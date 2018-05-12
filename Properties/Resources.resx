@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="FeedErrorTooFewArgs" xml:space="preserve">
+    <value>:warning: Please specify your feedee!</value>
+  </data>
+  <data name="FeedErrorTooManyArgs" xml:space="preserve">
+    <value>:warning: You can't feed more than one person!</value>
+  </data>
   <data name="MentionUnknown" xml:space="preserve">
     <value>Hi, yes! Did you mention me?</value>
   </data>

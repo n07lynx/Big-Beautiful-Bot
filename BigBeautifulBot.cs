@@ -100,11 +100,11 @@ namespace BigBeautifulBot
         {
             if (args.Count() > 1)
             {
-                await message.Channel.SendMessageAsync(":warning: You can't feed more than one person!");
+                await message.Channel.SendMessageAsync(Resources.FeedErrorTooManyArgs);
             }
             else if (args.Count() < 1)
             {
-                await message.Channel.SendMessageAsync(":warning: Please specify your feedee!");
+                await message.Channel.SendMessageAsync(Resources.FeedErrorTooFewArgs);
             }
             else
             {

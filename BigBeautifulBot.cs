@@ -143,6 +143,16 @@ namespace BigBeautifulBot
                 await Info.Save();
                 await message.Channel.SendMessageAsync(Resources.UseCupcake);
             }
+            else if (itemCode == "<:loreille:441422451541278721>")
+            {
+                await Lori(message, args);
+            }
+            else if (itemCode == "🍮")
+            {
+                Info.Weight += 0.22M;
+                await Info.Save();
+                await message.Channel.SendMessageAsync(Resources.UseCustard);
+            }
             else
             {
                 Console.WriteLine($"Unknown ItemCode: {itemCode}");

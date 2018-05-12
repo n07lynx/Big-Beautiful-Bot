@@ -123,6 +123,9 @@
   <data name="UseCupcake" xml:space="preserve">
     <value>Ooh! Cupcake :grinning:</value>
   </data>
+  <data name="UseCustard" xml:space="preserve">
+    <value>Aheh, this makes me feel quite full :sweat_smile:</value>
+  </data>
   <data name="UseScales" xml:space="preserve">
     <value>I currently weigh... ***{0}kgs***</value>
   </data>

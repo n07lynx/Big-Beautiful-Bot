@@ -1,0 +1,12 @@
+{
+	"prefix" : "?",
+	"activities" : [
+	"the 'eat too much' game",
+	"with her belly",
+	"Fat Princess: Fistful of Cake",
+	"Debutopia",
+	"Piggy in the Middle"
+	],
+	"progFolder" : "D:\\Images\\Cutefats\\Progressions\\",
+	"helpText" : "Hi! I'm the Big Beautiful Bot! I do fat girl things.\n\nCommands:\n?piggy - returns a piggy emote\n?feed [@person] - shows a weight gain image in context with the mentioned user"
+}

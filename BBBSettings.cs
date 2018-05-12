@@ -18,5 +18,7 @@ namespace BigBeautifulBot
         public string token => (string)_jObject[nameof(token)];
         public string prefix => (string)_jObject[nameof(prefix)];
         public string progFolder => (string)_jObject[nameof(progFolder)];
+
+        public string LorielleFolder => (string)_jObject[nameof(LorielleFolder)];
     }
 }

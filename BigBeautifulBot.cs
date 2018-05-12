@@ -52,6 +52,9 @@ namespace BigBeautifulBot
                             case "kgs":
                                 await WeightConvert(message, args, command);
                                 return;
+                            case "lori":
+                                await Lori(message, args);
+                                return;
                         }
                     }
 
@@ -65,6 +68,12 @@ namespace BigBeautifulBot
             {
                 Console.WriteLine($"Error: {ex}");
             }
+        }
+
+        private async Task Lori(SocketMessage message, string[] args)
+        {
+            var file = Program.GetRandomFile(config.LorielleFolder);
+            await message.Channel.SendFileAsync(file);
         }
 
         private async Task WeightConvert(SocketMessage message, string[] args, string inputUnits)
@@ -99,8 +108,7 @@ namespace BigBeautifulBot
             }
             else
             {
-                var files = Directory.GetFiles(config.progFolder);
-                var file = Program.GetRandomElement(files);
+                string file = Program.GetRandomFile(config.progFolder);
                 await message.Channel.SendFileAsync(file, $"{message.Author.Mention} fed {args[0]}");
             }
         }

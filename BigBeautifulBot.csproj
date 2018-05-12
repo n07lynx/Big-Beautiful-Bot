@@ -132,6 +132,7 @@
     <None Include="App.config" />
     <None Include="config.json" />
     <None Include="packages.config" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">

@@ -76,5 +76,12 @@ namespace BigBeautifulBot
             var random = new Random();
             return activities[random.Next(activities.Length)];
         }
+
+        public static string GetRandomFile(string dir)
+        {
+            var files = Directory.GetFiles(dir);
+            var file = GetRandomElement(files);
+            return file;
+        }
     }
 }

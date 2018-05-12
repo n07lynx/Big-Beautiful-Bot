@@ -3,6 +3,7 @@ using System.IO;
 using Discord.WebSocket;
 using System;
 using System.Threading.Tasks;
+using BigBeautifulBot.Properties;
 
 namespace BigBeautifulBot
 {
@@ -104,15 +105,15 @@ namespace BigBeautifulBot
         private async Task Use(SocketMessage message, string[] args)
         {
             var itemCode = args[0];
-            if (itemCode == "🍰")//cake?
+            if (itemCode == "🍰")//cake
             {
                 Info.Weight += 0.2M;
                 await Info.Save();
-                await message.Channel.SendMessageAsync("Yum! Thanks! Cake is my favorite :3");
+                await message.Channel.SendMessageAsync(Resources.UseShortcake);
             }
             else if (itemCode == "⚖")//scales
             {
-                await message.Channel.SendMessageAsync($"I currently weigh... ***{Info.Weight}kgs***!");
+                await message.Channel.SendMessageAsync(string.Format(Resources.UseScales, Info.Weight));
             }
             else if (itemCode == "<:makuactivate:438142523001667584>" && $"{message.Author.Username}#{message.Author.Discriminator}" == "FairyMaku#0920")
             {
@@ -123,12 +124,12 @@ namespace BigBeautifulBot
             {
                 Info.Weight += 0.15M;
                 await Info.Save();
-                await message.Channel.SendMessageAsync("Ooh! Cupcake :grinning:");
+                await message.Channel.SendMessageAsync(Resources.UseCupcake);
             }
             else
             {
                 Console.WriteLine($"Unknown ItemCode: {itemCode}");
-                await message.Channel.SendMessageAsync("I um... Can't figure out what this is... Beep boop :sweat_smile:");
+                await message.Channel.SendMessageAsync(Resources.UseUnknown);
             }
         }
     }

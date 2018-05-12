@@ -25,15 +25,15 @@ namespace BigBeautifulBot
 
             try
             {
-                using (message.Channel.EnterTypingState())
+                var messageContent = message.Content;
+                if (messageContent.StartsWith(config.prefix))//Command
                 {
-                    var messageContent = message.Content;
-                    if (messageContent.StartsWith(config.prefix))//Command
-                    {
-                        var components = new string(messageContent.Skip(config.prefix.Length).ToArray()).Trim().Split(' ');
-                        var command = components.First().ToLower();
-                        var args = components.Skip(1).ToArray();
+                    var components = new string(messageContent.Skip(config.prefix.Length).ToArray()).Trim().Split(' ');
+                    var command = components.First().ToLower();
+                    var args = components.Skip(1).ToArray();
 
+                    using (message.Channel.EnterTypingState())
+                    {
                         switch (command)
                         {
                             case "use":
@@ -57,11 +57,11 @@ namespace BigBeautifulBot
                                 return;
                         }
                     }
+                }
 
-                    if (message.MentionedUsers.Any(x => x.Id == Program.client.CurrentUser.Id))//Mention
-                    {
-                        await message.Channel.SendMessageAsync(Resources.MentionUnknown);
-                    }
+                if (message.MentionedUsers.Any(x => x.Id == Program.client.CurrentUser.Id))//Mention
+                {
+                    await message.Channel.SendMessageAsync(Resources.MentionUnknown);
                 }
             }
             catch (Exception ex)

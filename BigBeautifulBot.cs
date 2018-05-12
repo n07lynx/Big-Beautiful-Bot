@@ -9,13 +9,15 @@ namespace BigBeautifulBot
 {
     public class BigBeautifulBot
     {
-        private BBBSettings config;
+        private BBBSettings _Config;
         public BBBInfo Info { get; }
+        public FoodProcessor FoodProcessor { get; }
 
         public BigBeautifulBot(BBBSettings config)
         {
-            this.config = config;
+            _Config = config;
             Info = new BBBInfo();
+            FoodProcessor = new FoodProcessor();
         }
 
         internal async Task MessageReceived(SocketMessage message)
@@ -26,9 +28,9 @@ namespace BigBeautifulBot
             try
             {
                 var messageContent = message.Content;
-                if (messageContent.StartsWith(config.prefix))//Command
+                if (messageContent.StartsWith(_Config.prefix))//Command
                 {
-                    var components = new string(messageContent.Skip(config.prefix.Length).ToArray()).Trim().Split(' ');
+                    var components = new string(messageContent.Skip(_Config.prefix.Length).ToArray()).Trim().Split(' ');
                     var command = components.First().ToLower();
                     var args = components.Skip(1).ToArray();
 
@@ -72,7 +74,7 @@ namespace BigBeautifulBot
 
         private async Task Lori(SocketMessage message, string[] args)
         {
-            var file = Program.GetRandomFile(config.LorielleFolder);
+            var file = Program.GetRandomFile(_Config.LorielleFolder);
             await message.Channel.SendFileAsync(file);
         }
 
@@ -108,7 +110,7 @@ namespace BigBeautifulBot
             }
             else
             {
-                string file = Program.GetRandomFile(config.progFolder);
+                string file = Program.GetRandomFile(_Config.progFolder);
                 await message.Channel.SendFileAsync(file, $"{message.Author.Mention} fed {args[0]}");
             }
         }
@@ -154,6 +156,10 @@ namespace BigBeautifulBot
             {
                 Info.Weight += 0.22M;
                 await message.Channel.SendMessageAsync(Resources.UseCustard);
+            }
+            else if (FoodProcessor.Definitions.ContainsKey(itemCode))
+            {
+                await FoodProcessor.Consume(itemCode, message);
             }
             else
             {

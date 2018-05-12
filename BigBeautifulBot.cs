@@ -12,12 +12,14 @@ namespace BigBeautifulBot
         private BBBSettings _Config;
         public BBBInfo Info { get; }
         public FoodProcessor FoodProcessor { get; }
+        public Scales Scales { get; }
 
         public BigBeautifulBot(BBBSettings config)
         {
             _Config = config;
             Info = new BBBInfo();
             FoodProcessor = new FoodProcessor(this);
+            Scales = new Scales(this);
         }
 
         internal async Task MessageReceived(SocketMessage message)
@@ -126,7 +128,7 @@ namespace BigBeautifulBot
             var itemCode = args[0];
             if (itemCode == "⚖")//scales
             {
-                await message.Channel.SendMessageAsync(string.Format(Resources.UseScales, Info.Weight));
+                await Scales.PerformWeighIn(message);
             }
             else if (itemCode == "<:makuactivate:438142523001667584>" && $"{message.Author.Username}#{message.Author.Discriminator}" == "FairyMaku#0920")
             {

@@ -29,7 +29,7 @@ namespace BigBeautifulBot
             //Initialize BBB
             bbb = new BigBeautifulBot(config);
 
-            _TickTimer = new Timer(Tick, null, 0, 60000);
+            _TickTimer = new Timer(Tick, null, 60000, 60000);
 
             //Setup client
             client = new DiscordSocketClient();

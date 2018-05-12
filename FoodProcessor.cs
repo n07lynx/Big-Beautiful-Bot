@@ -24,7 +24,11 @@ namespace BigBeautifulBot
 
         public static readonly Dictionary<string, FoodInfo> Definitions = new Dictionary<string, FoodInfo>
         {
-            { "🍕", new FoodInfo(0.05M, Resources.UsePizza) }
+            { "🍕", new FoodInfo(0.05M, Resources.UsePizza) },
+            { "🍮", new FoodInfo(0.22M, Resources.UseCustard) },
+            { "🥞", new FoodInfo(0.19M, Resources.UsePancake) },
+            { "🍰", new FoodInfo(0.2M, Resources.UseShortcake) },
+            { "<:cupcake:409416270534934529>", new FoodInfo(0.15M, Resources.UseCupcake) },
         };
     }
 }

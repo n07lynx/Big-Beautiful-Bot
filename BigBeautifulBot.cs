@@ -17,7 +17,7 @@ namespace BigBeautifulBot
         {
             _Config = config;
             Info = new BBBInfo();
-            FoodProcessor = new FoodProcessor();
+            FoodProcessor = new FoodProcessor(this);
         }
 
         internal async Task MessageReceived(SocketMessage message)
@@ -124,12 +124,7 @@ namespace BigBeautifulBot
         private async Task Use(SocketMessage message, string[] args)
         {
             var itemCode = args[0];
-            if (itemCode == "🍰")//cake
-            {
-                Info.Weight += 0.2M;
-                await message.Channel.SendMessageAsync(Resources.UseShortcake);
-            }
-            else if (itemCode == "⚖")//scales
+            if (itemCode == "⚖")//scales
             {
                 await message.Channel.SendMessageAsync(string.Format(Resources.UseScales, Info.Weight));
             }
@@ -138,24 +133,9 @@ namespace BigBeautifulBot
                 var adminMessage = Console.ReadLine();
                 await message.Channel.SendMessageAsync(adminMessage);
             }
-            else if (itemCode == "<:cupcake:409416270534934529>")
-            {
-                Info.Weight += 0.15M;
-                await message.Channel.SendMessageAsync(Resources.UseCupcake);
-            }
-            else if (itemCode == "🥞")
-            {
-                Info.Weight += 0.19M;
-                await message.Channel.SendMessageAsync(Resources.UsePancake);
-            }
             else if (itemCode == "<:loreille:441422451541278721>")
             {
                 await Lori(message, args);
-            }
-            else if (itemCode == "🍮")
-            {
-                Info.Weight += 0.22M;
-                await message.Channel.SendMessageAsync(Resources.UseCustard);
             }
             else if (FoodProcessor.Definitions.ContainsKey(itemCode))
             {

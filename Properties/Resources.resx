@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="MentionUnknown" xml:space="preserve">
+    <value>Hi, yes! Did you mention me?</value>
+  </data>
   <data name="UseCupcake" xml:space="preserve">
     <value>Ooh! Cupcake :grinning:</value>
   </data>

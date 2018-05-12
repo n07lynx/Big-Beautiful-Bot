@@ -57,7 +57,7 @@ namespace BigBeautifulBot
 
                     if (message.MentionedUsers.Any(x => x.Id == Program.client.CurrentUser.Id))//Mention
                     {
-                        await message.Channel.SendMessageAsync("Hi, yes! Did you mention me?");
+                        await message.Channel.SendMessageAsync(Resources.MentionUnknown);
                     }
                 }
             }

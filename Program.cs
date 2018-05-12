@@ -17,16 +17,12 @@ namespace BigBeautifulBot
         public static BBBSettings config;
 
         public static BigBeautifulBot bbb;
-        public static SQLiteConnection db;
 
         static void Main(string[] args) => MainAsync(args).GetAwaiter().GetResult();
         static async Task MainAsync(string[] args)
         {
             //Load config
             config = new BBBSettings();
-
-            //Connect to database
-            db = new SQLiteConnection("Data Source=bbb.db;Version=3;").OpenAndReturn();
 
             //Initialize BBB
             bbb = new BigBeautifulBot(config);
@@ -93,7 +89,7 @@ namespace BigBeautifulBot
         public BigBeautifulBot(BBBSettings config)
         {
             this.config = config;
-            bbbInfo = new BBBInfo();//TODO:Load from database
+            bbbInfo = new BBBInfo();
         }
 
         internal async Task MessageReceived(SocketMessage message)
@@ -132,7 +128,7 @@ namespace BigBeautifulBot
 
             if (message.MentionedUsers.Any(x => x.Id == Program.client.CurrentUser.Id))//Mention
             {
-                //TODO
+                await message.Channel.SendMessageAsync("Hi, yes! Did you mention me?");
             }
         }
 

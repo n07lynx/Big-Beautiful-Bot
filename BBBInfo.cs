@@ -6,9 +6,15 @@ namespace BigBeautifulBot
 {
     public class BBBInfo
     {
+        public static SQLiteConnection db;
+
         public BBBInfo()
         {
-            var command = new SQLiteCommand("SELECT * FROM BBB;", Program.db);
+            //Connect to database
+            db = db ?? new SQLiteConnection("Data Source=bbb.db;Version=3;").OpenAndReturn();
+
+            //Get values from database
+            var command = new SQLiteCommand("SELECT * FROM BBB;", db);
             var reader = command.ExecuteReader();
             reader.Read();
             BBBID = (long)reader[0];
@@ -20,7 +26,7 @@ namespace BigBeautifulBot
 
         internal async Task Save()
         {
-            var command = new SQLiteCommand("UPDATE BBB SET Weight = ?;", Program.db);
+            var command = new SQLiteCommand("UPDATE BBB SET Weight = ?;", db);
             command.Parameters.Add(new SQLiteParameter("?", Weight));
             await command.ExecuteNonQueryAsync();
         }

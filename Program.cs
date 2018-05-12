@@ -8,6 +8,7 @@ using System.Data.SQLite;
 using Newtonsoft.Json;
 using System.IO;
 using Newtonsoft.Json.Linq;
+using System.Threading;
 
 namespace BigBeautifulBot
 {
@@ -17,6 +18,7 @@ namespace BigBeautifulBot
         public static BBBSettings config;
 
         public static BigBeautifulBot bbb;
+        private static Timer _TickTimer;
 
         static void Main(string[] args) => MainAsync(args).GetAwaiter().GetResult();
         static async Task MainAsync(string[] args)
@@ -26,6 +28,8 @@ namespace BigBeautifulBot
 
             //Initialize BBB
             bbb = new BigBeautifulBot(config);
+
+            _TickTimer = new Timer(Tick, null, 0, 60000);
 
             //Setup client
             client = new DiscordSocketClient();
@@ -40,6 +44,16 @@ namespace BigBeautifulBot
 
             //Hold the program open indefinitely
             await Task.Delay(-1);
+        }
+
+        private static async void Tick(object state)
+        {
+            Console.WriteLine($"Tick");
+            if (bbb.Info.Weight > 55)
+            {
+                bbb.Info.Weight -= 0.01M;
+                await bbb.Info.Save();
+            }
         }
 
         private static async Task Client_LeftGuild(SocketGuild arg)

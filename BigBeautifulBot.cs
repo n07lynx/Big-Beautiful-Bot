@@ -14,12 +14,12 @@ namespace BigBeautifulBot
     public class BigBeautifulBot
     {
         private BBBSettings config;
-        private BBBInfo bbbInfo;
+        public BBBInfo Info { get; }
 
         public BigBeautifulBot(BBBSettings config)
         {
             this.config = config;
-            bbbInfo = new BBBInfo();
+            Info = new BBBInfo();
         }
 
         internal async Task MessageReceived(SocketMessage message)
@@ -111,13 +111,13 @@ namespace BigBeautifulBot
             var itemCode = args[0];
             if (itemCode == "🍰")//cake?
             {
-                bbbInfo.Weight += 0.2M;
-                await bbbInfo.Save();
+                Info.Weight += 0.2M;
+                await Info.Save();
                 await message.Channel.SendMessageAsync("Yum! Thanks!");
             }
             else if (itemCode == "⚖")//scales
             {
-                await message.Channel.SendMessageAsync($"I currently weigh... ***{bbbInfo.Weight}kgs***!");
+                await message.Channel.SendMessageAsync($"I currently weigh... ***{Info.Weight}kgs***!");
             }
             else
             {

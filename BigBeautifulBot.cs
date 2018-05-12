@@ -20,41 +20,50 @@ namespace BigBeautifulBot
 
         internal async Task MessageReceived(SocketMessage message)
         {
-            var messageContent = message.Content;
-
             //Don't talk to yourself x3
             if (message.Author.Id == Program.client.CurrentUser.Id) return;
 
-            if (messageContent.StartsWith(config.prefix))//Command
+            try
             {
-                var components = new string(messageContent.Skip(config.prefix.Length).ToArray()).Trim().Split(' ');
-                var command = components.First().ToLower();
-                var args = components.Skip(1).ToArray();
-
-                switch (command)
+                using (message.Channel.EnterTypingState())
                 {
-                    case "use":
-                        await Use(message, args);
-                        return;
-                    case "help":
-                        await Help(message, args);
-                        return;
-                    case "feed":
-                        await Feed(message, args);
-                        return;
-                    case "piggy":
-                        await Piggy(message, args);
-                        return;
-                    case "lbs":
-                    case "kgs":
-                        await WeightConvert(message, args, command);
-                        return;
+                    var messageContent = message.Content;
+                    if (messageContent.StartsWith(config.prefix))//Command
+                    {
+                        var components = new string(messageContent.Skip(config.prefix.Length).ToArray()).Trim().Split(' ');
+                        var command = components.First().ToLower();
+                        var args = components.Skip(1).ToArray();
+
+                        switch (command)
+                        {
+                            case "use":
+                                await Use(message, args);
+                                return;
+                            case "help":
+                                await Help(message, args);
+                                return;
+                            case "feed":
+                                await Feed(message, args);
+                                return;
+                            case "piggy":
+                                await Piggy(message, args);
+                                return;
+                            case "lbs":
+                            case "kgs":
+                                await WeightConvert(message, args, command);
+                                return;
+                        }
+                    }
+
+                    if (message.MentionedUsers.Any(x => x.Id == Program.client.CurrentUser.Id))//Mention
+                    {
+                        await message.Channel.SendMessageAsync("Hi, yes! Did you mention me?");
+                    }
                 }
             }
-
-            if (message.MentionedUsers.Any(x => x.Id == Program.client.CurrentUser.Id))//Mention
+            catch (Exception ex)
             {
-                await message.Channel.SendMessageAsync("Hi, yes! Did you mention me?");
+                Console.WriteLine($"Error: {ex}");
             }
         }
 

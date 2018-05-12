@@ -126,6 +126,9 @@
   <data name="UseCustard" xml:space="preserve">
     <value>Aheh, this makes me feel quite full :sweat_smile:</value>
   </data>
+  <data name="UsePancake" xml:space="preserve">
+    <value>Err, I don't know what to say, but I'm hungry so I'm just going to eat this, thanks~</value>
+  </data>
   <data name="UseScales" xml:space="preserve">
     <value>I currently weigh... ***{0}kgs***</value>
   </data>

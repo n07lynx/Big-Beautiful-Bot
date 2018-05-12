@@ -1,13 +1,6 @@
-using System.Configuration;
-using System.Linq;
-using System.Collections.Generic;
-using System.Data.SQLite;
 using Newtonsoft.Json;
 using System.IO;
 using Newtonsoft.Json.Linq;
-using Discord.WebSocket;
-using System;
-using System.Threading.Tasks;
 
 namespace BigBeautifulBot
 {

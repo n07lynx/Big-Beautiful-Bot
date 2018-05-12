@@ -1,10 +1,5 @@
-﻿using System.Configuration;
-using System.Linq;
-using System.Collections.Generic;
-using System.Data.SQLite;
-using Newtonsoft.Json;
+﻿using System.Linq;
 using System.IO;
-using Newtonsoft.Json.Linq;
 using Discord.WebSocket;
 using System;
 using System.Threading.Tasks;
@@ -113,11 +108,22 @@ namespace BigBeautifulBot
             {
                 Info.Weight += 0.2M;
                 await Info.Save();
-                await message.Channel.SendMessageAsync("Yum! Thanks!");
+                await message.Channel.SendMessageAsync("Yum! Thanks! Cake is my favorite :3");
             }
             else if (itemCode == "⚖")//scales
             {
                 await message.Channel.SendMessageAsync($"I currently weigh... ***{Info.Weight}kgs***!");
+            }
+            else if (itemCode == "<:makuactivate:438142523001667584>" && $"{message.Author.Username}#{message.Author.Discriminator}" == "FairyMaku#0920")
+            {
+                var adminMessage = Console.ReadLine();
+                await message.Channel.SendMessageAsync(adminMessage);
+            }
+            else if (itemCode == "<:cupcake:409416270534934529>")
+            {
+                Info.Weight += 0.15M;
+                await Info.Save();
+                await message.Channel.SendMessageAsync("Ooh! Cupcake :grinning:");
             }
             else
             {

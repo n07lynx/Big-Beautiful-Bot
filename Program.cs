@@ -48,7 +48,6 @@ namespace BigBeautifulBot
 
         private static async void Tick(object state)
         {
-            Console.WriteLine($"Tick");
             if (bbb.Info.Weight > 55)
             {
                 bbb.Info.Weight -= 0.01M;

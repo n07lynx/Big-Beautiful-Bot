@@ -172,7 +172,7 @@
     <value>Err, I don't know what to say, but I'm hungry so I'm just going to eat this, thanks~</value>
   </data>
   <data name="UseScales" xml:space="preserve">
-    <value>I currently weigh... **{0}kgs**</value>
+    <value>I weigh **{0}kgs**.</value>
   </data>
   <data name="UseShortcake" xml:space="preserve">
     <value>Yum! Thanks! Cake is my favorite :3</value>

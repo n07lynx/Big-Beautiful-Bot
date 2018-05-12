@@ -180,6 +180,9 @@
   <data name="UseUnknown" xml:space="preserve">
     <value>I um... Can't figure out what this is... Beep boop :sweat_smile:</value>
   </data>
+  <data name="UseFoodUnknown" xml:space="preserve">
+    <value>Damn, that was good.</value>
+  </data>
   <data name="UsePizza" xml:space="preserve">
     <value>Mm, that was good, thanks!</value>
   </data>

@@ -19,7 +19,7 @@ namespace BigBeautifulBot
         {
             var foodItem = Definitions[itemCode];
             _Bot.Info.Weight += foodItem.WeightValue;
-            await message.Channel.SendMessageAsync(foodItem.BotComment);
+            await message.Channel.SendMessageAsync(foodItem.BotComment ?? Resources.UseFoodUnknown);
         }
 
         public static readonly Dictionary<string, FoodInfo> Definitions = new Dictionary<string, FoodInfo>

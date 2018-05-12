@@ -5,6 +5,9 @@ using System.Configuration;
 using System.Linq;
 using System.Collections.Generic;
 using System.Data.SQLite;
+using Newtonsoft.Json;
+using System.IO;
+using Newtonsoft.Json.Linq;
 
 namespace BigBeautifulBot
 {
@@ -20,14 +23,14 @@ namespace BigBeautifulBot
         static void Main(string[] args) => MainAsync(args).GetAwaiter().GetResult();
         static async Task MainAsync(string[] args)
         {
-
             //Load config
             config = new BBBSettings();
 
+            //Connect to database
+            db = new SQLiteConnection("Data Source=bbb.db;Version=3;").OpenAndReturn();
+
             //Initialize BBB
             bbb = new BigBeautifulBot(config);
-
-            db = new SQLiteConnection("Data Source=bbb.db;Version=3;");
 
             //Setup client
             client = new DiscordSocketClient();
@@ -60,40 +63,39 @@ namespace BigBeautifulBot
             await client.SetGameAsync("with her code");
         }
 
-        private static string GetRandomElement(string[] activities)
+        public static string GetRandomElement(string[] activities)
         {
             var random = new Random();
             return activities[random.Next(activities.Length)];
         }
     }
 
-    public sealed class BBBSettings : ApplicationSettingsBase
+    public class BBBSettings
     {
-        [UserScopedSetting]
-        public string token
+        private JObject _jObject;
+
+        public BBBSettings()
         {
-            get { return (string)this[nameof(token)]; }
-            set { this[nameof(token)] = value; }
+            var serialiser = JsonSerializer.Create();
+            var configText = File.ReadAllText("config.json");
+            _jObject = (JObject)serialiser.Deserialize(new JsonTextReader(new StringReader(configText)));
         }
 
-        [UserScopedSetting]
-        public string prefix
-        {
-            get { return (string)this[nameof(prefix)]; }
-            set { this[nameof(prefix)] = value; }
-        }
+        public string token => (string)_jObject[nameof(token)];
+        public string prefix => (string)_jObject[nameof(prefix)];
+        public string progFolder => (string)_jObject[nameof(progFolder)];
     }
 
     public class BigBeautifulBot
     {
         private BBBSettings config;
+        private BBBInfo bbbInfo;
 
         public BigBeautifulBot(BBBSettings config)
         {
             this.config = config;
+            bbbInfo = new BBBInfo();//TODO:Load from database
         }
-
-        public BBBInfo bbbInfo { get; private set; }
 
         internal async Task MessageReceived(SocketMessage message)
         {
@@ -104,14 +106,23 @@ namespace BigBeautifulBot
 
             if (messageContent.StartsWith(config.prefix))//Command
             {
-                var components = messageContent.Skip(config.prefix.Length).ToString().Trim().Split(' ');
+                var components = new string(messageContent.Skip(config.prefix.Length).ToArray()).Trim().Split(' ');
                 var command = components.First().ToLower();
-                var args = components.Skip(1);
+                var args = components.Skip(1).ToArray();
 
                 switch (command)
                 {
                     case "use":
                         await Use(message, args);
+                        break;
+                    case "help":
+                        await Help(message, args);
+                        break;
+                    case "feed":
+                        await Feed(message, args);
+                        break;
+                    case "piggy":
+                        await Piggy(message, args);
                         break;
                 }
             }
@@ -122,28 +133,50 @@ namespace BigBeautifulBot
             }
         }
 
-        private async Task Use(SocketMessage message, IEnumerable<string> args)
+        private async Task Piggy(SocketMessage message, string[] args)
         {
-            var itemCode = args.First().ToCharArray().First();
-            if (itemCode == 'L')
+            await message.Channel.SendMessageAsync(":pig2:");
+        }
+
+        private async Task Feed(SocketMessage message, string[] args)
+        {
+            if (args.Count() > 1)
             {
-                //TODO: Move text to resource file
-                await message.Channel.SendMessageAsync("I like that letter... I can't really do anything with it though.");
+                await message.Channel.SendMessageAsync(":warning: You can't feed more than one person!");
             }
-            else if (itemCode == 0x1F370)//cake?
+            else if (args.Count() < 1)
             {
-                bbbInfo.Weight += 0.2;
-                await bbbInfo.Save();
-                await message.Channel.SendMessageAsync("Yum! Thanks!");
-            }
-            else if (itemCode == 0xFE0F)//scales
-            {
-                var displayNumber = 1d;
-                await message.Channel.SendMessageAsync($"I currently weigh... ***{displayNumber}kgs***!");
+                await message.Channel.SendMessageAsync(":warning: Please specify your feedee!");
             }
             else
             {
-                Console.WriteLine($"Unknown ItemCode: {itemCode} ({(int)itemCode})");
+                var files = Directory.GetFiles(config.progFolder);
+                var file = Program.GetRandomElement(files);
+                await message.Channel.SendFileAsync(file, $"{message.Author.Mention} fed {args[0]}");
+            }
+        }
+
+        private Task Help(SocketMessage message, string[] args)
+        {
+            throw new NotImplementedException();
+        }
+
+        private async Task Use(SocketMessage message, string[] args)
+        {
+            var itemCode = args[0];
+            if (itemCode == "🍰")//cake?
+            {
+                bbbInfo.Weight += 0.2M;
+                await bbbInfo.Save();
+                await message.Channel.SendMessageAsync("Yum! Thanks!");
+            }
+            else if (itemCode == "⚖")//scales
+            {
+                await message.Channel.SendMessageAsync($"I currently weigh... ***{bbbInfo.Weight}kgs***!");
+            }
+            else
+            {
+                Console.WriteLine($"Unknown ItemCode: {itemCode}");
                 await message.Channel.SendMessageAsync("I um... Can't figure out what this is... Beep boop :sweat_smile:");
             }
         }

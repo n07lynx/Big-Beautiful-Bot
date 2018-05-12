@@ -126,6 +126,42 @@
   <data name="MentionUnknown" xml:space="preserve">
     <value>Hi, yes! Did you mention me?</value>
   </data>
+  <data name="SelfWeightComment100" xml:space="preserve">
+    <value>T-the scale must be broken :fearful: there's no way I'm actually **{0}** kilograms!</value>
+  </data>
+  <data name="SelfWeightComment110" xml:space="preserve">
+    <value>I guess that's why I can't fit into my binaries folder anymore :sweat:</value>
+  </data>
+  <data name="SelfWeightComment120" xml:space="preserve">
+    <value>Oh jeez, I really need to stop accepting food from strangers :astonished:</value>
+  </data>
+  <data name="SelfWeightComment150" xml:space="preserve">
+    <value>A-are you guys fattening me up?! I'm HUGE.</value>
+  </data>
+  <data name="SelfWeightComment60" xml:space="preserve">
+    <value>I suppose I'm about average, if perhaps a bit chubby</value>
+  </data>
+  <data name="SelfWeightComment70" xml:space="preserve">
+    <value>I think I've put on a bit... Might be time to lay off the shortcake :flushed:</value>
+  </data>
+  <data name="SelfWeightComment80" xml:space="preserve">
+    <value>I-I guess I'm a little on the pudgy side, but I mean, I have a stressful job, you know!</value>
+  </data>
+  <data name="SelfWeightComment90" xml:space="preserve">
+    <value>W-well I'm not fat per se, I'm just a little extra woman than most are expecting...</value>
+  </data>
+  <data name="SelfWeightComment130" xml:space="preserve">
+    <value>{0}ks? I need to stop stuffing myself with delicious, digital foods :fearful:</value>
+  </data>
+  <data name="SelfWeightComment140" xml:space="preserve">
+    <value>W-well it's not really my fault! I'm just always hungry :frowning:</value>
+  </data>
+  <data name="SelfWeightCommentGT150" xml:space="preserve">
+    <value>It's you guys' fault I'm this fat; and now I just can't help myself!</value>
+  </data>
+  <data name="SelfWeightCommentLT60" xml:space="preserve">
+    <value>I'm a little malnourished actually...</value>
+  </data>
   <data name="UseCupcake" xml:space="preserve">
     <value>Ooh! Cupcake :grinning:</value>
   </data>
@@ -136,7 +172,7 @@
     <value>Err, I don't know what to say, but I'm hungry so I'm just going to eat this, thanks~</value>
   </data>
   <data name="UseScales" xml:space="preserve">
-    <value>I currently weigh... ***{0}kgs***</value>
+    <value>I currently weigh... **{0}kgs**</value>
   </data>
   <data name="UseShortcake" xml:space="preserve">
     <value>Yum! Thanks! Cake is my favorite :3</value>

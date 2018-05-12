@@ -125,7 +125,6 @@ namespace BigBeautifulBot
             if (itemCode == "🍰")//cake
             {
                 Info.Weight += 0.2M;
-                await Info.Save();
                 await message.Channel.SendMessageAsync(Resources.UseShortcake);
             }
             else if (itemCode == "⚖")//scales
@@ -140,13 +139,11 @@ namespace BigBeautifulBot
             else if (itemCode == "<:cupcake:409416270534934529>")
             {
                 Info.Weight += 0.15M;
-                await Info.Save();
                 await message.Channel.SendMessageAsync(Resources.UseCupcake);
             }
             else if (itemCode == "🥞")
             {
                 Info.Weight += 0.19M;
-                await Info.Save();
                 await message.Channel.SendMessageAsync(Resources.UsePancake);
             }
             else if (itemCode == "<:loreille:441422451541278721>")
@@ -156,7 +153,6 @@ namespace BigBeautifulBot
             else if (itemCode == "🍮")
             {
                 Info.Weight += 0.22M;
-                await Info.Save();
                 await message.Channel.SendMessageAsync(Resources.UseCustard);
             }
             else
@@ -164,6 +160,9 @@ namespace BigBeautifulBot
                 Console.WriteLine($"Unknown ItemCode: {itemCode}");
                 await message.Channel.SendMessageAsync(Resources.UseUnknown);
             }
+
+            //Save any changes
+            await Info.Save();
         }
     }
 }

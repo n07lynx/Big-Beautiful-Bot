@@ -16,7 +16,6 @@ namespace BigBeautifulBot
         public static DiscordSocketClient client;
         public static BBBSettings config;
 
-        public const decimal kgLbConversionFactor = 0.453592M;
         public static BigBeautifulBot bbb;
         public static SQLiteConnection db;
 
@@ -114,23 +113,42 @@ namespace BigBeautifulBot
                 {
                     case "use":
                         await Use(message, args);
-                        break;
+                        return;
                     case "help":
                         await Help(message, args);
-                        break;
+                        return;
                     case "feed":
                         await Feed(message, args);
-                        break;
+                        return;
                     case "piggy":
                         await Piggy(message, args);
-                        break;
+                        return;
+                    case "lbs":
+                    case "kgs":
+                        await WeightConvert(message, args, command);
+                        return;
                 }
             }
 
             if (message.MentionedUsers.Any(x => x.Id == Program.client.CurrentUser.Id))//Mention
             {
-
+                //TODO
             }
+        }
+
+        private async Task WeightConvert(SocketMessage message, string[] args, string inputUnits)
+        {
+            const decimal kgLbConversionFactor = 0.453592M;
+            var isKgs = inputUnits == "kgs";
+            var isLbs = inputUnits == "lbs";
+            var source = int.Parse(args[0]);
+            var lbs = isKgs ? source / kgLbConversionFactor : source;
+            var kgs = isLbs ? source * kgLbConversionFactor : source;
+            var response = $"{source}{inputUnits} is **";
+            if (isLbs) response += $"{Math.Round(kgs, 2)}kgs";
+            if (isKgs) response += $"{Math.Round(lbs, 2)}lbs";
+            response += "**!";
+            await message.Channel.SendMessageAsync(response);
         }
 
         private async Task Piggy(SocketMessage message, string[] args)

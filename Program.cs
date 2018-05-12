@@ -156,9 +156,10 @@ namespace BigBeautifulBot
             }
         }
 
-        private Task Help(SocketMessage message, string[] args)
+        private async Task Help(SocketMessage message, string[] args)
         {
-            throw new NotImplementedException();
+            var readmeText = File.ReadAllText("README.md");
+            await message.Channel.SendMessageAsync(readmeText);
         }
 
         private async Task Use(SocketMessage message, string[] args)

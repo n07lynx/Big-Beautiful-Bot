@@ -118,6 +118,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BBBInfo.cs" />
+    <Compile Include="BBBSettings.cs" />
+    <Compile Include="BigBeautifulBot.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

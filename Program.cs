@@ -39,7 +39,7 @@ namespace BigBeautifulBot
             client.MessageReceived += bbb.MessageReceived;
 
             //Login and start
-            await client.LoginAsync(Discord.TokenType.Bot, config.token);
+            await client.LoginAsync(Discord.TokenType.Bot, config.Token);
             await client.StartAsync();
 
             //Hold the program open indefinitely

@@ -15,10 +15,10 @@ namespace BigBeautifulBot
             _jObject = (JObject)serialiser.Deserialize(new JsonTextReader(new StringReader(configText)));
         }
 
-        public string token => (string)_jObject[nameof(token)];
-        public string prefix => (string)_jObject[nameof(prefix)];
-        public string progFolder => (string)_jObject[nameof(progFolder)];
-
+        public string Token => (string)_jObject[nameof(Token)];
+        public string Prefix => (string)_jObject[nameof(Prefix)];
+        public string ProgFolder => (string)_jObject[nameof(ProgFolder)];
         public string LorielleFolder => (string)_jObject[nameof(LorielleFolder)];
+        public string PurinFolder => (string)_jObject[nameof(PurinFolder)];
     }
 }

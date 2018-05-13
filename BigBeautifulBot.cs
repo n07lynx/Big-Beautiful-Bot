@@ -30,9 +30,9 @@ namespace BigBeautifulBot
             try
             {
                 var messageContent = message.Content;
-                if (messageContent.StartsWith(_Config.prefix))//Command
+                if (messageContent.StartsWith(_Config.Prefix))//Command
                 {
-                    var components = new string(messageContent.Skip(_Config.prefix.Length).ToArray()).Trim().Split(' ');
+                    var components = new string(messageContent.Skip(_Config.Prefix.Length).ToArray()).Trim().Split(' ');
                     var command = components.First().ToLower();
                     var args = components.Skip(1).ToArray();
 
@@ -59,6 +59,9 @@ namespace BigBeautifulBot
                             case "lori":
                                 await Lori(message, args);
                                 return;
+                            case "purin":
+                                await Purin(message, args);
+                                return;
                         }
                     }
                 }
@@ -72,6 +75,12 @@ namespace BigBeautifulBot
             {
                 Console.WriteLine($"Error: {ex}");
             }
+        }
+
+        private async Task Purin(SocketMessage message, string[] args)
+        {
+            var file = Program.GetRandomFile(_Config.PurinFolder);
+            await message.Channel.SendFileAsync(file);
         }
 
         private async Task Lori(SocketMessage message, string[] args)
@@ -112,7 +121,7 @@ namespace BigBeautifulBot
             }
             else
             {
-                string file = Program.GetRandomFile(_Config.progFolder);
+                string file = Program.GetRandomFile(_Config.ProgFolder);
                 await message.Channel.SendFileAsync(file, $"{message.Author.Mention} fed {args[0]}");
             }
         }

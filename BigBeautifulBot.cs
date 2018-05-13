@@ -36,33 +36,30 @@ namespace BigBeautifulBot
                     var command = components.First().ToLower();
                     var args = components.Skip(1).ToArray();
 
-                    using (message.Channel.EnterTypingState())
+                    switch (command)
                     {
-                        switch (command)
-                        {
-                            case "use":
-                                await Use(message, args);
-                                return;
-                            case "help":
-                                await Help(message, args);
-                                return;
-                            case "feed":
-                                await Feed(message, args);
-                                return;
-                            case "piggy":
-                                await Piggy(message, args);
-                                return;
-                            case "lbs":
-                            case "kgs":
-                                await WeightConvert(message, args, command);
-                                return;
-                            case "lori":
-                                await Lori(message, args);
-                                return;
-                            case "purin":
-                                await Purin(message, args);
-                                return;
-                        }
+                        case "use":
+                            await Use(message, args);
+                            return;
+                        case "help":
+                            await Help(message, args);
+                            return;
+                        case "feed":
+                            await Feed(message, args);
+                            return;
+                        case "piggy":
+                            await Piggy(message, args);
+                            return;
+                        case "lbs":
+                        case "kgs":
+                            await WeightConvert(message, args, command);
+                            return;
+                        case "lori":
+                            await Lori(message, args);
+                            return;
+                        case "purin":
+                            await Purin(message, args);
+                            return;
                     }
                 }
 
@@ -79,14 +76,20 @@ namespace BigBeautifulBot
 
         private async Task Purin(SocketMessage message, string[] args)
         {
-            var file = Program.GetRandomFile(_Config.PurinFolder);
-            await message.Channel.SendFileAsync(file);
+            using (message.Channel.EnterTypingState())
+            {
+                var file = Program.GetRandomFile(_Config.PurinFolder);
+                await message.Channel.SendFileAsync(file);
+            }
         }
 
         private async Task Lori(SocketMessage message, string[] args)
         {
-            var file = Program.GetRandomFile(_Config.LorielleFolder);
-            await message.Channel.SendFileAsync(file);
+            using (message.Channel.EnterTypingState())
+            {
+                var file = Program.GetRandomFile(_Config.LorielleFolder);
+                await message.Channel.SendFileAsync(file);
+            }
         }
 
         private async Task WeightConvert(SocketMessage message, string[] args, string inputUnits)

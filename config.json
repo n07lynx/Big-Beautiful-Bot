@@ -1,6 +1,6 @@
 {
-	"token" : "<YOUR TOKEN HERE>",
-	"prefix" : "?",
+	"Token" : "<YOUR TOKEN HERE>",
+	"Prefix" : "?",
 	"activities" : [
 	"the 'eat too much' game",
 	"with her belly",
@@ -8,5 +8,7 @@
 	"Debutopia",
 	"Piggy in the Middle"
 	],
-	"progFolder" : "D:\\Images\\Cutefats\\Progressions\\",
+	"ProgFolder" : "D:\\Images\\Cutefats\\Progressions\\",
+	"LorielleFolder" : "D:\\Images\\Cutefats\\Loreille\\",
+	"PurinFolder" : "D:\\Images\\Cutefats\\Purin\\"
 }

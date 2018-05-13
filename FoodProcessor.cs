@@ -18,8 +18,18 @@ namespace BigBeautifulBot
         internal async Task Consume(string itemCode, SocketMessage message)
         {
             var foodItem = Definitions[itemCode];
-            _Bot.Info.Weight += foodItem.WeightValue;
-            await message.Channel.SendMessageAsync(foodItem.BotComment);
+
+            if (_Bot.Info.Appetite > Math.Sign(_Bot.Config.OverfeedLimit))
+            {
+                _Bot.Info.Weight += foodItem.WeightValue;
+                _Bot.Info.Appetite -= foodItem.WeightValue;
+                await message.Channel.SendMessageAsync(foodItem.BotComment);
+                //TODO: Comments as her appetite goes down
+            }
+            else
+            {
+                await message.Channel.SendMessageAsync(Resources.OverfedComment);
+            }
         }
 
         public static readonly Dictionary<string, FoodInfo> Definitions = new Dictionary<string, FoodInfo>

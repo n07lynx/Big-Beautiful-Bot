@@ -186,6 +186,9 @@
   <data name="UsePizza" xml:space="preserve">
     <value>Mm, that was good, thanks!</value>
   </data>
+  <data name="OverfedComment" xml:space="preserve">
+    <value>G-guys \*huff\* I, I can't possibly eat \*huff\* this. I-I'm far too full... S-sorry~</value>
+  </data>
   <data name="UseCherry" xml:space="preserve">
     <value>Damn, that was good.</value>
   </data>

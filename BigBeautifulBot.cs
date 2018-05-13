@@ -9,14 +9,14 @@ namespace BigBeautifulBot
 {
     public class BigBeautifulBot
     {
-        private BBBSettings _Config;
+        public BBBSettings Config { get; }
         public BBBInfo Info { get; }
         public FoodProcessor FoodProcessor { get; }
         public Scales Scales { get; }
 
         public BigBeautifulBot(BBBSettings config)
         {
-            _Config = config;
+            Config = config;
             Info = new BBBInfo();
             FoodProcessor = new FoodProcessor(this);
             Scales = new Scales(this);
@@ -30,9 +30,9 @@ namespace BigBeautifulBot
             try
             {
                 var messageContent = message.Content;
-                if (messageContent.StartsWith(_Config.Prefix))//Command
+                if (messageContent.StartsWith(Config.Prefix))//Command
                 {
-                    var components = new string(messageContent.Skip(_Config.Prefix.Length).ToArray()).Trim().Split(' ');
+                    var components = new string(messageContent.Skip(Config.Prefix.Length).ToArray()).Trim().Split(' ');
                     var command = components.First().ToLower();
                     var args = components.Skip(1).ToArray();
 
@@ -78,7 +78,7 @@ namespace BigBeautifulBot
         {
             using (message.Channel.EnterTypingState())
             {
-                var file = Program.GetRandomFile(_Config.PurinFolder);
+                var file = Program.GetRandomFile(Config.PurinFolder);
                 await message.Channel.SendFileAsync(file);
             }
         }
@@ -87,7 +87,7 @@ namespace BigBeautifulBot
         {
             using (message.Channel.EnterTypingState())
             {
-                var file = Program.GetRandomFile(_Config.LorielleFolder);
+                var file = Program.GetRandomFile(Config.LorielleFolder);
                 await message.Channel.SendFileAsync(file);
             }
         }
@@ -124,7 +124,7 @@ namespace BigBeautifulBot
             }
             else
             {
-                string file = Program.GetRandomFile(_Config.ProgFolder);
+                string file = Program.GetRandomFile(Config.ProgFolder);
                 await message.Channel.SendFileAsync(file, $"{message.Author.Mention} fed {args[0]}");
             }
         }

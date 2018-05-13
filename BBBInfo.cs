@@ -19,8 +19,9 @@ namespace BigBeautifulBot
             var command = new SQLiteCommand("SELECT * FROM BBB;", db);
             var reader = command.ExecuteReader();
             reader.Read();
-            BBBID = (long)reader[0];
-            Weight = (decimal)reader[1];
+            BBBID = (long)reader[nameof(BBBID)];
+            Weight = (decimal)reader[nameof(Weight)];
+            Appetite = (decimal)reader[nameof(Appetite)];
 
             Activities = GetActivities().ToArray();
         }
@@ -31,13 +32,14 @@ namespace BigBeautifulBot
             var reader = command.ExecuteReader();
             while (reader.Read())
             {
-                yield return (string)reader[0];
+                yield return (string)reader["Name"];
             }
         }
 
         public string[] Activities { get; }
         public long BBBID { get; }
         public decimal Weight { get; set; }
+        public decimal Appetite { get; set; }
 
         internal async Task Save()
         {

@@ -3,5 +3,9 @@
 	"Prefix" : "?",
 	"ProgFolder" : "D:\\Images\\Cutefats\\Progressions\\",
 	"LorielleFolder" : "D:\\Images\\Cutefats\\Loreille\\",
-	"PurinFolder" : "D:\\Images\\Cutefats\\Purin\\"
+	"PurinFolder" : "D:\\Images\\Cutefats\\Purin\\",
+	"MinWeight" : 55,
+	"WeightLossRate" : 0.01,
+	"HungerRate" : 0.2,
+	"WeightAppetiteRatio" : 6
 }

@@ -60,6 +60,9 @@ namespace BigBeautifulBot
                         case "purin":
                             await Purin(message, args);
                             return;
+                        case "fatfact":
+                            await FatFact(message, args);
+                            return;
                     }
                 }
 
@@ -72,6 +75,12 @@ namespace BigBeautifulBot
             {
                 Console.WriteLine($"Error: {ex}");
             }
+        }
+
+        private async Task FatFact(SocketMessage message, string[] args)
+        {
+            var fact = await Info.GetFatFact();
+            await message.Channel.SendMessageAsync(fact);
         }
 
         private async Task Purin(SocketMessage message, string[] args)

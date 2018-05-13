@@ -48,5 +48,19 @@ namespace BigBeautifulBot
             command.Parameters.Add(new SQLiteParameter("@A", Appetite));
             await command.ExecuteNonQueryAsync();
         }
+
+        internal async Task<string> GetFatFact()
+        {
+            var command = new SQLiteCommand("SELECT Fact FROM FatFact;", db);
+            var reader = await command.ExecuteReaderAsync();
+
+            var factList = new List<string>();
+            while (await reader.ReadAsync())
+            {
+                factList.Add((string)reader["Fact"]);
+            }
+
+            return Program.GetRandomElement(factList.ToArray());
+        }
     }
 }

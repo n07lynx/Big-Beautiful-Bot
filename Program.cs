@@ -53,13 +53,14 @@ namespace BigBeautifulBot
                 if (bbb.Info.Weight > config.MinWeight)
                 {
                     bbb.Info.Weight -= config.WeightLossRate;
-                    await bbb.Info.Save();
                 }
 
                 if(bbb.Info.Appetite < bbb.Info.Weight / config.WeightAppetiteRatio)
                 {
                     bbb.Info.Appetite += config.HungerRate;
                 }
+
+                await bbb.Info.Save();
             }
             catch (Exception ex)
             {

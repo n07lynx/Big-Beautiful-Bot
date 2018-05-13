@@ -69,11 +69,11 @@ namespace BigBeautifulBot
 
                 if (message.MentionedUsers.Any(x => x.Id == Program.client.CurrentUser.Id))//Mention
                 {
-                    if (Regex.IsMatch(messageContent, "/hi|hello/i"))
+                    if (Regex.IsMatch(messageContent, "hi|hello|hey", RegexOptions.IgnoreCase))
                     {
                         await message.Channel.SendMessageAsync(Resources.MentionGreeting);
                     }
-                    else if (Regex.IsMatch(messageContent, @"/who('?)s a (good|cute) (little )?(fatty|porker|porkchop)\?/i"))
+                    else if (Regex.IsMatch(messageContent, @"who('?)s a (good|cute) (little )?(fatty|porker|porkchop)\?", RegexOptions.IgnoreCase))
                     {
                         await message.Channel.SendMessageAsync(Resources.MentionWhoIs);
                     }

@@ -5,6 +5,9 @@ using System;
 using System.Threading.Tasks;
 using BigBeautifulBot.Properties;
 using System.Text.RegularExpressions;
+using System.Net.Http;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace BigBeautifulBot
 {
@@ -64,6 +67,9 @@ namespace BigBeautifulBot
                         case "fatfact":
                             await FatFact(message, args);
                             return;
+                        case "fatty":
+                            await Fatty(message, args);
+                            return;
                     }
                 }
 
@@ -86,6 +92,21 @@ namespace BigBeautifulBot
             catch (Exception ex)
             {
                 Console.WriteLine($"Error: {ex}");
+            }
+        }
+
+        private async Task Fatty(SocketMessage message, string[] args)
+        {
+            var client = new HttpClient();
+            var restString = $"http://gelbooru.com/index.php?page=dapi&s=post&q=index&json=1&tags=bbw";
+            var result = await client.GetStringAsync(restString);
+            var serialiser = JsonSerializer.Create();
+            var @object = (JArray)serialiser.Deserialize(new JsonTextReader(new StringReader(result)));
+
+            if (@object.Any())
+            {
+                var randomFile = Program.GetRandomElement(@object.Select(x => (string)x["file_url"]).ToArray());
+                await message.Channel.SendMessageAsync(randomFile);
             }
         }
 

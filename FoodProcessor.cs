@@ -39,7 +39,7 @@ namespace BigBeautifulBot
             { "🍏", new FoodInfo(0.1M, Resources.UseFoodUnknown) },
             { "🍐", new FoodInfo(0.1M, Resources.UseFoodUnknown) },
             { "🍑", new FoodInfo(0.1M, Resources.UseFoodUnknown) },
-            { "🍒", new FoodInfo(0.1M, Resources.UseFoodUnknown) },
+            { "🍒", new FoodInfo(3.0M, Resources.UseCherry) },
             { "🍓", new FoodInfo(0.1M, Resources.UseFoodUnknown) },
             { "🥝", new FoodInfo(0.1M, Resources.UseFoodUnknown) },
             { "🍅", new FoodInfo(0.1M, Resources.UseFoodUnknown) },

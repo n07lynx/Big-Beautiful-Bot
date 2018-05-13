@@ -181,9 +181,12 @@
     <value>I um... Can't figure out what this is... Beep boop :sweat_smile:</value>
   </data>
   <data name="UseFoodUnknown" xml:space="preserve">
-    <value>Damn, that was good.</value>
+    <value>Oh, thanks, that was yummy :smile:</value>
   </data>
   <data name="UsePizza" xml:space="preserve">
     <value>Mm, that was good, thanks!</value>
+  </data>
+  <data name="UseCherry" xml:space="preserve">
+    <value>Damn, that was good.</value>
   </data>
 </root>

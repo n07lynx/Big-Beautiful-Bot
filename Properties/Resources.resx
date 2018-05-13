@@ -198,4 +198,43 @@
   <data name="UseCherry" xml:space="preserve">
     <value>Damn, that was good.</value>
   </data>
+  <data name="AppetiteComment0" xml:space="preserve">
+    <value>Mm, I feel perfectly full \*afue\*</value>
+  </data>
+  <data name="AppetiteComment1" xml:space="preserve">
+    <value>\*gha\* It's nice, I don't feel so hungry anymore :relieved:</value>
+  </data>
+  <data name="AppetiteComment10" xml:space="preserve">
+    <value>I'd kill for a {0} ~</value>
+  </data>
+  <data name="AppetiteComment2" xml:space="preserve">
+    <value>Mm. I'm still a little bit hungry. Desert ~ ?</value>
+  </data>
+  <data name="AppetiteComment3" xml:space="preserve">
+    <value>\*uwah\* I'm going to need to loosen some buttons here...</value>
+  </data>
+  <data name="AppetiteComment4" xml:space="preserve">
+    <value>I really need an extra large portion, I've worked up quite the appetite!</value>
+  </data>
+  <data name="AppetiteComment5" xml:space="preserve">
+    <value>Hmm, I'm still pretty hungry. How about some {0}?</value>
+  </data>
+  <data name="AppetiteComment6" xml:space="preserve">
+    <value>Thinking about :bacon: makes me :drooling_face:</value>
+  </data>
+  <data name="AppetiteComment7" xml:space="preserve">
+    <value>Wanna order some food?</value>
+  </data>
+  <data name="AppetiteComment8" xml:space="preserve">
+    <value>Feed me lots of sweets, 'kay? :heart:</value>
+  </data>
+  <data name="AppetiteComment9" xml:space="preserve">
+    <value>Mm, I feel better, but I'm still really hungry  :tired_face:</value>
+  </data>
+  <data name="AppetiteCommentFull" xml:space="preserve">
+    <value>I'm full but \*huff\* I could probably eat one more...</value>
+  </data>
+  <data name="AppetiteCommentHungry" xml:space="preserve">
+    <value>Guuuuuuuuy's I'm really huungry :tired_face: feeed meeee ~ :two_hearts:</value>
+  </data>
 </root>

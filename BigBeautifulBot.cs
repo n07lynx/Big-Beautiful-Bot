@@ -98,14 +98,13 @@ namespace BigBeautifulBot
         private async Task Fatty(SocketMessage message, string[] args)
         {
             var client = new HttpClient();
-            var restString = $"http://gelbooru.com/index.php?page=dapi&s=post&q=index&json=1&tags=bbw";
-            var result = await client.GetStringAsync(restString);
-            var serialiser = JsonSerializer.Create();
-            var @object = (JArray)serialiser.Deserialize(new JsonTextReader(new StringReader(result)));
+            var apiUrl = $"http://gelbooru.com/index.php?page=dapi&s=post&q=index&json=1&limit=100&tags=bbw";
+            var rawJson = await client.GetStreamAsync(apiUrl);
+            var booruResults = JToken.ReadFrom(new JsonTextReader(new StreamReader(rawJson)));
 
-            if (@object.Any())
+            if (booruResults.Any())
             {
-                var randomFile = Program.GetRandomElement(@object.Select(x => (string)x["file_url"]).ToArray());
+                var randomFile = Program.GetRandomElement(booruResults.Select(x => (string)x["file_url"]).ToArray());
                 await message.Channel.SendMessageAsync(randomFile);
             }
         }

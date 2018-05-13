@@ -48,10 +48,17 @@ namespace BigBeautifulBot
 
         private static async void Tick(object state)
         {
-            if (bbb.Info.Weight > 55)
+            try
             {
-                bbb.Info.Weight -= 0.01M;
-                await bbb.Info.Save();
+                if (bbb.Info.Weight > 55)
+                {
+                    bbb.Info.Weight -= 0.01M;
+                    await bbb.Info.Save();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex}");
             }
         }
 

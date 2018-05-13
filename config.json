@@ -7,5 +7,6 @@
 	"MinWeight" : 55,
 	"WeightLossRate" : 0.01,
 	"HungerRate" : 0.2,
-	"WeightAppetiteRatio" : 6
+	"WeightAppetiteRatio" : 6,
+	"OverfeedLimit" : 3
 }

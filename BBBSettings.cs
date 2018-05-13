@@ -24,5 +24,6 @@ namespace BigBeautifulBot
         public decimal MinWeight => (decimal)_jObject[nameof(MinWeight)];
         public decimal HungerRate => (decimal)_jObject[nameof(HungerRate)];
         public decimal WeightAppetiteRatio => (decimal)_jObject[nameof(WeightAppetiteRatio)];
+        public decimal OverfeedLimit => (decimal)_jObject[nameof(OverfeedLimit)];
     }
 }

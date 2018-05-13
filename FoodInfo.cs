@@ -1,9 +1,12 @@
-﻿namespace BigBeautifulBot
+﻿using System;
+
+namespace BigBeautifulBot
 {
     public class FoodInfo
     {
         public FoodInfo(decimal weightValue, string comment)
         {
+            if (string.IsNullOrEmpty(comment)) throw new ArgumentNullException(nameof(comment));
             WeightValue = weightValue;
             BotComment = comment;
         }

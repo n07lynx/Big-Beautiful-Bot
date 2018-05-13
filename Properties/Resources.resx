@@ -237,4 +237,7 @@
   <data name="AppetiteCommentHungry" xml:space="preserve">
     <value>Guuuuuuuuy's I'm really huungry :tired_face: feeed meeee ~ :two_hearts:</value>
   </data>
+  <data name="MentionGoodnight" xml:space="preserve">
+    <value>Goodnight, {0}</value>
+  </data>
 </root>

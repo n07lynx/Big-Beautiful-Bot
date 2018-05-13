@@ -83,6 +83,10 @@ namespace BigBeautifulBot
                     {
                         await message.Channel.SendMessageAsync(Resources.MentionWhoIs);
                     }
+                    else if(Regex.IsMatch(messageContent, @"(goodnight|'night)", RegexOptions.IgnoreCase))
+                    {
+                        await message.Channel.SendMessageAsync(string.Format(Resources.MentionGoodnight, message.Author.Mention));
+                    }
                     else
                     {
                         await message.Channel.SendMessageAsync(Resources.MentionUnknown);

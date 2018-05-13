@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.SQLite;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BigBeautifulBot
@@ -19,8 +21,21 @@ namespace BigBeautifulBot
             reader.Read();
             BBBID = (long)reader[0];
             Weight = (decimal)reader[1];
+
+            Activities = GetActivities().ToArray();
         }
 
+        private IEnumerable<string> GetActivities()
+        {
+            var command = new SQLiteCommand("SELECT Name FROM Games;", db);
+            var reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                yield return (string)reader[0];
+            }
+        }
+
+        public string[] Activities { get; }
         public long BBBID { get; }
         public decimal Weight { get; set; }
 

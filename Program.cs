@@ -68,7 +68,7 @@ namespace BigBeautifulBot
         private static async Task Client_Ready()
         {
             Console.WriteLine("Bot Started");
-            await client.SetGameAsync("with her code");
+            await client.SetGameAsync(GetRandomElement(bbb.Info.Activities));
         }
 
         public static string GetRandomElement(string[] array)

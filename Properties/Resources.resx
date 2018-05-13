@@ -186,6 +186,12 @@
   <data name="UsePizza" xml:space="preserve">
     <value>Mm, that was good, thanks!</value>
   </data>
+  <data name="MentionGreeting" xml:space="preserve">
+    <value>Oh, hi there!</value>
+  </data>
+  <data name="MentionWhoIs" xml:space="preserve">
+    <value>O-oh, I-I am~</value>
+  </data>
   <data name="OverfedComment" xml:space="preserve">
     <value>G-guys \*huff\* I, I can't possibly eat \*huff\* this. I-I'm far too full... S-sorry~</value>
   </data>

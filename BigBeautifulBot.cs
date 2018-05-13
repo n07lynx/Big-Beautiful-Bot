@@ -4,6 +4,7 @@ using Discord.WebSocket;
 using System;
 using System.Threading.Tasks;
 using BigBeautifulBot.Properties;
+using System.Text.RegularExpressions;
 
 namespace BigBeautifulBot
 {
@@ -68,7 +69,18 @@ namespace BigBeautifulBot
 
                 if (message.MentionedUsers.Any(x => x.Id == Program.client.CurrentUser.Id))//Mention
                 {
-                    await message.Channel.SendMessageAsync(Resources.MentionUnknown);
+                    if (Regex.IsMatch(messageContent, "/hi|hello/i"))
+                    {
+                        await message.Channel.SendMessageAsync(Resources.MentionGreeting);
+                    }
+                    else if (Regex.IsMatch(messageContent, @"/who('?)s a (good|cute) (little )?(fatty|porker|porkchop)\?/i"))
+                    {
+                        await message.Channel.SendMessageAsync(Resources.MentionWhoIs);
+                    }
+                    else
+                    {
+                        await message.Channel.SendMessageAsync(Resources.MentionUnknown);
+                    }
                 }
             }
             catch (Exception ex)

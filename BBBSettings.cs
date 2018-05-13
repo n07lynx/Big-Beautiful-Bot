@@ -23,5 +23,6 @@ namespace BigBeautifulBot
         public decimal HungerRate => (decimal)_jObject[nameof(HungerRate)];
         public decimal WeightAppetiteRatio => (decimal)_jObject[nameof(WeightAppetiteRatio)];
         public decimal OverfeedLimit => (decimal)_jObject[nameof(OverfeedLimit)];
+        public int TickInterval => (int)_jObject[nameof(TickInterval)];
     }
 }

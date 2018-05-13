@@ -71,10 +71,10 @@ namespace BigBeautifulBot
             await client.SetGameAsync("with her code");
         }
 
-        public static string GetRandomElement(string[] activities)
+        public static string GetRandomElement(string[] array)
         {
             var random = new Random();
-            return activities[random.Next(activities.Length)];
+            return array[random.Next(array.Length)];
         }
 
         public static string GetRandomFile(string dir)

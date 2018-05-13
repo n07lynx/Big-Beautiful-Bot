@@ -20,5 +20,7 @@ namespace BigBeautifulBot
         public string ProgFolder => (string)_jObject[nameof(ProgFolder)];
         public string LorielleFolder => (string)_jObject[nameof(LorielleFolder)];
         public string PurinFolder => (string)_jObject[nameof(PurinFolder)];
+        public decimal WeightLossRate => (decimal)_jObject[nameof(WeightLossRate)];
+        public decimal MinWeight => (decimal)_jObject[nameof(MinWeight)];
     }
 }

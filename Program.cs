@@ -50,9 +50,9 @@ namespace BigBeautifulBot
         {
             try
             {
-                if (bbb.Info.Weight > 55)
+                if (bbb.Info.Weight > config.MinWeight)
                 {
-                    bbb.Info.Weight -= 0.01M;
+                    bbb.Info.Weight -= config.WeightLossRate;
                     await bbb.Info.Save();
                 }
             }

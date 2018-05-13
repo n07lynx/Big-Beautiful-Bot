@@ -43,8 +43,9 @@ namespace BigBeautifulBot
 
         internal async Task Save()
         {
-            var command = new SQLiteCommand("UPDATE BBB SET Weight = ?;", db);
+            var command = new SQLiteCommand("UPDATE BBB SET Weight = ?, Appetite = @A;", db);
             command.Parameters.Add(new SQLiteParameter("?", Weight));
+            command.Parameters.Add(new SQLiteParameter("@A", Appetite));
             await command.ExecuteNonQueryAsync();
         }
     }

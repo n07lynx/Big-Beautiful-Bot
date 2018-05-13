@@ -99,8 +99,8 @@ namespace BigBeautifulBot
         {
             var client = new HttpClient();
             var apiUrl = $"http://gelbooru.com/index.php?page=dapi&s=post&q=index&json=1&limit=100&tags=bbw";
-            var rawJson = await client.GetStreamAsync(apiUrl);
-            var booruResults = JToken.ReadFrom(new JsonTextReader(new StreamReader(rawJson)));
+            var rawJsonStream = await client.GetStreamAsync(apiUrl);
+            var booruResults = JToken.ReadFrom(new JsonTextReader(new StreamReader(rawJsonStream)));
 
             if (booruResults.Any())
             {

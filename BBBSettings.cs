@@ -6,13 +6,11 @@ namespace BigBeautifulBot
 {
     public class BBBSettings
     {
-        private JObject _jObject;
+        private JToken _jObject;
 
         public BBBSettings()
         {
-            var serialiser = JsonSerializer.Create();
-            var configText = File.ReadAllText("config.json");
-            _jObject = (JObject)serialiser.Deserialize(new JsonTextReader(new StringReader(configText)));
+            _jObject = JToken.ReadFrom(new JsonTextReader(new StreamReader("config.json")));
         }
 
         public string Token => (string)_jObject[nameof(Token)];

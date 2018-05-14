@@ -13,6 +13,8 @@ namespace BigBeautifulBot
 {
     public class BigBeautifulBot
     {
+        private const string tick = "✅";
+
         public BBBSettings Config { get; }
         public BBBInfo Info { get; }
         public FoodProcessor FoodProcessor { get; }
@@ -109,21 +111,24 @@ namespace BigBeautifulBot
             var checkFolderNumber = Program.MyRandom.Next(foldersBySize.Keys.Min(), foldersBySize.Keys.Max());
             var checkfolder = foldersBySize[checkFolderNumber];
 
-            //TODO: Ensure no duplicates
+            //Get two unique images
             var image1 = Program.GetRandomFile(checkfolder);
-            var image2 = Program.GetRandomFile(checkfolder);
+            string image2;
+            do image2 = Program.GetRandomFile(checkfolder);//TODO: Prevent infinite loop
+            while (image1 == image2);
 
             await message.Channel.SendMessageAsync($"Who's fatter?");
+
             var message1 = await message.Channel.SendFileAsync(image1);
             var message2 = await message.Channel.SendFileAsync(image2);
 
-            await message1.AddReactionAsync(new Discord.Emoji("✅"));
-            await message2.AddReactionAsync(new Discord.Emoji("✅"));
+            await message1.AddReactionAsync(new Discord.Emoji(tick));
+            await message2.AddReactionAsync(new Discord.Emoji(tick));
 
-            await Task.Delay(10000);
+            await Task.Delay(15000);
 
-            var r1 = await message1.GetReactionUsersAsync("✅");
-            var r2 = await message2.GetReactionUsersAsync("✅");
+            var r1 = await message1.GetReactionUsersAsync(tick);
+            var r2 = await message2.GetReactionUsersAsync(tick);
 
             if (r1.Count != r2.Count)
             {
@@ -149,7 +154,7 @@ namespace BigBeautifulBot
                 }
             }
 
-            await message.Channel.SendMessageAsync("Thanks for voting! Laura's cutefats folder has been updated.");
+            await message.Channel.SendMessageAsync("Thanks for voting! Maku's cutefats folder has been updated.");
         }
 
         private async Task Fatty(SocketMessage message, string[] args)

@@ -9,5 +9,6 @@
 	"HungerRate" : 0.2,
 	"WeightAppetiteRatio" : 6,
 	"OverfeedLimit" : 3,
-	"TickInterval" : 60000
+	"TickInterval" : 60000,
+	"GeneralSizesFolder" : "D:\\Images\\Cutefats\\General Sizes\\"
 }

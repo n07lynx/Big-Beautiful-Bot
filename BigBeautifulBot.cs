@@ -70,6 +70,9 @@ namespace BigBeautifulBot
                         case "fatty":
                             await Fatty(message, args);
                             return;
+                        case "fatornot":
+                            await FatOrNot(message, args);
+                            return;
                     }
                 }
 
@@ -97,6 +100,40 @@ namespace BigBeautifulBot
             {
                 Console.WriteLine($"Error: {ex}");
             }
+        }
+
+        private async Task FatOrNot(SocketMessage message, string[] args)
+        {
+            var folders = Directory.GetDirectories(Config.GeneralSizesFolder);
+            var foldersBySize = folders.ToDictionary(x => int.Parse(x.Split(' ').Last()), x => x);
+            var checkFolderNumber = Program.MyRandom.Next(foldersBySize.Keys.Min(), foldersBySize.Keys.Max());
+            var checkfolder = foldersBySize[checkFolderNumber];
+
+            //TODO: Ensure no duplicates
+            var image1 = Program.GetRandomFile(checkfolder);
+            var image2 = Program.GetRandomFile(checkfolder);
+
+            await message.Channel.SendMessageAsync($"Who's fatter?");
+            var message1 = await message.Channel.SendFileAsync(image1);
+            var message2 = await message.Channel.SendFileAsync(image2);
+
+            await message1.AddReactionAsync(new Discord.Emoji("✅"));
+            await message2.AddReactionAsync(new Discord.Emoji("✅"));
+
+            await Task.Delay(10000);
+
+            var r1 = await message1.GetReactionUsersAsync("✅");
+            var r2 = await message2.GetReactionUsersAsync("✅");
+
+            if (r1.Count != r2.Count)
+            {
+                var relativeFatness = r1.Count > r2.Count ? 1 : -1;
+                var fileName = Path.GetFileName(image1);
+                var newFolderLocation = Path.Combine(foldersBySize[checkFolderNumber + relativeFatness], fileName);
+                File.Copy(image1, newFolderLocation);
+            }
+
+            await message.Channel.SendMessageAsync("Thanks for voting! Laura's cutefats folder has been updated.");
         }
 
         private async Task Fatty(SocketMessage message, string[] args)

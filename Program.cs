@@ -20,6 +20,8 @@ namespace BigBeautifulBot
         public static BigBeautifulBot bbb;
         private static Timer _TickTimer;
 
+        public static Random MyRandom { get; } = new Random();
+
         static void Main(string[] args) => MainAsync(args).GetAwaiter().GetResult();
         static async Task MainAsync(string[] args)
         {
@@ -55,7 +57,7 @@ namespace BigBeautifulBot
                     bbb.Info.Weight -= config.WeightLossRate;
                 }
 
-                if(bbb.Info.Appetite < bbb.Info.Weight / config.WeightAppetiteRatio)
+                if (bbb.Info.Appetite < bbb.Info.Weight / config.WeightAppetiteRatio)
                 {
                     bbb.Info.Appetite += config.HungerRate;
                 }
@@ -86,8 +88,7 @@ namespace BigBeautifulBot
 
         public static string GetRandomElement(string[] array)
         {
-            var random = new Random();
-            return array[random.Next(array.Length)];
+            return array[MyRandom.Next(array.Length)];
         }
 
         public static string GetRandomFile(string dir)

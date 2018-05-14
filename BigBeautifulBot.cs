@@ -143,14 +143,14 @@ namespace BigBeautifulBot
                     //Move image 1 up/down
                     var fileName = Path.GetFileName(image1);
                     var newFolderLocation = Path.Combine(foldersBySize[target1], fileName);
-                    File.Copy(image1, newFolderLocation);
+                    File.Move(image1, newFolderLocation);
                 }
                 else if (foldersBySize.ContainsKey(target2))
                 {
                     //Move image 2 up/down
                     var fileName = Path.GetFileName(image2);
                     var newFolderLocation = Path.Combine(foldersBySize[target2], fileName);
-                    File.Copy(image2, newFolderLocation);
+                    File.Move(image2, newFolderLocation);
                 }
                 else
                 {

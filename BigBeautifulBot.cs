@@ -138,7 +138,7 @@ namespace BigBeautifulBot
                     var newFolderLocation = Path.Combine(foldersBySize[target1], fileName);
                     File.Copy(image1, newFolderLocation);
                 }
-                else if(foldersBySize.ContainsKey(target2))
+                else if (foldersBySize.ContainsKey(target2))
                 {
                     var newFolderLocation = Path.Combine(foldersBySize[target2], fileName);
                     File.Copy(image2, newFolderLocation);

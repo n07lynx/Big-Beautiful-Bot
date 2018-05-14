@@ -13,8 +13,6 @@ namespace BigBeautifulBot
 {
     public class BigBeautifulBot
     {
-        private const string tick = "✅";
-
         public BBBSettings Config { get; }
         public BBBInfo Info { get; }
         public FoodProcessor FoodProcessor { get; }
@@ -106,6 +104,7 @@ namespace BigBeautifulBot
 
         private async Task FatOrNot(SocketMessage message, string[] args)
         {
+            const string tick = "✅";
             var folders = Directory.GetDirectories(Config.GeneralSizesFolder);
             var foldersBySize = folders.ToDictionary(x => int.Parse(x.Split(' ').Last()), x => x);
             var checkFolderNumber = Program.MyRandom.Next(foldersBySize.Keys.Min(), foldersBySize.Keys.Max());
@@ -119,32 +118,37 @@ namespace BigBeautifulBot
 
             await message.Channel.SendMessageAsync($"Who's fatter?");
 
+            //Post the images and make the options obvious
             var message1 = await message.Channel.SendFileAsync(image1);
             var message2 = await message.Channel.SendFileAsync(image2);
-
             await message1.AddReactionAsync(new Discord.Emoji(tick));
             await message2.AddReactionAsync(new Discord.Emoji(tick));
 
+            //Wait 15 seconds for users to vote
             await Task.Delay(15000);
 
+            //Collect vote results
             var r1 = await message1.GetReactionUsersAsync(tick);
             var r2 = await message2.GetReactionUsersAsync(tick);
 
             if (r1.Count != r2.Count)
             {
                 var relativeFatness = r1.Count > r2.Count ? 1 : -1;
-                var fileName = Path.GetFileName(image1);
 
                 var target1 = checkFolderNumber + relativeFatness;
                 var target2 = checkFolderNumber - relativeFatness;
 
                 if (foldersBySize.ContainsKey(target1))
                 {
+                    //Move image up
+                    var fileName = Path.GetFileName(image1);
                     var newFolderLocation = Path.Combine(foldersBySize[target1], fileName);
                     File.Copy(image1, newFolderLocation);
                 }
                 else if (foldersBySize.ContainsKey(target2))
                 {
+                    //Move image down
+                    var fileName = Path.GetFileName(image2);
                     var newFolderLocation = Path.Combine(foldersBySize[target2], fileName);
                     File.Copy(image2, newFolderLocation);
                 }

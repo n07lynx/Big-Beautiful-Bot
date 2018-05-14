@@ -129,8 +129,24 @@ namespace BigBeautifulBot
             {
                 var relativeFatness = r1.Count > r2.Count ? 1 : -1;
                 var fileName = Path.GetFileName(image1);
-                var newFolderLocation = Path.Combine(foldersBySize[checkFolderNumber + relativeFatness], fileName);
-                File.Copy(image1, newFolderLocation);
+
+                var target1 = checkFolderNumber + relativeFatness;
+                var target2 = checkFolderNumber - relativeFatness;
+
+                if (foldersBySize.ContainsKey(target1))
+                {
+                    var newFolderLocation = Path.Combine(foldersBySize[target1], fileName);
+                    File.Copy(image1, newFolderLocation);
+                }
+                else if(foldersBySize.ContainsKey(target2))
+                {
+                    var newFolderLocation = Path.Combine(foldersBySize[target2], fileName);
+                    File.Copy(image2, newFolderLocation);
+                }
+                else
+                {
+                    throw new Exception("This shouldn't happen but I'm pretty stupid so I wouldn't put it past me.");
+                }
             }
 
             await message.Channel.SendMessageAsync("Thanks for voting! Laura's cutefats folder has been updated.");

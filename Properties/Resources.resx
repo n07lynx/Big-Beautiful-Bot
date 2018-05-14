@@ -240,4 +240,10 @@
   <data name="MentionGoodnight" xml:space="preserve">
     <value>Goodnight, {0}</value>
   </data>
+  <data name="UseErrorTooFewArgs" xml:space="preserve">
+    <value>:warning: Please specify an item (emoji).</value>
+  </data>
+  <data name="WeightConvertErrorTooFewArgs" xml:space="preserve">
+    <value>:warning: Please enter a weight in {0}.</value>
+  </data>
 </root>

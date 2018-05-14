@@ -83,7 +83,7 @@ namespace BigBeautifulBot
                     {
                         await message.Channel.SendMessageAsync(Resources.MentionWhoIs);
                     }
-                    else if(Regex.IsMatch(messageContent, @"(goodnight|'night)", RegexOptions.IgnoreCase))
+                    else if (Regex.IsMatch(messageContent, @"(goodnight|'night)", RegexOptions.IgnoreCase))
                     {
                         await message.Channel.SendMessageAsync(string.Format(Resources.MentionGoodnight, message.Author.Mention));
                     }
@@ -139,6 +139,12 @@ namespace BigBeautifulBot
 
         private async Task WeightConvert(SocketMessage message, string[] args, string inputUnits)
         {
+            if (!args.Any())
+            {
+                await message.Channel.SendMessageAsync(string.Format(Resources.WeightConvertErrorTooFewArgs, inputUnits));
+                return;
+            }
+
             const decimal kgLbConversionFactor = 0.453592M;
             var isKgs = inputUnits == "kgs";
             var isLbs = inputUnits == "lbs";
@@ -182,12 +188,18 @@ namespace BigBeautifulBot
 
         private async Task Use(SocketMessage message, string[] args)
         {
+            if (!args.Any())
+            {
+                await message.Channel.SendMessageAsync(Resources.UseErrorTooFewArgs);
+                return;
+            }
+
             var itemCode = args[0];
             if (itemCode == "⚖")//scales
             {
                 await Scales.PerformWeighIn(message);
             }
-            else if (itemCode == "<:makuactivate:438142523001667584>" && $"{message.Author.Username}#{message.Author.Discriminator}" == "FairyMaku#0920")
+            else if (itemCode == "<:makuactivate:438142523001667584>" && message.Author.Mention == "@FairyMaku#0920")
             {
                 var adminMessage = Console.ReadLine();
                 await message.Channel.SendMessageAsync(adminMessage);

@@ -164,7 +164,7 @@ namespace BigBeautifulBot
         private async Task Fatty(SocketMessage message, string[] args)
         {
             var client = new HttpClient();
-            var apiUrl = $"http://gelbooru.com/index.php?page=dapi&s=post&q=index&json=1&limit=100&tags=plump";
+            var apiUrl = $"http://gelbooru.com/index.php?page=dapi&s=post&q=index&json=1&limit=100&tags=fat female -1boy -fat_man -shota -loli";
             var rawJsonStream = await client.GetStreamAsync(apiUrl);
             var booruResults = JToken.ReadFrom(new JsonTextReader(new StreamReader(rawJsonStream)));
 

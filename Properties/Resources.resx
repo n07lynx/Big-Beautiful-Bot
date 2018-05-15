@@ -166,10 +166,10 @@
     <value>Ooh! Cupcake :grinning:</value>
   </data>
   <data name="UseCustard" xml:space="preserve">
-    <value>Aheh, this makes me feel quite full :sweat_smile:</value>
+    <value>Ooh my, I can really taste the calories :sweat_smile:</value>
   </data>
   <data name="UsePancake" xml:space="preserve">
-    <value>Err, I don't know what to say, but I'm hungry so I'm just going to eat this, thanks~</value>
+    <value>These look yum, thanks~</value>
   </data>
   <data name="UseScales" xml:space="preserve">
     <value>I weigh **{0}kgs**.</value>
@@ -208,7 +208,7 @@
     <value>I'd kill for a {0} ~</value>
   </data>
   <data name="AppetiteComment2" xml:space="preserve">
-    <value>Mm. I'm still a little bit hungry. Desert ~ ?</value>
+    <value>Mm. I'm still a little bit hungry. Dessert ~ ?</value>
   </data>
   <data name="AppetiteComment3" xml:space="preserve">
     <value>\*uwah\* I'm going to need to loosen some buttons here...</value>

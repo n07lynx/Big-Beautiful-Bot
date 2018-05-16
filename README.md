@@ -10,7 +10,7 @@ lori - returns a Lorielle
 fatfact - returns a fact about fatties  
 purin - returns a purin  
 fatty - returns a 'plump' tagged image from gelbooru  
+fatornot - plays a game where users vote for the fattest of two images (this will actually sort my cute fatties folder by size because I'm too lazy to do it myself)  
 
 Proposed Features:  
 rubbelly - return a picture of a fatty getting a belly rub?  
-fatornot - plays a game where users vote for the fattest of two images (this will actually sort my cute fatties folder by size because I'm too lazy to do it myself)

@@ -230,7 +230,7 @@ namespace BigBeautifulBot
 
         private async Task Piggy(SocketMessage message, string[] args)
         {
-            await message.Channel.SendMessageAsync(":pig2:");
+            await message.Channel.SendMessageAsync(Program.GetRandomElement(new string[] { ":pig2:", ":pig:", ":pig_nose:" }));
         }
 
         private async Task Feed(SocketMessage message, string[] args)

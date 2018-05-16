@@ -163,15 +163,23 @@ namespace BigBeautifulBot
 
         private async Task Fatty(SocketMessage message, string[] args)
         {
-            var client = new HttpClient();
+            var client = new HttpClient();//TODO: Keep client between calls?
             var apiUrl = $"http://gelbooru.com/index.php?page=dapi&s=post&q=index&json=1&limit=100&tags=fat female -1boy -fat_man -shota -loli";
-            var rawJsonStream = await client.GetStreamAsync(apiUrl);
-            var booruResults = JToken.ReadFrom(new JsonTextReader(new StreamReader(rawJsonStream)));
+            if (args.Any()) apiUrl += " " + args.Aggregate((x, y) => $"{x} {y}");
 
-            if (booruResults.Any())
+            var rawJsonStream = await client.GetStreamAsync(apiUrl);
+            var streamReader = new StreamReader(rawJsonStream);
+
+            JToken booruResults;
+            if (!streamReader.EndOfStream && (booruResults = JToken.ReadFrom(new JsonTextReader(streamReader))).Any())
             {
                 var randomFile = Program.GetRandomElement(booruResults.Select(x => (string)x["file_url"]).ToArray());
                 await message.Channel.SendMessageAsync(randomFile);
+            }
+            else
+            {
+                //No results
+                await message.Channel.SendMessageAsync(Resources.FattyErrorNoResults);
             }
         }
 

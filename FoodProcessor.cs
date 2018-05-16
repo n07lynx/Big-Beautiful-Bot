@@ -9,6 +9,8 @@ namespace BigBeautifulBot
 {
     public class FoodProcessor
     {
+        private string _LastAppetiteComment;
+
         private BigBeautifulBot _Bot;
 
         public FoodProcessor(BigBeautifulBot bot)
@@ -22,11 +24,23 @@ namespace BigBeautifulBot
 
             if (_Bot.Info.Appetite > Math.Sign(_Bot.Config.OverfeedLimit))
             {
+                //Apply affects
                 _Bot.Info.Weight += foodItem.WeightValue;
                 _Bot.Info.Appetite -= foodItem.WeightValue;
 
-                var responseText = foodItem.BotComment + '\n';
-                responseText += GetAppetiteComment(_Bot.Info.Appetite);
+                //Get response
+                var responseText = foodItem.BotComment;
+
+                //Append an appetite comment if there's a new one
+                var appetiteComment = GetAppetiteComment(_Bot.Info.Appetite);
+                if (_LastAppetiteComment != appetiteComment)
+                {
+                    responseText += '\n';
+                    responseText += appetiteComment;
+                    _LastAppetiteComment = appetiteComment;
+                }
+                
+                //Send reponse
                 await message.Channel.SendMessageAsync(responseText);
             }
             else

@@ -161,11 +161,15 @@ namespace BigBeautifulBot
             await message.Channel.SendMessageAsync("Thanks for voting! Maku's cutefats folder has been updated.");
         }
 
+        public string[] BooruSources = { $"http://gelbooru.com/index.php?page=dapi&s=post&q=index&json=1&limit=100&tags=", /*"https://e621.net/post/index.json?tags="*/ };
+        public string[] CommonTags = { "fat", "female", "-1boy", "-fat_man", "-shota", "-loli" };
+
         private async Task Fatty(SocketMessage message, string[] args)
         {
+            var tags = CommonTags.Concat(args);
             var client = new HttpClient();//TODO: Keep client between calls?
-            var apiUrl = $"http://gelbooru.com/index.php?page=dapi&s=post&q=index&json=1&limit=100&tags=fat female -1boy -fat_man -shota -loli";
-            if (args.Any()) apiUrl += " " + args.Aggregate((x, y) => $"{x} {y}");
+            client.DefaultRequestHeaders.Add("User-Agent", Program.client.CurrentUser.Username);
+            var apiUrl = Program.GetRandomElement(BooruSources) + tags.Aggregate((x, y) => $"{x}%20{y}");
 
             var rawJsonStream = await client.GetStreamAsync(apiUrl);
             var streamReader = new StreamReader(rawJsonStream);

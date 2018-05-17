@@ -161,7 +161,7 @@ namespace BigBeautifulBot
             await message.Channel.SendMessageAsync("Thanks for voting! Maku's cutefats folder has been updated.");
         }
 
-        public string[] BooruSources = { $"http://gelbooru.com/index.php?page=dapi&s=post&q=index&json=1&limit=100&tags=", /*"https://e621.net/post/index.json?tags="*/ };
+        public string[] BooruSources = { $"http://gelbooru.com/index.php?page=dapi&s=post&q=index&json=1&limit=100&tags=", /*"http://safebooru.org/index.php?page=dapi&s=post&q=index&json=1&limit=100&tags=",*/ /*"https://e621.net/post/index.json?tags="*/ };
         public string[] CommonTags = { "fat", "female", "-1boy", "-fat_man", "-shota", "-loli" };
 
         private async Task Fatty(SocketMessage message, string[] args)

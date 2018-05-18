@@ -161,7 +161,7 @@ namespace BigBeautifulBot
             await message.Channel.SendMessageAsync("Thanks for voting! Maku's cutefats folder has been updated.");
         }
 
-        public IBooruSource[] BooruSources = { new GelbooruSource() };
+        public BooruSourceBase[] BooruSources = { new GelbooruSource(), new SafebooruSource(), new e621Source() };
         public string[] CommonTags = { "fat", "female", "-1boy", "-fat_man", "-shota", "-loli" };
 
         private async Task Fatty(SocketMessage message, string[] args)

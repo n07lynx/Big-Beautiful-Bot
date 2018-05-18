@@ -161,23 +161,17 @@ namespace BigBeautifulBot
             await message.Channel.SendMessageAsync("Thanks for voting! Maku's cutefats folder has been updated.");
         }
 
-        public string[] BooruSources = { $"http://gelbooru.com/index.php?page=dapi&s=post&q=index&json=1&limit=100&tags=", /*"http://safebooru.org/index.php?page=dapi&s=post&q=index&json=1&limit=100&tags=",*/ /*"https://e621.net/post/index.json?tags="*/ };
+        public IBooruSource[] BooruSources = { new GelbooruSource() };
         public string[] CommonTags = { "fat", "female", "-1boy", "-fat_man", "-shota", "-loli" };
 
         private async Task Fatty(SocketMessage message, string[] args)
         {
             var tags = CommonTags.Concat(args);
-            var client = new HttpClient();//TODO: Keep client between calls?
-            client.DefaultRequestHeaders.Add("User-Agent", Program.client.CurrentUser.Username);
-            var apiUrl = Program.GetRandomElement(BooruSources) + tags.Aggregate((x, y) => $"{x}%20{y}");
-
-            var rawJsonStream = await client.GetStreamAsync(apiUrl);
-            var streamReader = new StreamReader(rawJsonStream);
-
-            JToken booruResults;
-            if (!streamReader.EndOfStream && (booruResults = JToken.ReadFrom(new JsonTextReader(streamReader))).Any())
+            var files = await BooruSources[0].Search(tags.ToArray());//Hardcoded to source 1
+            if (files.Any())
             {
-                var randomFile = Program.GetRandomElement(booruResults.Select(x => (string)x["file_url"]).ToArray());
+                //Send result to client
+                var randomFile = Program.GetRandomElement(files.ToArray());
                 await message.Channel.SendMessageAsync(randomFile);
             }
             else

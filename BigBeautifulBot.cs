@@ -267,7 +267,7 @@ namespace BigBeautifulBot
             {
                 await Scales.PerformWeighIn(message);
             }
-            else if (itemCode == "<:makuactivate:438142523001667584>" && message.Author.Mention == "@FairyMaku#0920")
+            else if (itemCode == "<:makuactivate:438142523001667584>" && message.Author.Mention == Program.TheCreator)
             {
                 var adminMessage = Console.ReadLine();
                 await message.Channel.SendMessageAsync(adminMessage);

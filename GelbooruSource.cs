@@ -24,8 +24,9 @@ namespace BigBeautifulBot
             var requestString = SourceUri + tags.Aggregate((x, y) => $"{x}%20{y}");
             var resultStream = await client.GetStreamAsync(requestString);
             var streamReader = new StreamReader(resultStream);
+            if (streamReader.EndOfStream) return new string[0];
             var resultsObject = await JToken.ReadFromAsync(new JsonTextReader(streamReader));
-            return resultsObject.Select(x => x["file_url"]).Cast<string>();
+            return resultsObject.Select(x => (string)x["file_url"]);
         }
     }
 }

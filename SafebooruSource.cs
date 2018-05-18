@@ -15,7 +15,7 @@ namespace BigBeautifulBot
 
         public override string GetFileUriFromToken(JToken token)
         {
-            return Path.Combine("http://safebooru.org/", (string)token["file_url"]);
+            return Path.Combine("http://safebooru.org/images/", (string)token["directory"], (string)token["image"]);
         }
     }
 }

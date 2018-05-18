@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 using System.Net.Http;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
 
 namespace BigBeautifulBot
 {
@@ -161,13 +162,22 @@ namespace BigBeautifulBot
             await message.Channel.SendMessageAsync("Thanks for voting! Maku's cutefats folder has been updated.");
         }
 
-        public BooruSourceBase[] BooruSources = { new GelbooruSource(), new SafebooruSource(), new e621Source() };
+        private const string sourceREgex = @"\(.*\)";
+        public Dictionary<string, BooruSourceBase> BooruSources = new Dictionary<string, BooruSourceBase>(StringComparer.CurrentCultureIgnoreCase) { { "gelbooru", new GelbooruSource() }, { "safebooru", new SafebooruSource() }, { "e621", new e621Source() } };
         public string[] CommonTags = { "fat", "female", "-1boy", "-fat_man", "-shota", "-loli" };
 
         private async Task Fatty(SocketMessage message, string[] args)
         {
-            var tags = CommonTags.Concat(args);
-            var files = await BooruSources[0].Search(tags.ToArray());//Hardcoded to source 1
+            var inSources = args.Where(x => Regex.IsMatch(x, sourceREgex));
+            var inTags = args.Where(x => !Regex.IsMatch(x, sourceREgex));
+            var tags = CommonTags.Concat(inTags);
+
+            List<string> files = new List<string>();
+            foreach (var source in inSources)
+            {
+                files.AddRange(await BooruSources[source.Trim('(', ')')].Search(tags.ToArray()));
+            }
+
             if (files.Any())
             {
                 //Send result to client

@@ -249,4 +249,7 @@
   <data name="WeightConvertErrorTooFewArgs" xml:space="preserve">
     <value>:warning: Please enter a weight in {0}.</value>
   </data>
+  <data name="FattyErrorUnknownSource" xml:space="preserve">
+    <value>:warning: Unknown image source: {0}.</value>
+  </data>
 </root>

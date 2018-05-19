@@ -175,7 +175,17 @@ namespace BigBeautifulBot
             List<string> files = new List<string>();
             foreach (var source in inSources)
             {
-                files.AddRange(await BooruSources[source.Trim('(', ')')].Search(tags.ToArray()));
+                var sourceKey = source.Trim('(', ')');
+                BooruSourceBase booruSource;
+                if (BooruSources.TryGetValue(sourceKey, out booruSource))
+                {
+                    files.AddRange(await booruSource.Search(tags.ToArray()));
+                }
+                else
+                {
+                    await message.Channel.SendMessageAsync(string.Format(Resources.FattyErrorUnknownSource, sourceKey));
+                    return;
+                }
             }
 
             if (files.Any())

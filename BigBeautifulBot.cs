@@ -96,6 +96,14 @@ namespace BigBeautifulBot
                         await message.Channel.SendMessageAsync(Resources.MentionUnknown);
                     }
                 }
+
+                if(message.Author.ToString() == "lazorchef#3920" && message.Channel.Name == "oc" && message.Attachments.Any())//WAIFU DETECTION SYSTEM
+                {
+                    await message.Channel.SendMessageAsync($":satellite: W.D.S. (WAIFU DETECTION SYSTEM) ACTIVATED :satellite:\n:incoming_envelope: Notifying The Creator (@{Program.TheCreator})...");
+                    Console.Beep();
+                    Console.WriteLine("CHECK THE SERVER, LORIELLE COULD HAVE BEEN POSTED!");
+                    Console.Beep();
+                }
             }
             catch (Exception ex)
             {
@@ -291,7 +299,7 @@ namespace BigBeautifulBot
             {
                 await Scales.PerformWeighIn(message);
             }
-            else if (itemCode == "<:makuactivate:438142523001667584>" && message.Author.Mention == Program.TheCreator)
+            else if (itemCode == "<:makuactivate:438142523001667584>" && message.Author.ToString() == Program.TheCreator)
             {
                 var adminMessage = Console.ReadLine();
                 await message.Channel.SendMessageAsync(adminMessage);

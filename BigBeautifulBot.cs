@@ -162,15 +162,19 @@ namespace BigBeautifulBot
             await message.Channel.SendMessageAsync("Thanks for voting! Maku's cutefats folder has been updated.");
         }
 
-        private const string sourceREgex = @"\(.*\)";
+        private const string sourceRegex = @"\(.*\)";
         public Dictionary<string, BooruSourceBase> BooruSources = new Dictionary<string, BooruSourceBase>(StringComparer.CurrentCultureIgnoreCase) { { "gelbooru", new GelbooruSource() }, { "safebooru", new SafebooruSource() }, { "e621", new e621Source() } };
         public string[] CommonTags = { "fat", "female", "-1boy", "-fat_man", "-shota", "-loli" };
 
         private async Task Fatty(SocketMessage message, string[] args)
         {
-            var inSources = args.Where(x => Regex.IsMatch(x, sourceREgex));
-            var inTags = args.Where(x => !Regex.IsMatch(x, sourceREgex));
+            //Build tag list
+            var inTags = args.Where(x => !Regex.IsMatch(x, sourceRegex));
             var tags = CommonTags.Concat(inTags);
+
+            //Determine sources
+            var inSources = args.Where(x => Regex.IsMatch(x, sourceRegex)).ToList();
+            if (!inSources.Any()) inSources.Add(Config.DefaultImageSource);
 
             List<string> files = new List<string>();
             foreach (var source in inSources)

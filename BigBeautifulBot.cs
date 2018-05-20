@@ -21,7 +21,8 @@ namespace BigBeautifulBot
 
         //Put in info?
         public decimal MaxAppetite => Info.Weight / Config.WeightAppetiteRatio;
-        public bool IsOverfed => Info.Appetite < -Math.Abs(Config.OverfeedLimit);
+        public decimal WellFormedOverfeedLimit => -Math.Abs(Config.OverfeedLimit);
+        public bool IsOverfed => Info.Appetite < WellFormedOverfeedLimit;
 
         //Booru stuff
         private const string sourceRegex = @"^\(\S+\)$";

@@ -103,10 +103,11 @@ namespace BigBeautifulBot
         {
             var tileCount = fraction * 10;
             var result = string.Empty;
-            for (var i = 0; i < tileCount; i++)
+            for (var i = bbb.WellFormedOverfeedLimit; i < tileCount; i++)
             {
                 //TODO: Reverse gradient option
-                if (i < (1 / 3 * 10)) result += ":green_heart:";
+                if (i < 0) result += ":black_heart:";
+                else if (i < (1 / 3 * 10)) result += ":green_heart:";
                 else if (i < (2 / 3 * 10)) result += ":yellow_heart:";
                 else result += ":heart:";
             }

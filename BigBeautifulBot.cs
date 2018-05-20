@@ -104,7 +104,7 @@ namespace BigBeautifulBot
                     {
                         await message.Channel.SendMessageAsync(string.Format(Resources.MentionGoodnight, message.Author.Mention));
                     }
-                    else if (Regex.IsMatch(messageContent, @"you('?)re( a)?[^\.]*(fat|pork|glutton|chubby|pig)", RegexOptions.IgnoreCase))
+                    else if (Regex.IsMatch(messageContent, @"you('?| a)re( a)?[^\.]*(fat|pork|glutton|chubby|pig)", RegexOptions.IgnoreCase))
                     {
                         await message.Channel.SendMessageAsync(Resources.MentionBully);
                     }

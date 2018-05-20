@@ -58,7 +58,7 @@ namespace BigBeautifulBot
                     bbb.Info.Weight -= config.WeightLossRate;
                 }
 
-                if (bbb.Info.Appetite < bbb.Info.Weight / config.WeightAppetiteRatio)
+                if (bbb.Info.Appetite < bbb.MaxAppetite)
                 {
                     bbb.Info.Appetite += config.HungerRate;
                 }
@@ -97,6 +97,20 @@ namespace BigBeautifulBot
             var files = Directory.GetFiles(dir);
             var file = GetRandomElement(files);
             return file;
+        }
+
+        internal static string GenerateStatusBar(decimal fraction)
+        {
+            var tileCount = fraction * 10;
+            var result = string.Empty;
+            for (var i = 0; i < tileCount; i++)
+            {
+                //TODO: Reverse gradient option
+                if (i < (1 / 3 * 10)) result += ":green_heart:";
+                else if (i < (2 / 3 * 10)) result += ":yellow_heart:";
+                else result += ":heart:";
+            }
+            return result;
         }
     }
 }

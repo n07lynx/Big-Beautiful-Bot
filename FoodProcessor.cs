@@ -22,7 +22,11 @@ namespace BigBeautifulBot
         {
             var foodItem = Definitions[itemCode];
 
-            if (_Bot.Info.Appetite > Math.Sign(_Bot.Config.OverfeedLimit))
+            if (_Bot.IsOverfed)
+            {
+                await message.Channel.SendMessageAsync(Resources.OverfedComment);
+            }
+            else
             {
                 //Apply affects
                 _Bot.Info.Weight += foodItem.WeightValue;
@@ -39,13 +43,9 @@ namespace BigBeautifulBot
                     responseText += appetiteComment;
                     _LastAppetiteComment = appetiteComment;
                 }
-                
+
                 //Send reponse
                 await message.Channel.SendMessageAsync(responseText);
-            }
-            else
-            {
-                await message.Channel.SendMessageAsync(Resources.OverfedComment);
             }
         }
 

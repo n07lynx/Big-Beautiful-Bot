@@ -19,6 +19,15 @@ namespace BigBeautifulBot
         public FoodProcessor FoodProcessor { get; }
         public Scales Scales { get; }
 
+        //Put in info?
+        public decimal MaxAppetite => Info.Weight / Config.WeightAppetiteRatio;
+        public bool IsOverfed => Info.Appetite < Math.Sign(Config.OverfeedLimit);
+
+        //Booru stuff
+        private const string sourceRegex = @"^\(\S+\)$";
+        public Dictionary<string, BooruSourceBase> BooruSources = new Dictionary<string, BooruSourceBase>(StringComparer.CurrentCultureIgnoreCase) { { "gelbooru", new GelbooruSource() }, { "safebooru", new SafebooruSource() }, { "e621", new e621Source() } };
+        public string[] CommonTags = { "fat", "female", "-1boy", "-fat_man", "-shota", "-loli" };
+
         public BigBeautifulBot(BBBSettings config)
         {
             Config = config;
@@ -74,6 +83,9 @@ namespace BigBeautifulBot
                         case "fatornot":
                             await FatOrNot(message, args);
                             return;
+                        case "status":
+                            await Status(message, args);
+                            return;
                     }
                 }
 
@@ -97,7 +109,7 @@ namespace BigBeautifulBot
                     }
                 }
 
-                if(message.Author.ToString() == "lazorchef#3920" && message.Channel.Name == "oc" && message.Attachments.Any())//WAIFU DETECTION SYSTEM
+                if (message.Author.ToString() == "lazorchef#3920" && message.Channel.Name == "oc" && message.Attachments.Any())//WAIFU DETECTION SYSTEM
                 {
                     await message.Channel.SendMessageAsync($":satellite: W.D.S. (WAIFU DETECTION SYSTEM) ACTIVATED :satellite:\n:incoming_envelope: Notifying The Creator (@{Program.TheCreator})...");
                     Console.Beep();
@@ -109,6 +121,14 @@ namespace BigBeautifulBot
             {
                 Console.WriteLine($"Error: {ex}");
             }
+        }
+
+        private async Task Status(SocketMessage message, string[] args)
+        {
+            var builder = new Discord.EmbedBuilder();
+            builder.AddInlineField(nameof(Info.Weight), Info.Weight);
+            builder.AddInlineField(nameof(Info.Appetite), IsOverfed ? ":heartpulse: __OVERFED__ :heartpulse:" : Program.GenerateStatusBar(Info.Appetite / MaxAppetite));
+            await message.Channel.SendMessageAsync("**Current Status**", false, builder.Build());
         }
 
         private async Task FatOrNot(SocketMessage message, string[] args)
@@ -169,10 +189,6 @@ namespace BigBeautifulBot
 
             await message.Channel.SendMessageAsync("Thanks for voting! Maku's cutefats folder has been updated.");
         }
-
-        private const string sourceRegex = @"^\(\S+\)$";
-        public Dictionary<string, BooruSourceBase> BooruSources = new Dictionary<string, BooruSourceBase>(StringComparer.CurrentCultureIgnoreCase) { { "gelbooru", new GelbooruSource() }, { "safebooru", new SafebooruSource() }, { "e621", new e621Source() } };
-        public string[] CommonTags = { "fat", "female", "-1boy", "-fat_man", "-shota", "-loli" };
 
         private async Task Fatty(SocketMessage message, string[] args)
         {

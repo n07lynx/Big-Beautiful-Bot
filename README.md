@@ -9,8 +9,6 @@ kgs <kgs> - returns a weight in freedom units
 lori - returns a Lorielle  
 fatfact - returns a fact about fatties  
 purin - returns a purin  
-fatty - returns a 'plump' tagged image from gelbooru  
+fatty - returns an fatty image from various sources, you can specify a source with round brackets (e.g. (gelbooru)) and you can specify tags by writing them after the command separated with spaces  
 fatornot - plays a game where users vote for the fattest of two images (this will actually sort my cute fatties folder by size because I'm too lazy to do it myself)  
-
-Proposed Features:  
-rubbelly - return a picture of a fatty getting a belly rub?  
+use <emoji> - uses the emoji for something, she'll probably eat it  

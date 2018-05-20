@@ -126,7 +126,7 @@ namespace BigBeautifulBot
         private async Task Status(SocketMessage message, string[] args)
         {
             var builder = new Discord.EmbedBuilder();
-            builder.AddInlineField(nameof(Info.Weight), Info.Weight);
+            builder.AddInlineField(nameof(Info.Weight), $"{Info.Weight}kgs");
             builder.AddInlineField(nameof(Info.Appetite), IsOverfed ? ":heartpulse: __OVERFED__ :heartpulse:" : Program.GenerateStatusBar(Info.Appetite / MaxAppetite));
             await message.Channel.SendMessageAsync("**Current Status**", false, builder.Build());
         }

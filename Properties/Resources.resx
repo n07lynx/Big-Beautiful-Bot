@@ -252,4 +252,10 @@
   <data name="FattyErrorUnknownSource" xml:space="preserve">
     <value>:warning: Unknown image source: {0}.</value>
   </data>
+  <data name="MentionBully" xml:space="preserve">
+    <value>;w; no bulli</value>
+  </data>
+  <data name="MentionThatsRight" xml:space="preserve">
+    <value>Absolutely!</value>
+  </data>
 </root>

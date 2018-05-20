@@ -104,6 +104,14 @@ namespace BigBeautifulBot
                     {
                         await message.Channel.SendMessageAsync(string.Format(Resources.MentionGoodnight, message.Author.Mention));
                     }
+                    else if (Regex.IsMatch(messageContent, @"you('?)re( a)?[^\.]*(fat|pork|glutton|chubby|pig)", RegexOptions.IgnoreCase))
+                    {
+                        await message.Channel.SendMessageAsync(Resources.MentionBully);
+                    }
+                    else if (Regex.IsMatch(messageContent, @"isn('?)t that right\?", RegexOptions.IgnoreCase) && message.Author.ToString() == Program.TheCreator)
+                    {
+                        await message.Channel.SendMessageAsync(Resources.MentionThatsRight);
+                    }
                     else
                     {
                         await message.Channel.SendMessageAsync(Resources.MentionUnknown);

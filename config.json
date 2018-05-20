@@ -6,7 +6,7 @@
 	"PurinFolder" : "D:\\Images\\Cutefats\\Purin\\",
 	"MinWeight" : 55,
 	"WeightLossRate" : 0.01,
-	"HungerRate" : 0.2,
+	"HungerRate" : 0.1,
 	"WeightAppetiteRatio" : 6,
 	"OverfeedLimit" : 3,
 	"TickInterval" : 60000,

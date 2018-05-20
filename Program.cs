@@ -101,14 +101,13 @@ namespace BigBeautifulBot
 
         internal static string GenerateStatusBar(decimal fraction)
         {
-            var tileCount = fraction * 10;
             var result = string.Empty;
-            for (var i = bbb.WellFormedOverfeedLimit; i < tileCount; i++)
+            for (var i = bbb.WellFormedOverfeedLimit; i < fraction; i += 0.1M)
             {
                 //TODO: Reverse gradient option
                 if (i < 0) result += ":black_heart:";
-                else if (i < (1 / 3 * 10)) result += ":green_heart:";
-                else if (i < (2 / 3 * 10)) result += ":yellow_heart:";
+                else if (i < 1 / 3) result += ":green_heart:";
+                else if (i < 2 / 3) result += ":yellow_heart:";
                 else result += ":heart:";
             }
             return result;

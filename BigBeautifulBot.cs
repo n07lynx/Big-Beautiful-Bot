@@ -170,7 +170,7 @@ namespace BigBeautifulBot
             await message.Channel.SendMessageAsync("Thanks for voting! Maku's cutefats folder has been updated.");
         }
 
-        private const string sourceRegex = @"\(.*\)";
+        private const string sourceRegex = @"^\(\S+\)$";
         public Dictionary<string, BooruSourceBase> BooruSources = new Dictionary<string, BooruSourceBase>(StringComparer.CurrentCultureIgnoreCase) { { "gelbooru", new GelbooruSource() }, { "safebooru", new SafebooruSource() }, { "e621", new e621Source() } };
         public string[] CommonTags = { "fat", "female", "-1boy", "-fat_man", "-shota", "-loli" };
 

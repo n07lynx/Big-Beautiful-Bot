@@ -92,25 +92,28 @@ namespace BigBeautifulBot
 
                 if (message.MentionedUsers.Any(x => x.Id == Program.client.CurrentUser.Id))//Mention
                 {
-                    if (Regex.IsMatch(messageContent, "hi|hello|hey", RegexOptions.IgnoreCase))
+                    if (message.Author.ToString() == Program.TheCreator)
+                    {
+                        if (Regex.IsMatch(messageContent, Resources.RegexThatsRight, RegexOptions.IgnoreCase))
+                        {
+                            await message.Channel.SendMessageAsync(Resources.MentionThatsRight);
+                        }
+                    }
+                    else if (Regex.IsMatch(messageContent, Resources.RegexGreeting, RegexOptions.IgnoreCase))
                     {
                         await message.Channel.SendMessageAsync(Resources.MentionGreeting);
                     }
-                    else if (Regex.IsMatch(messageContent, @"who('?)s a (good|cute) (little )?(fatty|porker|porkchop)\?", RegexOptions.IgnoreCase))
+                    else if (Regex.IsMatch(messageContent, Resources.RegexWhoIs, RegexOptions.IgnoreCase))
                     {
                         await message.Channel.SendMessageAsync(Resources.MentionWhoIs);
                     }
-                    else if (Regex.IsMatch(messageContent, @"goodnight|'night|お(やす|休)み", RegexOptions.IgnoreCase))
+                    else if (Regex.IsMatch(messageContent, Resources.RegexGoodnight, RegexOptions.IgnoreCase))
                     {
                         await message.Channel.SendMessageAsync(string.Format(Resources.MentionGoodnight, message.Author.Mention));
                     }
-                    else if (Regex.IsMatch(messageContent, @"you('?| a)re( a)?[^\.]*(fat|pork|glutton|chubby|pig)", RegexOptions.IgnoreCase))
+                    else if (Regex.IsMatch(messageContent, Resources.RegexBully, RegexOptions.IgnoreCase))
                     {
                         await message.Channel.SendMessageAsync(Resources.MentionBully);
-                    }
-                    else if (Regex.IsMatch(messageContent, @"isn('?)t that right\?", RegexOptions.IgnoreCase) && message.Author.ToString() == Program.TheCreator)
-                    {
-                        await message.Channel.SendMessageAsync(Resources.MentionThatsRight);
                     }
                     else
                     {

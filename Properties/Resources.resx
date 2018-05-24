@@ -258,4 +258,19 @@
   <data name="MentionThatsRight" xml:space="preserve">
     <value>Absolutely!</value>
   </data>
+  <data name="RegexBully" xml:space="preserve">
+    <value>you('?| a)re( a)?[^\.]*(fat|pork|glutton|chubby|pig)</value>
+  </data>
+  <data name="RegexGoodnight" xml:space="preserve">
+    <value>goodnight|'night|お(やす|休)み</value>
+  </data>
+  <data name="RegexGreeting" xml:space="preserve">
+    <value>hi|hello|hey</value>
+  </data>
+  <data name="RegexThatsRight" xml:space="preserve">
+    <value>isn('?)t that right\?</value>
+  </data>
+  <data name="RegexWhoIs" xml:space="preserve">
+    <value>who('?)s a (good|cute) (little )?(fatty|porker|porkchop)\?</value>
+  </data>
 </root>

@@ -336,9 +336,9 @@ namespace BigBeautifulBot
             {
                 await Lori(message, args);
             }
-            else if (FoodProcessor.Definitions.ContainsKey(itemCode))
+            else if (FoodProcessor.TryParseFoods(args, out var foods))
             {
-                await FoodProcessor.Consume(itemCode, message);
+                await FoodProcessor.Consume(foods, message);
             }
             else
             {

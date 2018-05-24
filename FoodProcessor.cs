@@ -18,35 +18,37 @@ namespace BigBeautifulBot
             _Bot = bot;
         }
 
-        internal async Task Consume(string itemCode, SocketMessage message)
+        internal async Task Consume(IEnumerable<FoodInfo> foodItems, SocketMessage message)
         {
-            var foodItem = Definitions[itemCode];
-
-            if (_Bot.IsOverfed)
+            foreach (var foodItem in foodItems)
             {
-                await message.Channel.SendMessageAsync(Resources.OverfedComment);
-            }
-            else
-            {
-                //Apply affects
-                _Bot.Info.Weight += foodItem.WeightValue;
-                _Bot.Info.Appetite -= foodItem.WeightValue;
-
-                //Get response
-                var responseText = foodItem.BotComment;
-
-                //Append an appetite comment if there's a new one
-                var appetiteComment = GetAppetiteComment(_Bot.Info.Appetite);
-                if (_LastAppetiteComment != appetiteComment)
+                if (_Bot.IsOverfed)
                 {
-                    responseText += '\n';
-                    responseText += appetiteComment;
-                    _LastAppetiteComment = appetiteComment;
+                    await message.Channel.SendMessageAsync(Resources.OverfedComment);
+                    return;
                 }
-
-                //Send reponse
-                await message.Channel.SendMessageAsync(responseText);
+                else
+                {
+                    //Apply affects
+                    _Bot.Info.Weight += foodItem.WeightValue;
+                    _Bot.Info.Appetite -= foodItem.WeightValue;
+                }
             }
+
+            //Get response
+            var responseText = foodItems.Last().BotComment;
+
+            //Append an appetite comment if there's a new one
+            var appetiteComment = GetAppetiteComment(_Bot.Info.Appetite);
+            if (_LastAppetiteComment != appetiteComment)
+            {
+                responseText += '\n';
+                responseText += appetiteComment;
+                _LastAppetiteComment = appetiteComment;
+            }
+
+            //Send reponse
+            await message.Channel.SendMessageAsync(responseText);
         }
 
         private string GetAppetiteComment(decimal appetite)
@@ -163,5 +165,30 @@ namespace BigBeautifulBot
             { "🥤", new FoodInfo(0.1M, Resources.UseFoodUnknown) },
             { "<:cupcake:409416270534934529>", new FoodInfo(0.15M, Resources.UseCupcake) },
         };
+
+        internal bool TryParseFoods(string[] args, out List<FoodInfo> foods)
+        {
+            foods = new List<FoodInfo>();
+            foreach (var arg in args)
+            {
+                var stringLeft = arg;
+                do
+                {
+                    var ok = false;
+                    foreach (var food in Definitions)
+                    {
+                        if (stringLeft.StartsWith(food.Key, StringComparison.InvariantCultureIgnoreCase))
+                        {
+                            stringLeft = stringLeft.Substring(food.Key.Length);
+                            foods.Add(food.Value);
+                            ok = true;
+                        }
+                    }
+
+                    if (!ok) return ok;
+                } while (stringLeft.Length > 0);
+            }
+            return true;
+        }
     }
 }

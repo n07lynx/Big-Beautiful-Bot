@@ -92,14 +92,21 @@ namespace BigBeautifulBot
 
                 if (message.MentionedUsers.Any(x => x.Id == Program.client.CurrentUser.Id))//Mention
                 {
-                    if (message.Author.ToString() == Program.TheCreator)
+                    if (message.Author.ToString() == Program.TheCreator)//Admin instructions
                     {
+                        var adminResponse = true;
                         if (Regex.IsMatch(messageContent, Resources.RegexThatsRight, RegexOptions.IgnoreCase))
                         {
                             await message.Channel.SendMessageAsync(Resources.MentionThatsRight);
                         }
+                        else
+                        {
+                            adminResponse = false;
+                        }
+                        if (adminResponse) return;
                     }
-                    else if (Regex.IsMatch(messageContent, Resources.RegexGreeting, RegexOptions.IgnoreCase))
+
+                    if (Regex.IsMatch(messageContent, Resources.RegexGreeting, RegexOptions.IgnoreCase))
                     {
                         await message.Channel.SendMessageAsync(Resources.MentionGreeting);
                     }

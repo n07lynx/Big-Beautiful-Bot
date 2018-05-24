@@ -121,7 +121,7 @@ namespace BigBeautifulBot
                     }
                 }
 
-                if (message.Author.ToString() == "lazorchef#3920" && message.Channel.Name == "oc" && message.Attachments.Any())//WAIFU DETECTION SYSTEM
+                if (message.Author.ToString() == Program.TheChef && message.Channel.Name == "oc" && message.Attachments.Any())//WAIFU DETECTION SYSTEM
                 {
                     await message.Channel.SendMessageAsync($":satellite: W.D.S. (WAIFU DETECTION SYSTEM) ACTIVATED :satellite:\n:incoming_envelope: Notifying The Creator (@{Program.TheCreator})...");
                     Console.Beep();

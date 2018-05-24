@@ -20,6 +20,7 @@ namespace BigBeautifulBot
         public static BigBeautifulBot bbb;
         private static Timer _TickTimer;
         internal const string TheCreator = "FairyMaku#0920";
+        public const string TheChef = "lazorchef#3920";
 
         public static Random MyRandom { get; } = new Random();
 

@@ -158,8 +158,8 @@ namespace BigBeautifulBot
 
             //Post the images and make the options obvious
             var message1 = await message.Channel.SendFileAsync(image1);
-            var message2 = await message.Channel.SendFileAsync(image2);
             await message1.AddReactionAsync(new Discord.Emoji(tick));
+            var message2 = await message.Channel.SendFileAsync(image2);
             await message2.AddReactionAsync(new Discord.Emoji(tick));
 
             //Wait 15 seconds for users to vote

@@ -110,8 +110,8 @@ namespace BigBeautifulBot
             {
                 //TODO: Reverse gradient option
                 if (isNeg) result += ":black_heart:";
-                else if (i < 1 / 3) result += ":green_heart:";
-                else if (i < 2 / 3) result += ":yellow_heart:";
+                else if (i < 1M / 3M) result += ":green_heart:";
+                else if (i < 2M / 3M) result += ":yellow_heart:";
                 else result += ":heart:";
             }
             return result;

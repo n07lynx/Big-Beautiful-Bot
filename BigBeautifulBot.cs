@@ -29,6 +29,14 @@ namespace BigBeautifulBot
         public Dictionary<string, BooruSourceBase> BooruSources = new Dictionary<string, BooruSourceBase>(StringComparer.CurrentCultureIgnoreCase) { { "gelbooru", new GelbooruSource() }, { "safebooru", new SafebooruSource() }, { "e621", new e621Source() } };
         public string[] CommonTags = { "fat", "female", "-1boy", "-fat_man", "-shota", "-loli" };
 
+        Dictionary<string, string> _ResponseMap = new Dictionary<string, string>
+                {
+                    { Resources.RegexGreeting, Resources.MentionGreeting },
+                    { Resources.RegexWhoIs, Resources.MentionWhoIs},
+                    { Resources.RegexGoodnight, Resources.MentionGoodnight },
+                    { Resources.RegexBully, Resources.MentionBully }
+                };
+
         public BigBeautifulBot(BBBSettings config)
         {
             Config = config;
@@ -45,7 +53,7 @@ namespace BigBeautifulBot
             try
             {
                 var messageContent = message.Content;
-                if (messageContent.StartsWith(Config.Prefix))//Command
+                if (messageContent.StartsWith(Config.Prefix))//Command (TODO: Move to a command processor class)
                 {
                     var components = new string(messageContent.Skip(Config.Prefix.Length).ToArray()).Trim().Split(' ');
                     var command = components.First().ToLower();
@@ -90,42 +98,33 @@ namespace BigBeautifulBot
                     }
                 }
 
-                if (message.MentionedUsers.Any(x => x.Id == Program.client.CurrentUser.Id))//Mention
+                if (message.MentionedUsers.Any(x => x.Id == Program.client.CurrentUser.Id))//Mention (TODO: Move to a language parser class)
                 {
                     if (message.Author.ToString() == Program.TheCreator)//Admin instructions
                     {
-                        var adminResponse = true;
                         if (Regex.IsMatch(messageContent, Resources.RegexThatsRight, RegexOptions.IgnoreCase))
                         {
                             await message.Channel.SendMessageAsync(Resources.MentionThatsRight);
+                            return;
                         }
-                        else
+                        else if (Regex.IsMatch(messageContent, Resources.RegexFalseAlarm, RegexOptions.IgnoreCase))
                         {
-                            adminResponse = false;
+                            await message.Channel.SendMessageAsync(Resources.MentionFalseAlarm);
+                            return;
                         }
-                        if (adminResponse) return;
                     }
 
-                    if (Regex.IsMatch(messageContent, Resources.RegexGreeting, RegexOptions.IgnoreCase))
+                    foreach (var response in _ResponseMap) //Regular mention request/responses
                     {
-                        await message.Channel.SendMessageAsync(Resources.MentionGreeting);
+                        if (Regex.IsMatch(messageContent, response.Key, RegexOptions.IgnoreCase))
+                        {
+                            await message.Channel.SendMessageAsync(string.Format(response.Value, message.Author.Mention));
+                            return;
+                        }
                     }
-                    else if (Regex.IsMatch(messageContent, Resources.RegexWhoIs, RegexOptions.IgnoreCase))
-                    {
-                        await message.Channel.SendMessageAsync(Resources.MentionWhoIs);
-                    }
-                    else if (Regex.IsMatch(messageContent, Resources.RegexGoodnight, RegexOptions.IgnoreCase))
-                    {
-                        await message.Channel.SendMessageAsync(string.Format(Resources.MentionGoodnight, message.Author.Mention));
-                    }
-                    else if (Regex.IsMatch(messageContent, Resources.RegexBully, RegexOptions.IgnoreCase))
-                    {
-                        await message.Channel.SendMessageAsync(Resources.MentionBully);
-                    }
-                    else
-                    {
-                        await message.Channel.SendMessageAsync(Resources.MentionUnknown);
-                    }
+
+                    //Fallback message
+                    await message.Channel.SendMessageAsync(Resources.MentionUnknown);
                 }
 
                 if (message.Author.ToString() == Program.TheChef && message.Channel.Name == "oc" && message.Attachments.Any())//WAIFU DETECTION SYSTEM

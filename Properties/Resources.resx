@@ -273,4 +273,10 @@
   <data name="RegexWhoIs" xml:space="preserve">
     <value>who('?)s a (good|cute) (little )?(fatty|porker|porkchop)\?</value>
   </data>
+  <data name="MentionFalseAlarm" xml:space="preserve">
+    <value>Standing down :mute:</value>
+  </data>
+  <data name="RegexFalseAlarm" xml:space="preserve">
+    <value>false alarm</value>
+  </data>
 </root>

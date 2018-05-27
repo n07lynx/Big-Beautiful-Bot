@@ -30,12 +30,13 @@ namespace BigBeautifulBot
         public string[] CommonTags = { "fat", "female", "-1boy", "-fat_man", "-shota", "-loli" };
 
         Dictionary<string, string> _ResponseMap = new Dictionary<string, string>
-                {
-                    { Resources.RegexGreeting, Resources.MentionGreeting },
-                    { Resources.RegexWhoIs, Resources.MentionWhoIs},
-                    { Resources.RegexGoodnight, Resources.MentionGoodnight },
-                    { Resources.RegexBully, Resources.MentionBully }
-                };
+        {
+            { Resources.RegexGreeting, Resources.MentionGreeting },
+            { Resources.RegexWhoIs, Resources.MentionWhoIs},
+            { Resources.RegexGoodnight, Resources.MentionGoodnight },
+            { Resources.RegexBully, Resources.MentionBully },
+            { Resources.RegexLove, Resources.MentionLove }
+        };
 
         public BigBeautifulBot(BBBSettings config)
         {

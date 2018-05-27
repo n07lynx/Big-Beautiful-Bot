@@ -279,4 +279,10 @@
   <data name="RegexFalseAlarm" xml:space="preserve">
     <value>false alarm</value>
   </data>
+  <data name="MentionLove" xml:space="preserve">
+    <value>I love you too, {0}!</value>
+  </data>
+  <data name="RegexLove" xml:space="preserve">
+    <value>I love (yo)?u</value>
+  </data>
 </root>

@@ -329,7 +329,7 @@ namespace BigBeautifulBot
             }
 
             var itemCode = args[0];
-            if (itemCode == "⚖")//scales
+            if (itemCode.Equals("⚖", StringComparison.InvariantCultureIgnoreCase))//scales
             {
                 await Scales.PerformWeighIn(message);
             }

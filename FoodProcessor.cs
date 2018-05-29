@@ -164,6 +164,7 @@ namespace BigBeautifulBot
             { "🥃", new FoodInfo(0.1M, Resources.UseFoodUnknown) },
             { "🥤", new FoodInfo(0.1M, Resources.UseFoodUnknown) },
             { "<:cupcake:409416270534934529>", new FoodInfo(0.15M, Resources.UseCupcake) },
+            { "<:labombe:450987114557865995>", new FoodInfo(2.8M, Resources.UseLabombe) }
         };
 
         internal bool TryParseFoods(string[] args, out List<FoodInfo> foods)

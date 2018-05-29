@@ -285,4 +285,7 @@
   <data name="RegexLove" xml:space="preserve">
     <value>I love (yo)?u</value>
   </data>
+  <data name="UseLabombe" xml:space="preserve">
+    <value>Oh my, that's a lot of butter :dizzy_face:</value>
+  </data>
 </root>

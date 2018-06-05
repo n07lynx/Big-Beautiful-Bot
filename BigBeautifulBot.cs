@@ -128,7 +128,7 @@ namespace BigBeautifulBot
                     await message.Channel.SendMessageAsync(Resources.MentionUnknown);
                 }
 
-                if (message.Author.ToString() == Program.TheChef && message.Channel.Name == "oc" && message.Attachments.Any())//WAIFU DETECTION SYSTEM
+                if (message.Author.ToString() == Program.TheChef && message.Channel.Name == "oc" && message.Attachments.Any(x => Regex.IsMatch(x.Filename, "discord", RegexOptions.IgnoreCase)))//WAIFU DETECTION SYSTEM
                 {
                     await message.Channel.SendMessageAsync($":satellite: W.D.S. (WAIFU DETECTION SYSTEM) ACTIVATED :satellite:\n:incoming_envelope: Notifying The Creator (@{Program.TheCreator})...");
                     Console.Beep();

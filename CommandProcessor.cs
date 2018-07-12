@@ -273,7 +273,7 @@ namespace BigBeautifulBot
             {
                 await Lori(message, args);
             }
-            else if (FoodProcessor.TryParseFoods(args, out var foods))
+            else if (_Bot.FoodProcessor.TryParseFoods(args, out var foods))
             {
                 await _Bot.FoodProcessor.Consume(foods, message);
             }

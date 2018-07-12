@@ -5,7 +5,7 @@ VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BigBeautifulBot", "BigBeautifulBot.csproj", "{8A2F76FE-8A2A-432C-BE1F-DEBC4BF429DB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BBB.Core", "BBB.Core\BBB.Core.csproj", "{8CB7476D-01D8-4594-BC06-8B6917CDF52E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BigBeautifulBot.Core", "BigBeautifulBot.Core.csproj", "{8CB7476D-01D8-4594-BC06-8B6917CDF52E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

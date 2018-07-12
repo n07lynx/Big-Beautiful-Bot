@@ -275,7 +275,7 @@ namespace BigBeautifulBot
             }
             else if (FoodProcessor.TryParseFoods(args, out var foods))
             {
-                await FoodProcessor.Consume(foods, message);
+                await _Bot.FoodProcessor.Consume(foods, message);
             }
             else
             {

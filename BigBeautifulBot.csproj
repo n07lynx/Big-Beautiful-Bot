@@ -121,6 +121,7 @@
     <Compile Include="BBBInfo.cs" />
     <Compile Include="BBBSettings.cs" />
     <Compile Include="BigBeautifulBot.cs" />
+    <Compile Include="CommandProcessor.cs" />
     <Compile Include="e621Source.cs" />
     <Compile Include="FoodInfo.cs" />
     <Compile Include="FoodProcessor.cs" />
@@ -133,6 +134,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="RequestProcessorBase.cs" />
     <Compile Include="SafebooruSource.cs" />
     <Compile Include="Scales.cs" />
   </ItemGroup>

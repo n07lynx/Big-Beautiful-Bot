@@ -5,6 +5,8 @@ VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BigBeautifulBot", "BigBeautifulBot.csproj", "{8A2F76FE-8A2A-432C-BE1F-DEBC4BF429DB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BBB.Core", "BBB.Core\BBB.Core.csproj", "{8CB7476D-01D8-4594-BC06-8B6917CDF52E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{8A2F76FE-8A2A-432C-BE1F-DEBC4BF429DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8A2F76FE-8A2A-432C-BE1F-DEBC4BF429DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8A2F76FE-8A2A-432C-BE1F-DEBC4BF429DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8CB7476D-01D8-4594-BC06-8B6917CDF52E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8CB7476D-01D8-4594-BC06-8B6917CDF52E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8CB7476D-01D8-4594-BC06-8B6917CDF52E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8CB7476D-01D8-4594-BC06-8B6917CDF52E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

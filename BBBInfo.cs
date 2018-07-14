@@ -10,6 +10,8 @@ namespace BigBeautifulBot
     {
         public static SQLiteConnection db;
 
+        public const string TheCreator = "FairyMaku#0920";
+
         public BBBInfo()
         {
             //Connect to database

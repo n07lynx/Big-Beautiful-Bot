@@ -1,8 +1,9 @@
 ﻿namespace BigBeautifulBot.Properties {
     using System;
     internal class Resources {
+        internal static readonly string ErrorAccessDenied = ":warning: You do not have access to this command!";
 
-  public static string FeedErrorTooFewArgs
+        public static string FeedErrorTooFewArgs
 {
  get => @":warning: Please specify your feedee!";
   }

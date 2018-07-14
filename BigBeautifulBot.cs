@@ -55,7 +55,7 @@ namespace BigBeautifulBot
                 if (message.MentionedUsers.Any(x => x.Id == Program.client.CurrentUser.Id))//Mention (TODO: Move to a language parser class)
                 {
                     var messageContent = message.Content;
-                    if (message.Author.ToString() == Program.TheCreator)//Admin instructions
+                    if (message.Author.ToString() == BBBInfo.TheCreator)//Admin instructions
                     {
                         if (Regex.IsMatch(messageContent, Resources.RegexThatsRight, RegexOptions.IgnoreCase))
                         {
@@ -84,7 +84,7 @@ namespace BigBeautifulBot
 
                 if (message.Author.ToString() == Program.TheChef && message.Channel.Name == "oc" && message.Attachments.Any(x => Regex.IsMatch(x.Filename, "discord", RegexOptions.IgnoreCase)))//WAIFU DETECTION SYSTEM
                 {
-                    await message.Channel.SendMessageAsync($":satellite: W.D.S. (WAIFU DETECTION SYSTEM) ACTIVATED :satellite:\n:incoming_envelope: Notifying The Creator (@{Program.TheCreator})...");
+                    await message.Channel.SendMessageAsync($":satellite: W.D.S. (WAIFU DETECTION SYSTEM) ACTIVATED :satellite:\n:incoming_envelope: Notifying The Creator (@{BBBInfo.TheCreator})...");
                     Console.Beep();
                     Console.WriteLine("CHECK THE SERVER, LORIELLE COULD HAVE BEEN POSTED!");
                     Console.Beep();

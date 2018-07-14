@@ -61,7 +61,22 @@ namespace BigBeautifulBot
                     case "status":
                         await Status(message, args);
                         return;
+                    case "name" :
+                        await Name(message, args);
+                        return;
                 }
+            }
+        }
+
+        private async Task Name(SocketMessage message, string[] args)
+        {
+            if(message.Author.ToString().Equals(BBBInfo.TheCreator))
+            {
+                await Program.client.CurrentUser.ModifyAsync(x => x.Username = args.Aggregate((y,z) => $"{y} {z}"));
+            }
+            else
+            {
+                await message.Channel.SendMessageAsync(Resources.ErrorAccessDenied);
             }
         }
 
@@ -264,7 +279,7 @@ namespace BigBeautifulBot
             {
                 await _Bot.Scales.PerformWeighIn(message);
             }
-            else if (itemCode == "<:makuactivate:438142523001667584>" && message.Author.ToString() == Program.TheCreator)
+            else if (itemCode == "<:makuactivate:438142523001667584>" && message.Author.ToString() == BBBInfo.TheCreator)
             {
                 var adminMessage = Console.ReadLine();
                 await message.Channel.SendMessageAsync(adminMessage);

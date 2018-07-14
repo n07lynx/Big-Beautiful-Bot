@@ -217,6 +217,5 @@ FakesAssemblies/
 **/*.Server/ModelManifest.xml
 _Pvt_Extensions
 
+# BBB database
 bbb\.db
-
-Properties/Resources\.Designer\.cs

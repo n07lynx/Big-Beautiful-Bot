@@ -19,7 +19,6 @@ namespace BigBeautifulBot
 
         public static BigBeautifulBot bbb;
         private static Timer _TickTimer;
-        internal const string TheCreator = "FairyMaku#0920";
         public const string TheChef = "lazorchef#3920";
 
         public static Random MyRandom { get; } = new Random();
@@ -74,12 +73,12 @@ namespace BigBeautifulBot
 
         private static async Task Client_LeftGuild(SocketGuild arg)
         {
-            Console.WriteLine($"Left: {arg.Name}");
+            await Task.Run(() => Console.WriteLine($"Left: {arg.Name}"));
         }
 
         private static async Task Client_JoinedGuild(SocketGuild arg)
         {
-            Console.WriteLine($"Joined: {arg.Name}");
+            await Task.Run(() => Console.WriteLine($"Joined: {arg.Name}"));
         }
 
         private static async Task Client_Ready()

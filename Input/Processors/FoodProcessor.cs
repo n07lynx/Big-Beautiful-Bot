@@ -7,15 +7,12 @@ using System.Linq;
 
 namespace BigBeautifulBot
 {
-    public class FoodProcessor
+    public class FoodProcessor : RequestProcessorBase
     {
         private string _LastAppetiteComment;
 
-        private BigBeautifulBot _Bot;
-
-        public FoodProcessor(BigBeautifulBot bot)
+        public FoodProcessor(BigBeautifulBot bot) : base(bot)
         {
-            _Bot = bot;
         }
 
         internal async Task Consume(IEnumerable<FoodInfo> foodItems, SocketMessage message)

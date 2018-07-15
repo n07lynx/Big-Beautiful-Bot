@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Discord.WebSocket;
 using BigBeautifulBot.Properties;
+using BigBeautifulBot.Input.Inputs;
 
 namespace BigBeautifulBot
 {
@@ -14,12 +15,12 @@ namespace BigBeautifulBot
             _Bot = bigBeautifulBot;
         }
 
-        internal async Task PerformWeighIn(SocketMessage message)
+        internal async Task PerformWeighIn(CommandInput message)
         {
             var weight = _Bot.Info.Weight;
             var response = string.Format(Resources.UseScales, weight) + '\n';
             response += GetWeightCommend(weight, true);
-            await message.Channel.SendMessageAsync(response);
+            await message.Respond(response);
         }
 
         public static string GetWeightCommend(decimal weight, bool self)

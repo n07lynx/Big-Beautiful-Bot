@@ -1,4 +1,5 @@
-﻿using BigBeautifulBot.Properties;
+﻿using BigBeautifulBot.Input.Inputs;
+using BigBeautifulBot.Properties;
 using Discord.WebSocket;
 using System;
 using System.Collections.Generic;
@@ -10,78 +11,70 @@ using System.Threading.Tasks;
 
 namespace BigBeautifulBot
 {
-    public class CommandProcessor : InputProcessorBase
+    public class CommandProcessor : InputProcessorBase<CommandInput>
     {
         public CommandProcessor(BigBeautifulBot bot) : base(bot)
         {
             Scales = new Scales(bot);
         }
 
-        public override async Task Process(SocketMessage message)
+        public override async Task Process(CommandInput message)
         {
-            var messageContent = message.Content;
-            if (messageContent.StartsWith(_Bot.Config.Prefix))
-            {
-                var components = new string(messageContent.Skip(_Bot.Config.Prefix.Length).ToArray()).Trim().Split(' ');
-                var command = components.First().ToLower();
-                var args = components.Skip(1).ToArray();
-
-                switch (command)
+                switch (message.CommandName)
                 {
                     case "use":
-                        await Use(message, args);
+                        await Use(message);
                         return;
                     case "help":
-                        await Help(message, args);
+                        await Help(message);
                         return;
                     case "feed":
-                        await Feed(message, args);
+                        await Feed(message);
                         return;
                     case "piggy":
-                        await Piggy(message, args);
+                        await Piggy(message);
                         return;
                     case "lbs":
                     case "kgs":
-                        await WeightConvert(message, args, command);
+                        await WeightConvert(message);
                         return;
                     case "lori":
-                        await Lori(message, args);
+                        await Lori(message);
                         return;
                     case "purin":
-                        await Purin(message, args);
+                        await Purin(message);
                         return;
                     case "fatfact":
-                        await FatFact(message, args);
+                        await FatFact(message);
                         return;
                     case "fatty":
-                        await Fatty(message, args);
+                        await Fatty(message);
                         return;
                     case "fatornot":
-                        await FatOrNot(message, args);
+                        await FatOrNot(message);
                         return;
                     case "status":
-                        await Status(message, args);
+                        await Status(message);
                         return;
                     case "name" :
-                        await Name(message, args);
+                        await Name(message);
                         return;
                 }
-            }
         }
 
-        private async Task Name(SocketMessage message, string[] args)
+        private async Task Name(CommandInput message)
         {
             if(message.Author.ToString().Equals(BBBInfo.TheCreator))
             {
-                await Program.client.CurrentUser.ModifyAsync(x => x.Username = args.Aggregate((y,z) => $"{y} {z}"));
+                await Program.client.CurrentUser.ModifyAsync(x => x.Username = message.Args.Aggregate((y,z) => $"{y} {z}"));
             }
             else
             {
-                await message.Channel.SendMessageAsync(Resources.ErrorAccessDenied);
+                await message.Respond(Resources.ErrorAccessDenied);
             }
         }
 
-        private async Task FatOrNot(SocketMessage message, string[] args)
+        private async Task FatOrNot(CommandInput command)
         {
             const string tick = "✅";
             var folders = Directory.GetDirectories(_Bot.Config.GeneralSizesFolder);
@@ -95,25 +88,25 @@ namespace BigBeautifulBot
             do image2 = Program.GetRandomFile(checkfolder);//TODO: Prevent infinite loop
             while (image1 == image2);
 
-            await message.Channel.SendMessageAsync($"Who's fatter?");
+            await command.Respond($"Who's fatter?");
 
             //Post the images and make the options obvious
-            var message1 = await message.Channel.SendFileAsync(image1);
-            await message1.AddReactionAsync(new Discord.Emoji(tick));
-            var message2 = await message.Channel.SendFileAsync(image2);
-            await message2.AddReactionAsync(new Discord.Emoji(tick));
+            var message1 = await command.FileRespond(image1);
+            await message1.AddScalarUI(tick);
+            var message2 = await command.FileRespond(image2);
+            await message2.AddScalarUI(tick);
 
             //Wait 15 seconds for users to vote
             await Task.Delay(15000);
 
             //Collect vote results
-            var r1 = await message1.GetReactionUsersAsync(tick);
-            var r2 = await message2.GetReactionUsersAsync(tick);
+            var r1 = await message1.GetScalarUI(tick);
+            var r2 = await message2.GetScalarUI(tick);
 
-            if (r1.Count != r2.Count)
+            if (r1 != r2)
             {
                 //Calculate the position to move the image to
-                var relativeFatness = r1.Count > r2.Count ? 1 : -1;
+                var relativeFatness = r1 > r2 ? 1 : -1;
                 var target1 = checkFolderNumber + relativeFatness;
                 var target2 = checkFolderNumber - relativeFatness;
 
@@ -137,36 +130,36 @@ namespace BigBeautifulBot
                 }
             }
 
-            await message.Channel.SendMessageAsync("Thanks for voting! Maku's cutefats folder has been updated.");
+            await command.Respond("Thanks for voting! Maku's cutefats folder has been updated.");
         }
 
-        private async Task WeightConvert(SocketMessage message, string[] args, string inputUnits)
+        private async Task WeightConvert(CommandInput command)
         {
-            if (!args.Any())
+            if (!command.Args.Any())
             {
-                await message.Channel.SendMessageAsync(string.Format(Resources.WeightConvertErrorTooFewArgs, inputUnits));
+                await command.Respond(string.Format(Resources.WeightConvertErrorTooFewArgs, command.CommandName));
                 return;
             }
 
             const decimal kgLbConversionFactor = 0.453592M;
-            var isKgs = inputUnits == "kgs";
-            var isLbs = inputUnits == "lbs";
-            var source = int.Parse(args[0]);
+            var isKgs = command.CommandName == "kgs";
+            var isLbs = command.CommandName == "lbs";
+            var source = int.Parse(command.Args[0]);
             var lbs = isKgs ? source / kgLbConversionFactor : source;
             var kgs = isLbs ? source * kgLbConversionFactor : source;
-            var response = $"{source}{inputUnits} is **";
+            var response = $"{source}{command.CommandName} is **";
             if (isLbs) response += $"{Math.Round(kgs, 2)}kgs";
             if (isKgs) response += $"{Math.Round(lbs, 2)}lbs";
             response += "**!";
-            await message.Channel.SendMessageAsync(response);
+            await command.Respond(response);
         }
 
-        private async Task Status(SocketMessage message, string[] args)
+        private async Task Status(CommandInput message)
         {
             var builder = new Discord.EmbedBuilder();
             builder.AddInlineField(nameof(_Bot.Info.Weight), $"{_Bot.Info.Weight}kgs");
             builder.AddInlineField(nameof(_Bot.Info.Appetite), _Bot.IsOverfed ? ":heartpulse: __OVERFED__ :heartpulse:" : Program.GenerateStatusBar(_Bot.Info.Appetite / _Bot.MaxAppetite));
-            await message.Channel.SendMessageAsync("**Current Status**", false, builder.Build());
+            await message.Message.Channel.SendMessageAsync("**Current Status**", false, builder.Build());
         }
 
 
@@ -178,14 +171,14 @@ namespace BigBeautifulBot
 
         public string[] CommonTags = { "fat", "female", "-1boy", "-fat_man", "-shota", "-loli" };
 
-        private async Task Fatty(SocketMessage message, string[] args)
+        private async Task Fatty(CommandInput command)
         {
             //Build tag list
-            var inTags = args.Where(x => !Regex.IsMatch(x, sourceRegex));
+            var inTags = command.Args.Where(x => !Regex.IsMatch(x, sourceRegex));
             var tags = CommonTags.Concat(inTags);
 
             //Determine sources
-            var inSources = args.Where(x => Regex.IsMatch(x, sourceRegex)).ToList();
+            var inSources = command.Args.Where(x => Regex.IsMatch(x, sourceRegex)).ToList();
             if (!inSources.Any()) inSources.Add(_Bot.Config.DefaultImageSource);
 
             List<string> files = new List<string>();
@@ -199,7 +192,7 @@ namespace BigBeautifulBot
                 }
                 else
                 {
-                    await message.Channel.SendMessageAsync(string.Format(Resources.FattyErrorUnknownSource, sourceKey));
+                    await command.Respond(string.Format(Resources.FattyErrorUnknownSource, sourceKey));
                     return;
                 }
             }
@@ -208,93 +201,111 @@ namespace BigBeautifulBot
             {
                 //Send result to client
                 var randomFile = Program.GetRandomElement(files.ToArray());
-                await message.Channel.SendMessageAsync(randomFile);
+                await command.Respond(randomFile);
             }
             else
             {
                 //No results
-                await message.Channel.SendMessageAsync(Resources.FattyErrorNoResults);
+                await command.Respond(Resources.FattyErrorNoResults);
             }
         }
 
-        private async Task FatFact(SocketMessage message, string[] args)
+        private async Task FatFact(CommandInput command)
         {
             var fact = await _Bot.Info.GetFatFact();
-            await message.Channel.SendMessageAsync(fact);
+            await command.Respond(fact);
         }
 
-        private async Task Purin(SocketMessage message, string[] args)
+        private async Task Purin(CommandInput command)
         {
-            using (message.Channel.EnterTypingState())
+            using (command.LoadingHandle)
             {
                 var file = Program.GetRandomFile(_Bot.Config.PurinFolder);
-                await message.Channel.SendFileAsync(file);
+                await command.Respond(file);
             }
         }
 
-        private async Task Lori(SocketMessage message, string[] args)
+        private async Task Lori(CommandInput command)
         {
-            using (message.Channel.EnterTypingState())
+            using (command.LoadingHandle)
             {
                 var file = Program.GetRandomFile(_Bot.Config.LorielleFolder);
-                await message.Channel.SendFileAsync(file);
+                await command.FileRespond(file);
             }
         }
 
-        private async Task Piggy(SocketMessage message, string[] args)
+        private async Task Piggy(CommandInput command)
         {
-            await message.Channel.SendMessageAsync(Program.GetRandomElement(new string[] { ":pig2:", ":pig:", ":pig_nose:" }));
+            await command.Respond(Program.GetRandomElement(new string[] { ":pig2:", ":pig:", ":pig_nose:" }));
         }
 
-        private async Task Feed(SocketMessage message, string[] args)
+        private async Task Feed(CommandInput command)
         {
-            if (args.Count() > 1)
+            if (command.Args.Count() > 1)
             {
-                await message.Channel.SendMessageAsync(Resources.FeedErrorTooManyArgs);
+                await command.Respond(Resources.FeedErrorTooManyArgs);
             }
-            else if (args.Count() < 1)
+            else if (!command.Args.Any())
             {
-                await message.Channel.SendMessageAsync(Resources.FeedErrorTooFewArgs);
+                await command.Respond(Resources.FeedErrorTooFewArgs);
             }
             else
             {
                 string file = Program.GetRandomFile(_Bot.Config.ProgFolder);
-                await message.Channel.SendFileAsync(file, $"{message.Author.Mention} fed {args[0]}");
+                await command.FileRespond(file, $"@{command.Author} fed {command.Args[0]}");
             }
         }
 
-        private async Task Help(SocketMessage message, string[] args)
+        private async Task Help(CommandInput message)
         {
             var readmeText = File.ReadAllText("README.md");
-            await message.Channel.SendMessageAsync(readmeText);
+            await message.Respond(readmeText);
         }
 
-        private async Task Use(SocketMessage message, string[] args)
+        public override bool TryParse(SocketMessage message, out IInput command)
         {
-            if (!args.Any())
+            var messageContent = message.Content;
+            if (messageContent.StartsWith(_Bot.Config.Prefix))
             {
-                await message.Channel.SendMessageAsync(Resources.UseErrorTooFewArgs);
+                var components = new string(messageContent.Skip(_Bot.Config.Prefix.Length).ToArray()).Trim().Split(' ');
+                var commandName = components.First().ToLower();
+                var args = components.Skip(1).ToArray();
+                command = new CommandInput(message) { CommandName = commandName, Args = args };
+                return true;
+            }
+            else
+            {
+                command = null;
+                return false;
+            }
+        }
+
+        private async Task Use(CommandInput command)
+        {
+            if (!command.Args.Any())
+            {
+                await command.Respond(Resources.UseErrorTooFewArgs);
                 return;
             }
 
-            var itemCode = args[0];
+            var itemCode = command.Args[0];
             if (itemCode.Equals("⚖", StringComparison.InvariantCultureIgnoreCase))//scales 
             {
-                await Scales.PerformWeighIn(message);
+                await Scales.PerformWeighIn(command);
             }
-            else if (itemCode == "<:makuactivate:438142523001667584>" && message.Author.ToString() == BBBInfo.TheCreator)
+            else if (itemCode == "<:makuactivate:438142523001667584>" && command.IsAdmin)
             {
                 var adminMessage = Console.ReadLine();
-                await message.Channel.SendMessageAsync(adminMessage);
+                await command.Respond(adminMessage);
             }
             else if (itemCode == "<:loreille:441422451541278721>")
             {
-                await Lori(message, args);
+                await Lori(command);
             }
             else
             {
                 Console.WriteLine($"Unknown ItemCode: {itemCode}");
-                await message.Channel.SendMessageAsync(Resources.UseUnknown);
+                await command.Respond(Resources.UseUnknown);
             }
 
             //Save any changes 

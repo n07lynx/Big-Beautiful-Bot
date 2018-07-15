@@ -2,18 +2,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using BigBeautifulBot.Input.Inputs;
 using BigBeautifulBot.Properties;
 using Discord.WebSocket;
 
 namespace BigBeautifulBot.Input.Processors
 {
-    public class LanguageProcessor : InputProcessorBase
+    public class LanguageProcessor : InputProcessorBase<StringInput>
     {
         public LanguageProcessor(BigBeautifulBot bot) : base(bot)
         {
         }
 
-   Dictionary<string, string> _ResponseMap = new Dictionary<string, string>
+        Dictionary<string, string> _ResponseMap = new Dictionary<string, string>
         {
             { Resources.RegexGreeting, Resources.MentionGreeting },
             { Resources.RegexWhoIs, Resources.MentionWhoIs},
@@ -22,36 +23,42 @@ namespace BigBeautifulBot.Input.Processors
             { Resources.RegexLove, Resources.MentionLove }
         };
 
-        public override async Task  Process(SocketMessage message)
+        public override async Task Process(StringInput message)
         {
-  if (message.MentionedUsers.Any(x => x.Id == Program.client.CurrentUser.Id))//Mention (TODO: Move to a language parser class)
+            if (message.TargetsMe/*  */)//Mention (TODO: Move to a language parser class)
+            {
+                if (message.IsAdmin)//Admin instructions
                 {
-                    var messageContent = message.Content;
-                    if (message.Author.ToString() == BBBInfo.TheCreator)//Admin instructions
+                    if (Regex.IsMatch(message.Text, Resources.RegexThatsRight, RegexOptions.IgnoreCase))
                     {
-                        if (Regex.IsMatch(messageContent, Resources.RegexThatsRight, RegexOptions.IgnoreCase))
-                        {
-                            await message.Channel.SendMessageAsync(Resources.MentionThatsRight);
-                            return;
-                        }
-                        else if (Regex.IsMatch(messageContent, Resources.RegexFalseAlarm, RegexOptions.IgnoreCase))
-                        {
-                            await message.Channel.SendMessageAsync(Resources.MentionFalseAlarm);
-                            return;
-                        }
+                        await message.Respond(Resources.MentionThatsRight);
+                        return;
                     }
-
-                    foreach (var response in _ResponseMap) //Regular mention request/responses
+                    else if (Regex.IsMatch(message.Text, Resources.RegexFalseAlarm, RegexOptions.IgnoreCase))
                     {
-                        if (Regex.IsMatch(messageContent, response.Key, RegexOptions.IgnoreCase))
-                        {
-                            await message.Channel.SendMessageAsync(string.Format(response.Value, message.Author.Mention));
-                            return;
-                        }
+                        await message.Respond(Resources.MentionFalseAlarm);
+                        return;
                     }
+                }
 
-                    //Fallback message
-                    await message.Channel.SendMessageAsync(Resources.MentionUnknown);
-                }        }
+                foreach (var response in _ResponseMap) //Regular mention request/responses
+                {
+                    if (Regex.IsMatch(message.Text, response.Key, RegexOptions.IgnoreCase))
+                    {
+                        await message.Respond(string.Format(response.Value, message.Author));
+                        return;
+                    }
+                }
+
+                //Fallback message
+                await message.Respond(Resources.MentionUnknown);
+            }
+        }
+
+        public override bool TryParse(SocketMessage message, out IInput input)
+        {
+            input = new StringInput(message);
+            return true;
+        }
     }
 }

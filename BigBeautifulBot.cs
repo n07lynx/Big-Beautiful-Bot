@@ -9,6 +9,7 @@ using System.Net.Http;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
+using BigBeautifulBot.Input.Processors;
 
 namespace BigBeautifulBot
 {
@@ -22,13 +23,13 @@ namespace BigBeautifulBot
         public decimal WellFormedOverfeedLimit => -Math.Abs(Config.OverfeedLimit);
         public bool IsOverfed => Info.Appetite < WellFormedOverfeedLimit;
 
-        private List<InputProcessorBase> Processors;
+        private List<IInputProcessor> Processors;
 
         public BigBeautifulBot(BBBSettings config)
         {
             Config = config;
             Info = new BBBInfo();
-            Processors = new List<InputProcessorBase> { new FoodProcessor(this), new CommandProcessor(this) };
+            Processors = new List<IInputProcessor> { new FoodProcessor(this), new CommandProcessor(this) };
         }
 
         internal async Task MessageReceived(SocketMessage message)
@@ -40,7 +41,10 @@ namespace BigBeautifulBot
             {
                 foreach (var processor in Processors)
                 {
-                    await processor.Process(message);
+                    if(processor.TryParse(message, out var input))
+                    {
+                        await processor.Process(input);
+                    }
                 }
 
                 if (message.Author.ToString() == Program.TheChef && message.Channel.Name == "oc" && message.Attachments.Any(x => Regex.IsMatch(x.Filename, "discord", RegexOptions.IgnoreCase)))//WAIFU DETECTION SYSTEM

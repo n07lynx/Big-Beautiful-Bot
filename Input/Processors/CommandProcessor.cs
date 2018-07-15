@@ -14,9 +14,8 @@ namespace BigBeautifulBot
     {
         public CommandProcessor(BigBeautifulBot bot) : base(bot)
         {
+            Scales = new Scales(bot);
         }
-
-     
 
         public override async Task Process(SocketMessage message)
         {
@@ -175,6 +174,8 @@ namespace BigBeautifulBot
         private const string sourceRegex = @"^\(\S+\)$";
         public Dictionary<string, BooruSourceBase> BooruSources = new Dictionary<string, BooruSourceBase>(StringComparer.CurrentCultureIgnoreCase) { { "gelbooru", new GelbooruSource() }, { "safebooru", new SafebooruSource() }, { "e621", new e621Source() } };
 
+        public Scales Scales { get; }
+
         public string[] CommonTags = { "fat", "female", "-1boy", "-fat_man", "-shota", "-loli" };
 
         private async Task Fatty(SocketMessage message, string[] args)
@@ -279,7 +280,7 @@ namespace BigBeautifulBot
             var itemCode = args[0];
             if (itemCode.Equals("⚖", StringComparison.InvariantCultureIgnoreCase))//scales 
             {
-                await _Bot.Scales.PerformWeighIn(message);
+                await Scales.PerformWeighIn(message);
             }
             else if (itemCode == "<:makuactivate:438142523001667584>" && message.Author.ToString() == BBBInfo.TheCreator)
             {
@@ -289,9 +290,6 @@ namespace BigBeautifulBot
             else if (itemCode == "<:loreille:441422451541278721>")
             {
                 await Lori(message, args);
-            }
-            else if (_Bot.FoodProcessor.TryParseFoods(args, out var foods))
-            {
             }
             else
             {

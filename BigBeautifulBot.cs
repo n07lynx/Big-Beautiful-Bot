@@ -16,24 +16,20 @@ namespace BigBeautifulBot
     {
         public BBBSettings Config { get; }
         public BBBInfo Info { get; }
-        public FoodProcessor FoodProcessor { get; }
-        public CommandProcessor CommandProcessor { get; }
-        public Scales Scales { get; }
 
         //Put in info?
         public decimal MaxAppetite => Info.Weight / Config.WeightAppetiteRatio;
         public decimal WellFormedOverfeedLimit => -Math.Abs(Config.OverfeedLimit);
         public bool IsOverfed => Info.Appetite < WellFormedOverfeedLimit;
 
+        private List<RequestProcessorBase> Processors;
      
 
         public BigBeautifulBot(BBBSettings config)
         {
             Config = config;
             Info = new BBBInfo();
-            FoodProcessor = new FoodProcessor(this);
-            Scales = new Scales(this);
-            CommandProcessor = new CommandProcessor(this);
+            Processors = new List<RequestProcessorBase> { new FoodProcessor(this), new CommandProcessor(this) } ;
         }
 
         internal async Task MessageReceived(SocketMessage message)
@@ -43,8 +39,10 @@ namespace BigBeautifulBot
 
             try
             {
-                await CommandProcessor.Process(message);
-                await FoodProcessor.Process(message);
+                foreach(var processor in Processors)
+                {
+                    await processor.Process(message);
+                }
 
                 if (message.Author.ToString() == Program.TheChef && message.Channel.Name == "oc" && message.Attachments.Any(x => Regex.IsMatch(x.Filename, "discord", RegexOptions.IgnoreCase)))//WAIFU DETECTION SYSTEM
                 {

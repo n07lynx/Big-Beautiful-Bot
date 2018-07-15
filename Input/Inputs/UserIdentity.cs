@@ -1,3 +1,4 @@
+using System.Net.Sockets;
 using Discord.WebSocket;
 
 namespace BigBeautifulBot.Input.Inputs
@@ -8,6 +9,13 @@ namespace BigBeautifulBot.Input.Inputs
         {
             UserName = user.ToString();
             SystemName = user.Mention;
+            IsAdmin = UserName == BBBInfo.TheCreator;
+        }
+
+        public UserIdentity(Socket connection)
+        {
+            UserName = connection.RemoteEndPoint.ToString();
+            SystemName = connection.RemoteEndPoint.ToString();
             IsAdmin = UserName == BBBInfo.TheCreator;
         }
 

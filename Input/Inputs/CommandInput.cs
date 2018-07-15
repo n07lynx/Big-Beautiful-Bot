@@ -6,7 +6,7 @@ namespace BigBeautifulBot.Input.Inputs
 {
     public class CommandInput : StringInput
     {
-        public CommandInput(SocketMessage message) : base (message)
+        public CommandInput(IMessage message) : base (message)
         {
         }
 

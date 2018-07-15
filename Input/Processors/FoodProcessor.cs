@@ -115,7 +115,7 @@ namespace BigBeautifulBot
             { "<:labombe:450987114557865995>", new FoodInfo(2.8M, Resources.UseLabombe) }
         };
 
-        public override bool TryParse(Discord.WebSocket.SocketMessage message, out IInput input)
+        public override bool TryParse(IMessage message, out IInput input)
         {
             var foods = new MealInput(message);
             input = foods;

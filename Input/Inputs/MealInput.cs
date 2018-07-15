@@ -11,7 +11,7 @@ namespace BigBeautifulBot.Input.Inputs
     {
         public List<FoodInfo> FoodContent = new List<FoodInfo>();
 
-        public MealInput(SocketMessage message) : base (message)
+        public MealInput(IMessage message) : base (message)
         {
         }
     }

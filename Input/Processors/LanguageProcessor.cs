@@ -56,7 +56,7 @@ namespace BigBeautifulBot.Input.Processors
             }
         }
 
-        public override bool TryParse(SocketMessage message, out IInput input)
+        public override bool TryParse(IMessage message, out IInput input)
         {
             input = new StringInput(message);
             return true;

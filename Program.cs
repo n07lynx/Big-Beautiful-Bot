@@ -9,6 +9,9 @@ using Newtonsoft.Json;
 using System.IO;
 using Newtonsoft.Json.Linq;
 using System.Threading;
+using System.Net.Sockets;
+using System.Net;
+using System.Text;
 
 namespace BigBeautifulBot
 {
@@ -39,14 +42,41 @@ namespace BigBeautifulBot
             client.Ready += Client_Ready;
             client.JoinedGuild += Client_JoinedGuild;
             client.LeftGuild += Client_LeftGuild;
-            client.MessageReceived += bbb.MessageReceived;
+            client.MessageReceived += Client_MessageReceived;
 
             //Login and start
             await client.LoginAsync(Discord.TokenType.Bot, config.Token);
             await client.StartAsync();
 
-            //Hold the program open indefinitely
-            await Task.Delay(-1);
+            //Setup socket client
+            var hostInfo = Dns.GetHostEntry(Dns.GetHostName());
+            var address = hostInfo.AddressList.First();
+            var endpoint = new IPEndPoint(address, 0);
+            var socket = new Socket(address.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+            socket.Bind(endpoint);
+            socket.Listen(10);
+
+            while(true)
+            {
+                var connection = socket.Accept();
+                var buffer = new byte[1024];
+                int receivedBytes;
+                string message = string.Empty;
+                while((receivedBytes = socket.Receive(buffer)) > 0)
+                {
+                    message += Encoding.Unicode.GetString(buffer, 0, receivedBytes);
+                }
+                var socketMessage = new Input.SocketMessage(connection);
+                await bbb.MessageReceived(socketMessage);
+                connection.Shutdown(SocketShutdown.Both);
+                connection.Close();
+            }
+        }
+
+        private async static Task Client_MessageReceived(SocketMessage arg)
+        {
+            var discordMessage = new DiscordMessageWrapper(arg);
+            await bbb.MessageReceived(discordMessage);
         }
 
         private static async void Tick(object state)

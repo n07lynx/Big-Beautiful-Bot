@@ -18,6 +18,6 @@ namespace BigBeautifulBot
 
         public async Task Process(IInput input) => await Process((T)input);
 
-        public abstract bool TryParse(SocketMessage message, out IInput input);
+        public abstract bool TryParse(IMessage message, out IInput input);
     }
 }

@@ -20,53 +20,53 @@ namespace BigBeautifulBot
 
         public override async Task Process(CommandInput message)
         {
-                switch (message.CommandName)
-                {
-                    case "use":
-                        await Use(message);
-                        return;
-                    case "help":
-                        await Help(message);
-                        return;
-                    case "feed":
-                        await Feed(message);
-                        return;
-                    case "piggy":
-                        await Piggy(message);
-                        return;
-                    case "lbs":
-                    case "kgs":
-                        await WeightConvert(message);
-                        return;
-                    case "lori":
-                        await Lori(message);
-                        return;
-                    case "purin":
-                        await Purin(message);
-                        return;
-                    case "fatfact":
-                        await FatFact(message);
-                        return;
-                    case "fatty":
-                        await Fatty(message);
-                        return;
-                    case "fatornot":
-                        await FatOrNot(message);
-                        return;
-                    case "status":
-                        await Status(message);
-                        return;
-                    case "name" :
-                        await Name(message);
-                        return;
-                }
+            switch (message.CommandName)
+            {
+                case "use":
+                    await Use(message);
+                    return;
+                case "help":
+                    await Help(message);
+                    return;
+                case "feed":
+                    await Feed(message);
+                    return;
+                case "piggy":
+                    await Piggy(message);
+                    return;
+                case "lbs":
+                case "kgs":
+                    await WeightConvert(message);
+                    return;
+                case "lori":
+                    await Lori(message);
+                    return;
+                case "purin":
+                    await Purin(message);
+                    return;
+                case "fatfact":
+                    await FatFact(message);
+                    return;
+                case "fatty":
+                    await Fatty(message);
+                    return;
+                case "fatornot":
+                    await FatOrNot(message);
+                    return;
+                case "status":
+                    await Status(message);
+                    return;
+                case "name":
+                    await Name(message);
+                    return;
+            }
         }
 
         private async Task Name(CommandInput message)
         {
-            if(message.Author.ToString().Equals(BBBInfo.TheCreator))
+            if (message.Author.ToString().Equals(BBBInfo.TheCreator))
             {
-                await Program.client.CurrentUser.ModifyAsync(x => x.Username = message.Args.Aggregate((y,z) => $"{y} {z}"));
+                await Program.client.CurrentUser.ModifyAsync(x => x.Username = message.Args.Aggregate((y, z) => $"{y} {z}"));
             }
             else
             {
@@ -156,10 +156,10 @@ namespace BigBeautifulBot
 
         private async Task Status(CommandInput message)
         {
-            var builder = new Discord.EmbedBuilder();
+            var builder = new Embed();
             builder.AddInlineField(nameof(_Bot.Info.Weight), $"{_Bot.Info.Weight}kgs");
             builder.AddInlineField(nameof(_Bot.Info.Appetite), _Bot.Info.IsOverfed ? ":heartpulse: __OVERFED__ :heartpulse:" : Program.GenerateStatusBar(_Bot.Info.Appetite / _Bot.Info.MaxAppetite));
-            await message.Message.Channel.SendMessageAsync("**Current Status**", false, builder.Build());
+            await message.Message.SendEmbedAsync("**Current Status**", false, builder.Build());
         }
 
 
@@ -262,7 +262,7 @@ namespace BigBeautifulBot
             await message.Respond(readmeText);
         }
 
-        public override bool TryParse(SocketMessage message, out IInput command)
+        public override bool TryParse(IMessage message, out IInput command)
         {
             var messageContent = message.Content;
             if (messageContent.StartsWith(_Bot.Config.Prefix))

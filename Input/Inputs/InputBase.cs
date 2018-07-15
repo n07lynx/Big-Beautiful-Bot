@@ -8,28 +8,28 @@ namespace BigBeautifulBot.Input.Inputs
     //TODO: Move discord-specific code into an interfaced wrapper
     public class InputBase : IInput
     {
-        public InputBase(SocketMessage message)
+        public InputBase(IMessage message)
         {
             Message = message;
-            Author = new UserIdentity(message.Author);
+            Author = message.Author;
         }
 
-        public SocketMessage Message { get; private set; }
+        public IMessage Message { get; private set; }
 
-        public bool TargetsMe => Message.MentionedUsers.Any(x => x.Id == Program.client.CurrentUser.Id);
+        public bool TargetsMe => Message.MentionedUsers.Any(x => x.SystemName == Program.client.CurrentUser.Mention);
 
         public UserIdentity Author {get;set;}
 
-        public IDisposable LoadingHandle => Message.Channel.EnterTypingState();
+        public IDisposable LoadingHandle => Message.LoadingHandle;
 
         public async Task Respond(string response)
         {
-            await Message.Channel.SendMessageAsync(response);
+            await Message.SendMessageAsync(response);
         }
 
         public async Task<OutputBase> FileRespond(string file, string text = null)
         {
-            return new OutputBase(await Message.Channel.SendFileAsync(file, text));
+            return new OutputBase(await Message.SendFileAsync(file, text));
         }
     }
 }

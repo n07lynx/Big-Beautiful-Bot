@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using BigBeautifulBot.Input.Inputs;
 using Discord.Rest;
@@ -19,25 +20,30 @@ namespace BigBeautifulBot
 
         public UserIdentity Author { get; }
 
-        public List<UserIdentity> MentionedUsers => throw new NotImplementedException();
+        public IDisposable LoadingHandle => DiscordSocketMessage.Channel.EnterTypingState();
 
-        public IDisposable LoadingHandle => throw new NotImplementedException();
+        public string Content => DiscordSocketMessage.Content;
 
-        public string Content => throw new NotImplementedException();
+        public bool TargetsMe => DiscordSocketMessage.MentionedUsers.Any(x => x.Id == Program.client.CurrentUser.Id);
 
-        public Task SendEmbedAsync(string v1, bool v2, object v3)
+        public async Task SendEmbedAsync(string v1, Embed v3)
         {
-            throw new NotImplementedException();
+            var builder = new Discord.EmbedBuilder();
+            foreach (var value in v3)
+            {
+                builder.AddInlineField(value.Key, value.Value);
+            }
+            await DiscordSocketMessage.Channel.SendMessageAsync(v1, false, builder.Build());
         }
 
-        public Task<RestUserMessage> SendFileAsync(string file, string text)
+        public async Task<RestUserMessage> SendFileAsync(string file, string text)
         {
-            throw new NotImplementedException();
+            return await DiscordSocketMessage.Channel.SendFileAsync(file, text);
         }
 
-        public Task SendMessageAsync(string response)
+        public async Task SendMessageAsync(string response)
         {
-            throw new NotImplementedException();
+            await DiscordSocketMessage.Channel.SendMessageAsync(response);
         }
     }
 }

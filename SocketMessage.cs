@@ -16,14 +16,14 @@ namespace BigBeautifulBot.Input
             Author = new UserIdentity(connection);
         }
 
-        public UserIdentity Author {get;}
+        public UserIdentity Author { get; }
         public string Content { get; internal set; }
-
-        public List<UserIdentity> MentionedUsers => throw new NotImplementedException();
 
         public IDisposable LoadingHandle => throw new NotImplementedException();
 
-        public Task SendEmbedAsync(string v1, bool v2, object v3)
+        public bool TargetsMe { get; } = true;
+
+        public Task SendEmbedAsync(string v1, Embed v3)
         {
             throw new NotImplementedException();
         }

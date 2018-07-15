@@ -156,10 +156,10 @@ namespace BigBeautifulBot
 
         private async Task Status(CommandInput message)
         {
-            var builder = new Embed();
-            builder.AddInlineField(nameof(_Bot.Info.Weight), $"{_Bot.Info.Weight}kgs");
-            builder.AddInlineField(nameof(_Bot.Info.Appetite), _Bot.Info.IsOverfed ? ":heartpulse: __OVERFED__ :heartpulse:" : Program.GenerateStatusBar(_Bot.Info.Appetite / _Bot.Info.MaxAppetite));
-            await message.Message.SendEmbedAsync("**Current Status**", false, builder.Build());
+            var embed = new Embed();
+            embed.Add(nameof(_Bot.Info.Weight), $"{_Bot.Info.Weight}kgs");
+            embed.Add(nameof(_Bot.Info.Appetite), _Bot.Info.IsOverfed ? ":heartpulse: __OVERFED__ :heartpulse:" : Program.GenerateStatusBar(_Bot.Info.Appetite / _Bot.Info.MaxAppetite));
+            await message.Message.SendEmbedAsync("**Current Status**", embed);
         }
 
 

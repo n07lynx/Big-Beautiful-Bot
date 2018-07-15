@@ -9,12 +9,11 @@ namespace BigBeautifulBot
     public interface IMessage
     {
         UserIdentity Author { get; }
-        List<UserIdentity> MentionedUsers { get; }
         IDisposable LoadingHandle { get; }
         string Content { get; }
-
+        bool TargetsMe { get; }
         Task SendMessageAsync(string response);
         Task<RestUserMessage> SendFileAsync(string file, string text);
-        Task SendEmbedAsync(string v1, bool v2, object v3);
+        Task SendEmbedAsync(string v1, Embed v3);
     }
 }

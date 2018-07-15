@@ -16,7 +16,7 @@ namespace BigBeautifulBot.Input.Inputs
 
         public IMessage Message { get; private set; }
 
-        public bool TargetsMe => Message.MentionedUsers.Any(x => x.SystemName == Program.client.CurrentUser.Mention);
+        public bool TargetsMe => Message.TargetsMe;
 
         public UserIdentity Author {get;set;}
 

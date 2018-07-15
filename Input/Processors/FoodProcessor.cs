@@ -119,8 +119,8 @@ namespace BigBeautifulBot
         {
             var foods = new MealInput(message);
             input = foods;
-            CommandInput command = null;
-            if (!default(CommandProcessor).TryParse(message, out IInput inputCommand) || !(command = (CommandInput)inputCommand).CommandName.Equals("use")) return false;
+            CommandInput command = null;//TODO: I wish I didn't need to instantiate an input processor here...
+            if (!(new CommandProcessor(_Bot)).TryParse(message, out IInput inputCommand) || !(command = (CommandInput)inputCommand).CommandName.Equals("use")) return false;
 
             foreach (var arg in command.Args)
             {

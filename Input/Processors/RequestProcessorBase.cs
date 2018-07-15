@@ -1,6 +1,9 @@
-﻿namespace BigBeautifulBot
+﻿using System.Threading.Tasks;
+using Discord.WebSocket;
+
+namespace BigBeautifulBot
 {
-    public class RequestProcessorBase
+    public abstract class RequestProcessorBase
     {
         protected BigBeautifulBot _Bot;
 
@@ -8,5 +11,7 @@
         {
             _Bot = bot;
         }
+
+        public abstract Task Process(SocketMessage message);
     }
 }

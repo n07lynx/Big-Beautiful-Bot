@@ -16,10 +16,12 @@ namespace BigBeautifulBot
         {
         }
 
-        public async Task Process(SocketMessage message)
+     
+
+        public override async Task Process(SocketMessage message)
         {
             var messageContent = message.Content;
-            if (messageContent.StartsWith(_Bot.Config.Prefix))//Command (TODO: Move to a command processor class)
+            if (messageContent.StartsWith(_Bot.Config.Prefix))
             {
                 var components = new string(messageContent.Skip(_Bot.Config.Prefix.Length).ToArray()).Trim().Split(' ');
                 var command = components.First().ToLower();
@@ -290,7 +292,6 @@ namespace BigBeautifulBot
             }
             else if (_Bot.FoodProcessor.TryParseFoods(args, out var foods))
             {
-                await _Bot.FoodProcessor.Consume(foods, message);
             }
             else
             {

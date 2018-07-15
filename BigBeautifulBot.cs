@@ -25,14 +25,7 @@ namespace BigBeautifulBot
         public decimal WellFormedOverfeedLimit => -Math.Abs(Config.OverfeedLimit);
         public bool IsOverfed => Info.Appetite < WellFormedOverfeedLimit;
 
-        Dictionary<string, string> _ResponseMap = new Dictionary<string, string>
-        {
-            { Resources.RegexGreeting, Resources.MentionGreeting },
-            { Resources.RegexWhoIs, Resources.MentionWhoIs},
-            { Resources.RegexGoodnight, Resources.MentionGoodnight },
-            { Resources.RegexBully, Resources.MentionBully },
-            { Resources.RegexLove, Resources.MentionLove }
-        };
+     
 
         public BigBeautifulBot(BBBSettings config)
         {
@@ -51,36 +44,7 @@ namespace BigBeautifulBot
             try
             {
                 await CommandProcessor.Process(message);
-
-                if (message.MentionedUsers.Any(x => x.Id == Program.client.CurrentUser.Id))//Mention (TODO: Move to a language parser class)
-                {
-                    var messageContent = message.Content;
-                    if (message.Author.ToString() == BBBInfo.TheCreator)//Admin instructions
-                    {
-                        if (Regex.IsMatch(messageContent, Resources.RegexThatsRight, RegexOptions.IgnoreCase))
-                        {
-                            await message.Channel.SendMessageAsync(Resources.MentionThatsRight);
-                            return;
-                        }
-                        else if (Regex.IsMatch(messageContent, Resources.RegexFalseAlarm, RegexOptions.IgnoreCase))
-                        {
-                            await message.Channel.SendMessageAsync(Resources.MentionFalseAlarm);
-                            return;
-                        }
-                    }
-
-                    foreach (var response in _ResponseMap) //Regular mention request/responses
-                    {
-                        if (Regex.IsMatch(messageContent, response.Key, RegexOptions.IgnoreCase))
-                        {
-                            await message.Channel.SendMessageAsync(string.Format(response.Value, message.Author.Mention));
-                            return;
-                        }
-                    }
-
-                    //Fallback message
-                    await message.Channel.SendMessageAsync(Resources.MentionUnknown);
-                }
+                await FoodProcessor.Process(message);
 
                 if (message.Author.ToString() == Program.TheChef && message.Channel.Name == "oc" && message.Attachments.Any(x => Regex.IsMatch(x.Filename, "discord", RegexOptions.IgnoreCase)))//WAIFU DETECTION SYSTEM
                 {

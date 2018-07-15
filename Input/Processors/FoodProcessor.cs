@@ -15,9 +15,12 @@ namespace BigBeautifulBot
         {
         }
 
-        internal async Task Consume(IEnumerable<FoodInfo> foodItems, SocketMessage message)
+        public override async Task Process(SocketMessage message)
         {
-            foreach (var foodItem in foodItems)
+            var command = Command.GetCommand(message, _Bot.Config);
+            if(command == null || !TryParseFoods(command.Args, out var foods)) return;
+
+            foreach (var foodItem in foods)
             {
                 if (_Bot.IsOverfed)
                 {
@@ -33,7 +36,7 @@ namespace BigBeautifulBot
             }
 
             //Get response
-            var responseText = foodItems.Last().BotComment;
+            var responseText = foods.Last().BotComment;
 
             //Append an appetite comment if there's a new one
             var appetiteComment = GetAppetiteComment(_Bot.Info.Appetite);

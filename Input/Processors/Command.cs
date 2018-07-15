@@ -8,19 +8,21 @@ namespace BigBeautifulBot
         public string[] Args { get; internal set; }
         public string CommandName { get; internal set; }
 
-        public static Command GetCommand(SocketMessage message, BBBSettings settings)
+        public static bool TryParse(SocketMessage message, BBBSettings settings, out Command command)
         {
             var messageContent = message.Content;
             if (messageContent.StartsWith(settings.Prefix))
             {
                 var components = new string(messageContent.Skip(settings.Prefix.Length).ToArray()).Trim().Split(' ');
-                var command = components.First().ToLower();
+                var commandName = components.First().ToLower();
                 var args = components.Skip(1).ToArray();
-                return new Command { CommandName = command, Args = args };
+                command = new Command { CommandName = commandName, Args = args };
+                return true;
             }
             else
             {
-                return null;
+                command = null;
+                return false;
             }
         }
     }

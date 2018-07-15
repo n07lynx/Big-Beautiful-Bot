@@ -23,13 +23,12 @@ namespace BigBeautifulBot
         public bool IsOverfed => Info.Appetite < WellFormedOverfeedLimit;
 
         private List<RequestProcessorBase> Processors;
-     
 
         public BigBeautifulBot(BBBSettings config)
         {
             Config = config;
             Info = new BBBInfo();
-            Processors = new List<RequestProcessorBase> { new FoodProcessor(this), new CommandProcessor(this) } ;
+            Processors = new List<RequestProcessorBase> { new FoodProcessor(this), new CommandProcessor(this) };
         }
 
         internal async Task MessageReceived(SocketMessage message)
@@ -39,7 +38,7 @@ namespace BigBeautifulBot
 
             try
             {
-                foreach(var processor in Processors)
+                foreach (var processor in Processors)
                 {
                     await processor.Process(message);
                 }

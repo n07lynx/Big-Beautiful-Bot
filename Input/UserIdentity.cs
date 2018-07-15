@@ -19,8 +19,8 @@ namespace BigBeautifulBot.Input.Inputs
             IsAdmin = UserName == BBBInfo.TheCreator;
         }
 
-        public string UserName {get;}
-        public string SystemName {get;}
-        public bool IsAdmin {get;}
+        public string UserName { get; }
+        public string SystemName { get; }
+        public bool IsAdmin { get; }
     }
 }

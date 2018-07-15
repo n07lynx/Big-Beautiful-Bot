@@ -22,13 +22,13 @@ namespace BigBeautifulBot
         public decimal WellFormedOverfeedLimit => -Math.Abs(Config.OverfeedLimit);
         public bool IsOverfed => Info.Appetite < WellFormedOverfeedLimit;
 
-        private List<RequestProcessorBase> Processors;
+        private List<InputProcessorBase> Processors;
 
         public BigBeautifulBot(BBBSettings config)
         {
             Config = config;
             Info = new BBBInfo();
-            Processors = new List<RequestProcessorBase> { new FoodProcessor(this), new CommandProcessor(this) };
+            Processors = new List<InputProcessorBase> { new FoodProcessor(this), new CommandProcessor(this) };
         }
 
         internal async Task MessageReceived(SocketMessage message)

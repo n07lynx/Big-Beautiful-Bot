@@ -7,7 +7,7 @@ using Discord.WebSocket;
 
 namespace BigBeautifulBot.Input.Processors
 {
-    public class LanguageProcessor : RequestProcessorBase
+    public class LanguageProcessor : InputProcessorBase
     {
         public LanguageProcessor(BigBeautifulBot bot) : base(bot)
         {

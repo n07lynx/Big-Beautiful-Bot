@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BigBeautifulBot
 {
-    public class CommandProcessor : RequestProcessorBase
+    public class CommandProcessor : InputProcessorBase
     {
         public CommandProcessor(BigBeautifulBot bot) : base(bot)
         {

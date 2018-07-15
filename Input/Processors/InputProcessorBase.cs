@@ -3,11 +3,11 @@ using Discord.WebSocket;
 
 namespace BigBeautifulBot
 {
-    public abstract class RequestProcessorBase
+    public abstract class InputProcessorBase
     {
         protected BigBeautifulBot _Bot;
 
-        public RequestProcessorBase(BigBeautifulBot bot)
+        public InputProcessorBase(BigBeautifulBot bot)
         {
             _Bot = bot;
         }

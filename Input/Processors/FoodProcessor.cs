@@ -150,7 +150,7 @@ namespace BigBeautifulBot
 
             foreach (var foodItem in mealInput.FoodContent)
             {
-                if (_Bot.IsOverfed)
+                if (_Bot.Info.IsOverfed)
                 {
                     await mealInput.Respond(Resources.OverfedComment);
                     return;

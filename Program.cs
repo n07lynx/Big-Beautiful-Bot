@@ -58,7 +58,7 @@ namespace BigBeautifulBot
                     bbb.Info.Weight -= config.WeightLossRate;
                 }
 
-                if (bbb.Info.Appetite < bbb.MaxAppetite)
+                if (bbb.Info.Appetite < bbb.Info.MaxAppetite)
                 {
                     bbb.Info.Appetite += config.HungerRate;
                 }

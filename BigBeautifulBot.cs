@@ -19,16 +19,13 @@ namespace BigBeautifulBot
         public BBBInfo Info { get; }
 
         //Put in info?
-        public decimal MaxAppetite => Info.Weight / Config.WeightAppetiteRatio;
-        public decimal WellFormedOverfeedLimit => -Math.Abs(Config.OverfeedLimit);
-        public bool IsOverfed => Info.Appetite < WellFormedOverfeedLimit;
 
         private List<IInputProcessor> Processors;
 
         public BigBeautifulBot(BBBSettings config)
         {
             Config = config;
-            Info = new BBBInfo();
+            Info = new BBBInfo(config);
             Processors = new List<IInputProcessor> { new FoodProcessor(this), new CommandProcessor(this) };
         }
 

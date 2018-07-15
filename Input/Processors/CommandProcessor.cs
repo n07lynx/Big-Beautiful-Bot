@@ -158,7 +158,7 @@ namespace BigBeautifulBot
         {
             var builder = new Discord.EmbedBuilder();
             builder.AddInlineField(nameof(_Bot.Info.Weight), $"{_Bot.Info.Weight}kgs");
-            builder.AddInlineField(nameof(_Bot.Info.Appetite), _Bot.IsOverfed ? ":heartpulse: __OVERFED__ :heartpulse:" : Program.GenerateStatusBar(_Bot.Info.Appetite / _Bot.MaxAppetite));
+            builder.AddInlineField(nameof(_Bot.Info.Appetite), _Bot.Info.IsOverfed ? ":heartpulse: __OVERFED__ :heartpulse:" : Program.GenerateStatusBar(_Bot.Info.Appetite / _Bot.Info.MaxAppetite));
             await message.Message.Channel.SendMessageAsync("**Current Status**", false, builder.Build());
         }
 
@@ -252,7 +252,7 @@ namespace BigBeautifulBot
             else
             {
                 string file = Program.GetRandomFile(_Bot.Config.ProgFolder);
-                await command.FileRespond(file, $"@{command.Author.SystemName} fed {command.Args[0]}");
+                await command.FileRespond(file, $"{command.Author.SystemName} fed {command.Args[0]}");
             }
         }
 

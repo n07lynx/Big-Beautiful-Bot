@@ -10,10 +10,17 @@ namespace BigBeautifulBot
     {
         public static SQLiteConnection db;
 
+        private BBBSettings _Config;
+
+        public decimal MaxAppetite => Weight / _Config.WeightAppetiteRatio;
+        public decimal WellFormedOverfeedLimit => -Math.Abs(_Config.OverfeedLimit);
+        public bool IsOverfed => Appetite < WellFormedOverfeedLimit;
         public const string TheCreator = "FairyMaku#0920";
 
-        public BBBInfo()
+        public BBBInfo(BBBSettings config)
         {
+            _Config = config;
+
             //Connect to database
             db = db ?? new SQLiteConnection("Data Source=bbb.db;Version=3;").OpenAndReturn();
 

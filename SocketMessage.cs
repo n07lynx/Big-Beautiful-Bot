@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Threading.Tasks;
 using BigBeautifulBot.Input.Inputs;
 using Discord.Rest;
@@ -19,23 +20,28 @@ namespace BigBeautifulBot.Input
         public UserIdentity Author { get; }
         public string Content { get; internal set; }
 
-        public IDisposable LoadingHandle => throw new NotImplementedException();
+        public IDisposable LoadingHandle => new RemoteLoadingHandle(Connection);
 
         public bool TargetsMe { get; } = true;
 
-        public Task SendEmbedAsync(string v1, Embed v3)
+        public async Task SendEmbedAsync(string v1, Embed v3)
         {
+            foreach(var value in v3)
+            {
+                await SendMessageAsync($"{value.Key}: {value.Value}");
+            }
+        }
+
+        public async Task<RestUserMessage> SendFileAsync(string file, string text)
+        {
+            if (!string.IsNullOrEmpty(text)) await SendMessageAsync(text);
+            await Task.Run(() => Connection.SendFile(file));
             throw new NotImplementedException();
         }
 
-        public Task<RestUserMessage> SendFileAsync(string file, string text)
+        public async Task SendMessageAsync(string response)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task SendMessageAsync(string response)
-        {
-            throw new NotImplementedException();
+            await Task.Run(() => Connection.Send(Encoding.Unicode.GetBytes(response)));
         }
     }
 }

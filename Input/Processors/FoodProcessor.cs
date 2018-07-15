@@ -18,7 +18,7 @@ namespace BigBeautifulBot
         public override async Task Process(SocketMessage message)
         {
             var command = Command.GetCommand(message, _Bot.Config);
-            if(command == null || !TryParseFoods(command.Args, out var foods)) return;
+            if(command == null || !TryParseFoods(command.Args, out var foods) || !foods.Any()) return;
 
             foreach (var foodItem in foods)
             {

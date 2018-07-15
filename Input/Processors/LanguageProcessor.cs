@@ -14,6 +14,7 @@ namespace BigBeautifulBot.Input.Processors
         {
         }
 
+        //TODO: Move to database
         Dictionary<string, string> _ResponseMap = new Dictionary<string, string>
         {
             { Resources.RegexGreeting, Resources.MentionGreeting },
@@ -25,9 +26,9 @@ namespace BigBeautifulBot.Input.Processors
 
         public override async Task Process(StringInput message)
         {
-            if (message.TargetsMe/*  */)//Mention (TODO: Move to a language parser class)
+            if (message.TargetsMe)
             {
-                if (message.IsAdmin)//Admin instructions
+                if (message.Author.IsAdmin)//Admin instructions
                 {
                     if (Regex.IsMatch(message.Text, Resources.RegexThatsRight, RegexOptions.IgnoreCase))
                     {

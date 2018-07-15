@@ -252,7 +252,7 @@ namespace BigBeautifulBot
             else
             {
                 string file = Program.GetRandomFile(_Bot.Config.ProgFolder);
-                await command.FileRespond(file, $"@{command.Author} fed {command.Args[0]}");
+                await command.FileRespond(file, $"@{command.Author.SystemName} fed {command.Args[0]}");
             }
         }
 
@@ -293,7 +293,7 @@ namespace BigBeautifulBot
             {
                 await Scales.PerformWeighIn(command);
             }
-            else if (itemCode == "<:makuactivate:438142523001667584>" && command.IsAdmin)
+            else if (itemCode == "<:makuactivate:438142523001667584>" && command.Author.IsAdmin)
             {
                 var adminMessage = Console.ReadLine();
                 await command.Respond(adminMessage);

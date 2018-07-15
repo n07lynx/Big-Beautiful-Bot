@@ -11,15 +11,14 @@ namespace BigBeautifulBot.Input.Inputs
         public InputBase(SocketMessage message)
         {
             Message = message;
+            Author = new UserIdentity(message.Author);
         }
 
         public SocketMessage Message { get; private set; }
 
         public bool TargetsMe => Message.MentionedUsers.Any(x => x.Id == Program.client.CurrentUser.Id);
 
-        public bool IsAdmin => Author.ToString() == BBBInfo.TheCreator;
-
-        public string Author => Message.Author.ToString();
+        public UserIdentity Author {get;set;}
 
         public IDisposable LoadingHandle => Message.Channel.EnterTypingState();
 

@@ -51,7 +51,7 @@ namespace BigBeautifulBot
             //Setup socket client
             var hostInfo = Dns.GetHostEntry(Dns.GetHostName());
             var address = hostInfo.AddressList.First();
-            var endpoint = new IPEndPoint(address, 0);
+            var endpoint = new IPEndPoint(address, 662);
             var socket = new Socket(address.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
             socket.Bind(endpoint);
             socket.Listen(10);

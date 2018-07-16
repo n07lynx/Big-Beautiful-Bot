@@ -6,13 +6,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Client\**\*.*"/>
+    <Compile Remove="Client\**\*.*" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Discord.Net" />
-    <PackageReference Include="System.Data.Sqlite" />
-    <PackageReference Include="System.Data.Sqlite.Core" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!--Don't remove the package versions-->
+    <PackageReference Include="Discord.Net" Version="1.0.2" />
+    <PackageReference Include="System.Data.SQLite" Version="1.0.108.0" />
+    <PackageReference Include="System.Data.SQLite.Core" Version="1.0.108.0" />
   </ItemGroup>
 
 </Project>

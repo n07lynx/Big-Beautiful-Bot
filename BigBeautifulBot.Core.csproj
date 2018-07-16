@@ -10,9 +10,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Discord.Net" Version="1.0.2" />
-    <PackageReference Include="System.Data.Sqlite" Version="1.0.108.0" />
-    <PackageReference Include="System.Data.Sqlite.Core" Version="1.0.108.0" />
+    <PackageReference Include="Discord.Net" />
+    <PackageReference Include="System.Data.Sqlite" />
+    <PackageReference Include="System.Data.Sqlite.Core" />
   </ItemGroup>
 
 </Project>

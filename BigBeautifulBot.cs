@@ -26,7 +26,7 @@ namespace BigBeautifulBot
         {
             Config = config;
             Info = new BBBInfo(config);
-            Processors = new List<IInputProcessor> { new FoodProcessor(this), new CommandProcessor(this) };
+            Processors = new List<IInputProcessor> { new FoodProcessor(this), new CommandProcessor(this), new LanguageProcessor(this) };
         }
 
         internal async Task MessageReceived(IMessage message)

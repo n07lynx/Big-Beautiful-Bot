@@ -49,27 +49,31 @@ namespace BigBeautifulBot
             await client.StartAsync();
 
             //Setup socket client
-            var hostInfo = Dns.GetHostEntry(Dns.GetHostName());
-            var address = hostInfo.AddressList.First();
-            var endpoint = new IPEndPoint(address, 662);
-            var socket = new Socket(address.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-            socket.Bind(endpoint);
-            socket.Listen(10);
+            var tcpListener = new TcpListener(IPAddress.Parse("127.0.0.1"),662);
+            tcpListener.Start();
 
-            while(true)
+            while (true)
             {
-                var connection = socket.Accept();
-                var buffer = new byte[1024];
-                int receivedBytes;
-                string message = string.Empty;
-                while((receivedBytes = socket.Receive(buffer)) > 0)
+                //Each new client, kick off a thread to handle messages
+                var tcpClient = await tcpListener.AcceptTcpClientAsync();
+                new Thread(async () =>
                 {
-                    message += Encoding.Unicode.GetString(buffer, 0, receivedBytes);
-                }
-                var socketMessage = new Input.SocketMessage(connection);
-                await bbb.MessageReceived(socketMessage);
-                connection.Shutdown(SocketShutdown.Both);
-                connection.Close();
+                    using(var connectionStream = tcpClient.GetStream())
+                    {
+                        var reader = new StreamReader(connectionStream);
+
+                        while (connectionStream.CanRead)
+                        {
+                            var buff = new byte[1024];
+                            var readBytes = connectionStream.Read(buff, 0, buff.Length);
+                            if(readBytes > 0)
+                            {
+                                var socketMessage = new Input.SocketMessage(Encoding.Unicode.GetString(buff, 0, readBytes), connectionStream);
+                                await bbb.MessageReceived(socketMessage);
+                            }
+                        }
+                    }
+                }).Start();
             }
         }
 

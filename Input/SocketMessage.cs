@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using BigBeautifulBot.Input.Inputs;
@@ -9,20 +11,18 @@ namespace BigBeautifulBot.Input
 {
     public class SocketMessage : IMessage
     {
-        System.Net.Sockets.Socket Connection;
-
-        public SocketMessage(System.Net.Sockets.Socket connection)
+        public SocketMessage(string v, NetworkStream connectionStream)
         {
-            Connection = connection;
-            Author = new UserIdentity(connection);
+            ReplyChannel = connectionStream;
+            Content = v;
+            Author = new UserIdentity("Unknown Socket User");
         }
 
         public UserIdentity Author { get; }
-        public string Content { get; internal set; }
-
-        public IDisposable LoadingHandle => new RemoteLoadingHandle(Connection);
-
+        public string Content {get;}
+        public IDisposable LoadingHandle => new RemoteLoadingHandle();
         public bool TargetsMe { get; } = true;
+        public NetworkStream ReplyChannel { get; private set; }
 
         public async Task SendEmbedAsync(string v1, Embed v3)
         {
@@ -35,13 +35,13 @@ namespace BigBeautifulBot.Input
         public async Task<RestUserMessage> SendFileAsync(string file, string text)
         {
             if (!string.IsNullOrEmpty(text)) await SendMessageAsync(text);
-            await Task.Run(() => Connection.SendFile(file));
+            await Task.Run(() => ReplyChannel.Write(Encoding.Unicode.GetBytes(file)));
             throw new NotImplementedException();
         }
 
         public async Task SendMessageAsync(string response)
         {
-            await Task.Run(() => Connection.Send(Encoding.Unicode.GetBytes(response)));
+            await Task.Run(() => ReplyChannel.Write(Encoding.Unicode.GetBytes(response)));
         }
     }
 }

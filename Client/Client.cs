@@ -14,39 +14,30 @@ namespace BigBeautifulBot.Client
         static void Main(string[] args) => MainAsync(args).GetAwaiter().GetResult();
         static async Task MainAsync(string[] args)
         {
-            var hostInfo = Dns.GetHostEntry("localhost");
-            var address = hostInfo.AddressList.First();
-            var endpoint = new IPEndPoint(address, 662);
-            socket = new Socket(address.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-            socket.Connect(endpoint);
-
-            var inThread = new Thread(ReadInputs);
-            inThread.Start();
-            var outThread = new Thread(DisplayOutputs);
-            outThread.Start();
-
-            inThread.Join();
-            outThread.Join();
-        }
-
-        public static void ReadInputs()
-        {
-            while(true)
+            using(var client = new TcpClient("127.0.0.1",662))
             {
-                var value = Console.ReadLine();
-                socket.Send(Encoding.Unicode.GetBytes(value));
+                using(var stream = client.GetStream())
+                {
+                    new Thread(() =>
+                    {
+                        while(true)
+                        {
+                            var buffer = new byte[1024];
+                            var readValues = stream.Read(buffer, 0, buffer.Length);
+                            if(readValues > 0)
+                            {
+                                Console.WriteLine(Encoding.Unicode.GetString(buffer, 0, readValues));
+                            }
+                        }
+                    }).Start();
+
+                    while(true)
+                    {
+                        var ibn = Console.ReadLine();
+                        stream.Write(Encoding.Unicode.GetBytes(ibn));
+                    }
+                }
             }
         }
-
-        public static void DisplayOutputs()
-        {
-            while(true)
-            {
-                var bytes = new byte[1024];
-                var readBytes = socket.Receive(bytes);
-                Console.WriteLine(Encoding.Unicode.GetString(bytes,0,readBytes));
-            }
-        }
-
     }
 }

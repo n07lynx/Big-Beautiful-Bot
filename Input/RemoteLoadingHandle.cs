@@ -5,13 +5,10 @@ namespace BigBeautifulBot.Input
 {
     internal class RemoteLoadingHandle : IDisposable
     {
-        private Socket _Connection;
-
         public bool IsLoading;
 
-        public RemoteLoadingHandle(Socket connection)
+        public RemoteLoadingHandle()
         {
-            _Connection = connection;
             IsLoading = true;
         }
 

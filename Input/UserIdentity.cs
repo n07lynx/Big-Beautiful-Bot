@@ -12,10 +12,10 @@ namespace BigBeautifulBot.Input.Inputs
             IsAdmin = UserName == BBBInfo.TheCreator;
         }
 
-        public UserIdentity(Socket connection)
+        public UserIdentity(string user)
         {
-            UserName = connection.RemoteEndPoint.ToString();
-            SystemName = connection.RemoteEndPoint.ToString();
+            UserName = user;
+            SystemName = user;
             IsAdmin = UserName == BBBInfo.TheCreator;
         }
 

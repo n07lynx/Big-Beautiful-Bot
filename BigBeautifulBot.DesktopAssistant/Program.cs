@@ -1,18 +1,18 @@
-using System.Threading.Tasks;
-using System.Net;
-using System.Net.Sockets;
-using System.Threading;
-using System;
-using System.Text;
-using System.Linq;
+﻿using System;
+using Avalonia;
+using Avalonia.Logging.Serilog;
 
-namespace BigBeautifulBot.Client
+namespace BigBeautifulBot.DesktopAssistant
 {
-    public class Program
+    class Program
     {
+        static void Main(string[] args)
+        {
+            BuildAvaloniaApp().Start<MainWindow>();
+        }
+
         static Socket socket;
-        static void Main(string[] args) => MainAsync(args).GetAwaiter().GetResult();
-        static async Task MainAsync(string[] args)
+        static async Task Old(string[] args)
         {
             using(var client = new TcpClient("127.0.0.1",662))
             {
@@ -39,5 +39,10 @@ namespace BigBeautifulBot.Client
                 }
             }
         }
+
+        public static AppBuilder BuildAvaloniaApp()
+            => AppBuilder.Configure<App>()
+                .UsePlatformDetect()
+                .LogToDebug();
     }
 }

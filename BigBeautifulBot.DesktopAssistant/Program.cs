@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Net.Sockets;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Logging.Serilog;
 
@@ -12,29 +16,29 @@ namespace BigBeautifulBot.DesktopAssistant
         }
 
         static Socket socket;
-        static async Task Old(string[] args)
+        static void Old(string[] args)
         {
-            using(var client = new TcpClient("127.0.0.1",662))
+            using (var client = new TcpClient("127.0.0.1", 662))
             {
-                using(var stream = client.GetStream())
+                using (var stream = client.GetStream())
                 {
                     new Thread(() =>
                     {
-                        while(true)
+                        while (true)
                         {
                             var buffer = new byte[1024];
                             var readValues = stream.Read(buffer, 0, buffer.Length);
-                            if(readValues > 0)
+                            if (readValues > 0)
                             {
                                 Console.WriteLine(Encoding.Unicode.GetString(buffer, 0, readValues));
                             }
                         }
                     }).Start();
 
-                    while(true)
+                    while (true)
                     {
                         var ibn = Console.ReadLine();
-                        stream.Write(Encoding.Unicode.GetBytes(ibn));
+                        stream.Write(Encoding.Unicode.GetBytes(ibn), 0, ibn.Length);
                     }
                 }
             }

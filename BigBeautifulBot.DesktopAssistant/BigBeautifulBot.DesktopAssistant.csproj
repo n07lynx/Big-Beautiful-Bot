@@ -12,16 +12,16 @@
     <EmbeddedResource Include="**\*.xaml">
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Sprites\test.png" />
+    <EmbeddedResource Include="Sprites\*" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="0.6.1" />
     <PackageReference Include="Avalonia.Desktop" Version="0.6.1" />
+    <PackageReference Include="Avalonia.ReactiveUI" Version="0.6.1" />
   </ItemGroup>
 
 </Project>

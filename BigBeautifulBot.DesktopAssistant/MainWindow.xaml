@@ -1,11 +1,10 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Big Beautiful Bot - DesktopAssistant" HasSystemDecorations="False" Background="Transparent">
+        Title="Big Beautiful Bot - DesktopAssistant" HasSystemDecorations="False">
     <StackPanel>
         <!--<Canvas />-->
+        <TextBlock Text="{Binding OutputMessages}"/>
         <Image Source="resm:BigBeautifulBot.DesktopAssistant.Sprites.test.png"/>
-        <Border CornerRadius="8">
-            <TextBox Height="50"/>
-        </Border>
+        <TextBox Text="{Binding InputBoxText}" Height="50" KeyDown="TextBox_KeyDown"/>
     </StackPanel>
 </Window>

@@ -8,6 +8,7 @@
   <ItemGroup>
     <None Update="config.json" CopyToOutputDirectory="Always" />
     <None Update="bbb.db" CopyToOutputDirectory="Always" />
+    <None Update="README.md" CopyToPublishDirectory="Always" />
   </ItemGroup>
 
   <ItemGroup>

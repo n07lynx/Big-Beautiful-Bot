@@ -1,0 +1,25 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build BigBeautifulBot.Core",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}\\BigBeautifulBot.Core"
+            ],
+            "problemMatcher": "$msCompile",
+        },
+        {
+            "label": "Build BigBeautifulBot.DesktopAssistant",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}\\BigBeautifulBot.DesktopAssistant"
+            ],
+            "problemMatcher": "$msCompile"
+        }
+    ]
+}

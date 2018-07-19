@@ -4,6 +4,6 @@ namespace BigBeautifulBot.Input.Inputs
 {
     public interface IInput
     {
-        Task Respond(string response);
+        Task<OutputBase> Respond(string response);
     }
 }

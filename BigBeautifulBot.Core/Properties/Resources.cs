@@ -3,7 +3,8 @@
     using System;
     internal class Resources
     {
-        internal static readonly string ErrorAccessDenied = ":warning: You do not have access to this command!";
+        public static readonly string ErrorAccessDenied = ":warning: You do not have access to this command!";
+        public const string SaveFatErrorInternetResourceUnavailable = ":warning: Could not retrive fatty from internet resource.";
 
         public static string FeedErrorTooFewArgs
         {

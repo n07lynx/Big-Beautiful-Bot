@@ -59,6 +59,46 @@ namespace BigBeautifulBot
                 case "name":
                     await Name(message);
                     return;
+                case "savefat":
+                    await SaveFat(message);
+                    return;
+            }
+        }
+
+        private async Task SaveFat(CommandInput message)
+        {
+            if (!message.Args.Any())
+            {
+                await message.Respond(Resources.SaveFatErrorTooFewArgs);
+                return;
+            }
+
+            if (!message.Author.IsAdmin)
+            {
+                await message.Respond(Resources.SaveFatErrorAccessDenied);
+                return;
+            }
+
+            if (Uri.TryCreate(message.Args.First(), UriKind.Absolute, out var path))
+            {
+                using (var client = new System.Net.Http.HttpClient())
+                using (var response = await client.GetAsync(path))
+                {
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        await message.Respond(Resources.SaveFatErrorInternetResourceUnavailable);
+                        return;
+                    }
+
+                    var fileBytes = await response.Content.ReadAsByteArrayAsync();
+
+                    var @out = await message.Respond("Where does this belong?");
+                    await @out.PresentChoice(":2:",":3:",":up:");
+
+                    var fileName = Path.GetFileName(path.LocalPath);
+                    await File.WriteAllBytesAsync(fileName, fileBytes);
+
+                }
             }
         }
 

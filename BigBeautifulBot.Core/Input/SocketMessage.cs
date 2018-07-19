@@ -32,16 +32,17 @@ namespace BigBeautifulBot.Input
             }
         }
 
-        public async Task<RestUserMessage> SendFileAsync(string file, string text)
+        public async Task<OutputBase> SendFileAsync(string file, string text)
         {
             if (!string.IsNullOrEmpty(text)) await SendMessageAsync(text);
             await Task.Run(() => ReplyChannel.Write(Encoding.Unicode.GetBytes(file)));
             throw new NotImplementedException();
         }
 
-        public async Task SendMessageAsync(string response)
+        public async Task<OutputBase> SendMessageAsync(string response)
         {
             await Task.Run(() => ReplyChannel.Write(Encoding.Unicode.GetBytes(response)));
+            return new OutputBase();
         }
     }
 }

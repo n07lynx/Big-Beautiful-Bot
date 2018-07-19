@@ -29,6 +29,9 @@ namespace BigBeautifulBot
         static void Main(string[] args) => MainAsync(args).GetAwaiter().GetResult();
         static async Task MainAsync(string[] args)
         {
+            var exeDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
+            System.IO.Directory.SetCurrentDirectory(exeDirectory);
+
             //Load config
             config = new BBBSettings();
 

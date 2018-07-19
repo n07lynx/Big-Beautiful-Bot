@@ -6,6 +6,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Update="config.json" CopyToOutputDirectory="Always" />
+    <None Update="bbb.db" CopyToOutputDirectory="Always" />
+  </ItemGroup>
+
+  <ItemGroup>
     <!--Don't remove the package versions-->
     <PackageReference Include="Discord.Net" Version="1.0.2" />
     <PackageReference Include="System.Data.SQLite" Version="1.0.108.0" />

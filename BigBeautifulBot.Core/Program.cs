@@ -49,31 +49,43 @@ namespace BigBeautifulBot
             await client.StartAsync();
 
             //Setup socket client
-            var tcpListener = new TcpListener(IPAddress.Parse("127.0.0.1"),662);
+            var tcpListener = new TcpListener(IPAddress.Parse("127.0.0.1"), 662);
             tcpListener.Start();
+            await ServiceClients(tcpListener);
+        }
 
+        private static async Task ServiceClients(TcpListener tcpListener)
+        {
             while (true)
             {
                 //Each new client, kick off a thread to handle messages
                 var tcpClient = await tcpListener.AcceptTcpClientAsync();
-                new Thread(async () =>
-                {
-                    using(var connectionStream = tcpClient.GetStream())
-                    {
-                        var reader = new StreamReader(connectionStream);
+                new Thread(async () => await HandleClient(tcpClient)).Start();
+            }
+        }
 
-                        while (connectionStream.CanRead)
+        private static async Task HandleClient(TcpClient tcpClient)
+        {
+            try
+            {
+                using (var connectionStream = tcpClient.GetStream())
+                {
+                    while (connectionStream.CanRead)
+                    {
+                        var buff = new byte[1024];
+                        var readBytes = connectionStream.Read(buff, 0, buff.Length);
+                        if (readBytes > 0)
                         {
-                            var buff = new byte[1024];
-                            var readBytes = connectionStream.Read(buff, 0, buff.Length);
-                            if(readBytes > 0)
-                            {
-                                var socketMessage = new Input.SocketMessage(Encoding.Unicode.GetString(buff, 0, readBytes), connectionStream);
-                                await bbb.MessageReceived(socketMessage);
-                            }
+                            var socketMessage = new Input.SocketMessage(Encoding.Unicode.GetString(buff, 0, readBytes), connectionStream);
+                            await bbb.MessageReceived(socketMessage);
                         }
                     }
-                }).Start();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Client handling crashed!");
+                Console.WriteLine(ex);
             }
         }
 

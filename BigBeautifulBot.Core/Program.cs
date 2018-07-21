@@ -113,8 +113,22 @@ namespace BigBeautifulBot
 
         private async static Task Client_MessageReceived(SocketMessage arg)
         {
-            var discordMessage = new DiscordMessageWrapper(arg);
-            await bbb.MessageReceived(discordMessage);
+            //HACK: See Discord.Net/issues/1115
+            await Task.Run(() =>
+            {
+                new Thread(async () =>
+                {
+                    try
+                    {
+                        var discordMessage = new DiscordMessageWrapper(arg);
+                        await bbb.MessageReceived(discordMessage);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
+                });
+            });
         }
 
         private static async void Tick(object state)

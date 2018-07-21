@@ -96,7 +96,7 @@ namespace BigBeautifulBot
 
                     var fileBytes = await response.Content.ReadAsByteArrayAsync();
 
-                    var @out = await message.Respond("Where does this fatty belong?");
+                    var @out = await message.Respond($"Where does this fatty belong?\n({TwoDimensionOptionEmoji})D, ({ThreeDimensionOptionEmoji})D or Weight ({WeightGainOptionEmoji}) Gain.");
                     var selection = await @out.PromptOptions(message.Author, TwoDimensionOptionEmoji, ThreeDimensionOptionEmoji, WeightGainOptionEmoji);
 
                     string folder;

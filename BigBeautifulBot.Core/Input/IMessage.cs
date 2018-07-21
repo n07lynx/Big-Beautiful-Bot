@@ -12,8 +12,8 @@ namespace BigBeautifulBot
         IDisposable LoadingHandle { get; }
         string Content { get; }
         bool TargetsMe { get; }
-        Task SendMessageAsync(string response);
-        Task<RestUserMessage> SendFileAsync(string file, string text);
+        Task<OutputBase> SendMessageAsync(string response);
+        Task<OutputBase> SendFileAsync(string file, string text);
         Task SendEmbedAsync(string v1, Embed v3);
     }
 }

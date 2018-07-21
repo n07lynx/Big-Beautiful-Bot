@@ -59,6 +59,69 @@ namespace BigBeautifulBot
                 case "name":
                     await Name(message);
                     return;
+                case "savefat":
+                    await SaveFat(message);
+                    return;
+            }
+        }
+
+        private const string TwoDimensionOptionEmoji = "2⃣";
+        private const string ThreeDimensionOptionEmoji = "3⃣";
+        private const string WeightGainOptionEmoji = "⬆";
+
+        private async Task SaveFat(CommandInput message)
+        {
+            if (!message.Args.Any())
+            {
+                await message.Respond(Resources.SaveFatErrorTooFewArgs);
+                return;
+            }
+
+            if (!message.Author.IsAdmin)
+            {
+                await message.Respond(Resources.SaveFatErrorAccessDenied);
+                return;
+            }
+
+            if (Uri.TryCreate(message.Args.First(), UriKind.Absolute, out var path))
+            {
+                using (var client = new System.Net.Http.HttpClient())
+                using (var response = await client.GetAsync(path))
+                {
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        await message.Respond(Resources.SaveFatErrorInternetResourceUnavailable);
+                        return;
+                    }
+
+                    var fileBytes = await response.Content.ReadAsByteArrayAsync();
+
+                    var @out = await message.Respond($"Where does this fatty belong?\n({TwoDimensionOptionEmoji})D, ({ThreeDimensionOptionEmoji})D or Weight ({WeightGainOptionEmoji}) Gain.");
+                    var selection = await @out.PromptOptions(message.Author, TwoDimensionOptionEmoji, ThreeDimensionOptionEmoji, WeightGainOptionEmoji);
+
+                    string folder;
+                    switch (selection)
+                    {
+                        case TwoDimensionOptionEmoji:
+                            folder = Path.Combine(_Bot.Config.GeneralSizesFolder, "Size Class 5");
+                            break;
+                        case ThreeDimensionOptionEmoji:
+                            folder = _Bot.Config.ThreeDimensionalFatsFolder;
+                            break;
+                        case WeightGainOptionEmoji:
+                            folder = _Bot.Config.ProgFolder;
+                            break;
+                        default:
+                            throw new Exception();
+                    }
+
+                    string fileName = Path.GetFileName(path.LocalPath);
+                    var fullPath = Path.Combine(folder, fileName);
+                    await File.WriteAllBytesAsync(fullPath, fileBytes);
+
+                    await message.Respond("Fatty saved successfully!");
+
+                }
             }
         }
 
@@ -115,6 +178,7 @@ namespace BigBeautifulBot
                     //Move image 1 up/down
                     var fileName = Path.GetFileName(image1);
                     var newFolderLocation = Path.Combine(foldersBySize[target1], fileName);
+                    if(File.Exists(newFolderLocation)) return; //TODO: Handle this
                     File.Move(image1, newFolderLocation);
                 }
                 else if (foldersBySize.ContainsKey(target2))
@@ -122,6 +186,7 @@ namespace BigBeautifulBot
                     //Move image 2 up/down
                     var fileName = Path.GetFileName(image2);
                     var newFolderLocation = Path.Combine(foldersBySize[target2], fileName);
+                    if(File.Exists(newFolderLocation)) return; //TODO: Handle this
                     File.Move(image2, newFolderLocation);
                 }
                 else

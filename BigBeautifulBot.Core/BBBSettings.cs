@@ -26,5 +26,6 @@ namespace BigBeautifulBot
         public int TickInterval => (int)_jObject[nameof(TickInterval)];
         public string GeneralSizesFolder => (string)_jObject[nameof(GeneralSizesFolder)];
         public string DefaultImageSource => (string)_jObject[nameof(DefaultImageSource)];
+        public string ThreeDimensionalFatsFolder => (string)_jObject[nameof(ThreeDimensionalFatsFolder)];
     }
 }

@@ -22,14 +22,14 @@ namespace BigBeautifulBot.Input.Inputs
 
         public IDisposable LoadingHandle => Message.LoadingHandle;
 
-        public async Task Respond(string response)
+        public async Task<OutputBase> Respond(string response)
         {
-            await Message.SendMessageAsync(response);
+            return await Message.SendMessageAsync(response);
         }
 
         public async Task<OutputBase> FileRespond(string file, string text = null)
         {
-            return new OutputBase(await Message.SendFileAsync(file, text));
+            return await Message.SendFileAsync(file, text);
         }
     }
 }

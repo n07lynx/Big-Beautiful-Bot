@@ -36,14 +36,14 @@ namespace BigBeautifulBot
             await DiscordSocketMessage.Channel.SendMessageAsync(v1, false, builder.Build());
         }
 
-        public async Task<RestUserMessage> SendFileAsync(string file, string text)
+        public async Task<OutputBase> SendFileAsync(string file, string text)
         {
-            return await DiscordSocketMessage.Channel.SendFileAsync(file, text);
+            return new OutputBase(await DiscordSocketMessage.Channel.SendFileAsync(file, text));
         }
 
-        public async Task SendMessageAsync(string response)
+        public async Task<OutputBase> SendMessageAsync(string response)
         {
-            await DiscordSocketMessage.Channel.SendMessageAsync(response);
+            return new OutputBase(await DiscordSocketMessage.Channel.SendMessageAsync(response));
         }
     }
 }

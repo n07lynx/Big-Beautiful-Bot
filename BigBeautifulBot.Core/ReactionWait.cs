@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using BigBeautifulBot.Input.Inputs;
 using Discord.Rest;
 
 namespace BigBeautifulBot
@@ -8,9 +9,9 @@ namespace BigBeautifulBot
         public TaskCompletionSource<string> CompletionSource { get; }
         public string[] Options { get; }
         public ulong Message { get; }
-        public string ExclusiveInputUser { get; }
+        public UserIdentity ExclusiveInputUser { get; }
 
-        public ReactionWait(TaskCompletionSource<string> completionSource, string[] option, ulong messageId, string exclusiveInputUser)
+        public ReactionWait(TaskCompletionSource<string> completionSource, string[] option, ulong messageId, UserIdentity exclusiveInputUser)
         {
             this.CompletionSource = completionSource;
             this.Options = option;

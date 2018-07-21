@@ -14,6 +14,7 @@ using System.Net;
 using System.Text;
 using Discord;
 using Discord.Rest;
+using BigBeautifulBot.Input.Inputs;
 
 namespace BigBeautifulBot
 {
@@ -65,13 +66,17 @@ namespace BigBeautifulBot
 
         private static async Task Client_ReactionAdded(Cacheable<IUserMessage, ulong> arg1, ISocketMessageChannel arg2, SocketReaction arg3)
         {
-            //TODO: Security!
             //TODO: Timeout!
-            var wait = ReactionWaits.SingleOrDefault(x => x.Message == arg1.Id);
-            wait?.CompletionSource.SetResult(arg3.Emote.Name);
+            //TODO: Thread safety!
+            var wait = ReactionWaits.SingleOrDefault(x => x.Message == arg1.Id && arg3.UserId == x.ExclusiveInputUser.Id);
+            if (wait != null)
+            {
+                wait.CompletionSource.SetResult(arg3.Emote.Name);
+                ReactionWaits.Remove(wait);
+            }
         }
 
-        internal static void RegisterReactionWait(TaskCompletionSource<string> completionSource, string[] option, ulong messageId, string userId)
+        internal static void RegisterReactionWait(TaskCompletionSource<string> completionSource, string[] option, ulong messageId, UserIdentity userId)
         {
             ReactionWaits.Add(new ReactionWait(completionSource, option, messageId, userId));
         }
@@ -111,24 +116,20 @@ namespace BigBeautifulBot
             }
         }
 
-        private async static Task Client_MessageReceived(SocketMessage arg)
+        private static Task Client_MessageReceived(SocketMessage arg)
         {
-            //HACK: See Discord.Net/issues/1115
-            await Task.Run(() =>
+            try
             {
-                new Thread(async () =>
-                {
-                    try
-                    {
-                        var discordMessage = new DiscordMessageWrapper(arg);
-                        await bbb.MessageReceived(discordMessage);
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex);
-                    }
-                }).Start();
-            });
+                var discordMessage = new DiscordMessageWrapper(arg);
+                _ = bbb.MessageReceived(discordMessage);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+
+            //HACK: See Discord.Net/issues/1115
+            return Task.CompletedTask;
         }
 
         private static async void Tick(object state)

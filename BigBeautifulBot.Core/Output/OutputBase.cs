@@ -32,7 +32,7 @@ namespace BigBeautifulBot.Input.Inputs
             return users.Count;
         }
 
-        internal async Task<string> PromptOptions(string userId, params string[] options)
+        internal async Task<string> PromptOptions(UserIdentity userId, params string[] options)
         {
             var completionSource = new TaskCompletionSource<string>();
             Program.RegisterReactionWait(completionSource, options, Message.Id, userId);

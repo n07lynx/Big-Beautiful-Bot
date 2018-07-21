@@ -65,9 +65,9 @@ namespace BigBeautifulBot
             }
         }
 
-        private const string TwoDimensionOptionEmoji = ":2:";
-        private const string ThreeDimensionOptionEmoji = ":3:";
-        private const string WeightGainOptionEmoji = ":arrow_up:";
+        private const string TwoDimensionOptionEmoji = "2⃣";
+        private const string ThreeDimensionOptionEmoji = "3⃣";
+        private const string WeightGainOptionEmoji = "⬆";
 
         private async Task SaveFat(CommandInput message)
         {
@@ -118,6 +118,8 @@ namespace BigBeautifulBot
                     string fileName = Path.GetFileName(path.LocalPath);
                     var fullPath = Path.Combine(folder, fileName);
                     await File.WriteAllBytesAsync(fullPath, fileBytes);
+
+                    await message.Respond("Fatty saved successfully!");
 
                 }
             }
@@ -176,6 +178,7 @@ namespace BigBeautifulBot
                     //Move image 1 up/down
                     var fileName = Path.GetFileName(image1);
                     var newFolderLocation = Path.Combine(foldersBySize[target1], fileName);
+                    if(File.Exists(newFolderLocation)) return; //TODO: Handle this
                     File.Move(image1, newFolderLocation);
                 }
                 else if (foldersBySize.ContainsKey(target2))
@@ -183,6 +186,7 @@ namespace BigBeautifulBot
                     //Move image 2 up/down
                     var fileName = Path.GetFileName(image2);
                     var newFolderLocation = Path.Combine(foldersBySize[target2], fileName);
+                    if(File.Exists(newFolderLocation)) return; //TODO: Handle this
                     File.Move(image2, newFolderLocation);
                 }
                 else

@@ -32,9 +32,15 @@ namespace BigBeautifulBot.Input.Inputs
             return users.Count;
         }
 
-        internal Task PresentChoice(params string[] v1)
+        internal async Task<string> PromptOptions(string userId, params string[] options)
         {
-            Program.client.ReactionAdded
+            var completionSource = new TaskCompletionSource<string>();
+            foreach (var reaction in options)
+            {
+                Program.RegisterReactionWait(completionSource, options, Message.Id, userId);
+                await Message.AddReactionAsync(new Discord.Emoji(reaction));
+            }
+            return await completionSource.Task;
         }
     }
 }

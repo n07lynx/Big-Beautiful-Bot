@@ -11,5 +11,6 @@
 	"OverfeedLimit" : 3,
 	"TickInterval" : 60000,
 	"GeneralSizesFolder" : "D:\\Images\\Cutefats\\General Sizes\\",
-	"DefaultImageSource" : "safebooru"
+	"DefaultImageSource" : "safebooru",
+	"ThreeDimensionalFatsFolder" : "D:\\Images\\Cutefats\\3D\\"
 }

@@ -65,6 +65,10 @@ namespace BigBeautifulBot
             }
         }
 
+        private const string TwoDimensionOptionEmoji = ":2:";
+        private const string ThreeDimensionOptionEmoji = ":3:";
+        private const string WeightGainOptionEmoji = ":arrow_up:";
+
         private async Task SaveFat(CommandInput message)
         {
             if (!message.Args.Any())
@@ -92,11 +96,28 @@ namespace BigBeautifulBot
 
                     var fileBytes = await response.Content.ReadAsByteArrayAsync();
 
-                    var @out = await message.Respond("Where does this belong?");
-                    await @out.PresentChoice(":2:",":3:",":up:");
+                    var @out = await message.Respond("Where does this fatty belong?");
+                    var selection = await @out.PromptOptions(message.Author.SystemName, TwoDimensionOptionEmoji, ThreeDimensionOptionEmoji, WeightGainOptionEmoji);
 
-                    var fileName = Path.GetFileName(path.LocalPath);
-                    await File.WriteAllBytesAsync(fileName, fileBytes);
+                    string folder;
+                    switch (selection)
+                    {
+                        case TwoDimensionOptionEmoji:
+                            folder = Path.Combine(_Bot.Config.GeneralSizesFolder, "Size Class 5");
+                            break;
+                        case ThreeDimensionOptionEmoji:
+                            folder = _Bot.Config.ThreeDimensionalFatsFolder;
+                            break;
+                        case WeightGainOptionEmoji:
+                            folder = _Bot.Config.ProgFolder;
+                            break;
+                        default:
+                            throw new Exception();
+                    }
+
+                    string fileName = Path.GetFileName(path.LocalPath);
+                    var fullPath = Path.Combine(folder, fileName);
+                    await File.WriteAllBytesAsync(fullPath, fileBytes);
 
                 }
             }

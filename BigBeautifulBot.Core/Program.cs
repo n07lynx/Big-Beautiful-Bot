@@ -12,6 +12,8 @@ using System.Threading;
 using System.Net.Sockets;
 using System.Net;
 using System.Text;
+using Discord;
+using Discord.Rest;
 
 namespace BigBeautifulBot
 {
@@ -25,6 +27,7 @@ namespace BigBeautifulBot
         public const string TheChef = "lazorchef#3920";
 
         public static Random MyRandom { get; } = new Random();
+        public static List<ReactionWait> ReactionWaits { get; set; } = new List<ReactionWait>();
 
         static void Main(string[] args) => MainAsync(args).GetAwaiter().GetResult();
         static async Task MainAsync(string[] args)
@@ -40,12 +43,15 @@ namespace BigBeautifulBot
 
             _TickTimer = new Timer(Tick, null, config.TickInterval, config.TickInterval);
 
+            //TODO: Move all this client stuff into their own classes
+
             //Setup client
             client = new DiscordSocketClient();
             client.Ready += Client_Ready;
             client.JoinedGuild += Client_JoinedGuild;
             client.LeftGuild += Client_LeftGuild;
             client.MessageReceived += Client_MessageReceived;
+            client.ReactionAdded += Client_ReactionAdded;
 
             //Login and start
             await client.LoginAsync(Discord.TokenType.Bot, config.Token);
@@ -55,6 +61,19 @@ namespace BigBeautifulBot
             var tcpListener = new TcpListener(IPAddress.Parse("127.0.0.1"), 662);
             tcpListener.Start();
             await ServiceClients(tcpListener);
+        }
+
+        private static async Task Client_ReactionAdded(Cacheable<IUserMessage, ulong> arg1, ISocketMessageChannel arg2, SocketReaction arg3)
+        {
+            //TODO: Security!
+            //TODO: Timeout!
+            var wait = ReactionWaits.SingleOrDefault(x => x.Message == arg1.Id);
+            wait?.CompletionSource.SetResult(arg3.Emote.Name);
+        }
+
+        internal static void RegisterReactionWait(TaskCompletionSource<string> completionSource, string[] option, ulong messageId, string userId)
+        {
+            ReactionWaits.Add(new ReactionWait(completionSource, option, messageId, userId));
         }
 
         private static async Task ServiceClients(TcpListener tcpListener)

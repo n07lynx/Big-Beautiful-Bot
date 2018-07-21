@@ -127,7 +127,7 @@ namespace BigBeautifulBot
                     {
                         Console.WriteLine(ex);
                     }
-                });
+                }).Start();
             });
         }
 

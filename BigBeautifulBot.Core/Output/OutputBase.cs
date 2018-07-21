@@ -35,9 +35,9 @@ namespace BigBeautifulBot.Input.Inputs
         internal async Task<string> PromptOptions(string userId, params string[] options)
         {
             var completionSource = new TaskCompletionSource<string>();
+            Program.RegisterReactionWait(completionSource, options, Message.Id, userId);
             foreach (var reaction in options)
             {
-                Program.RegisterReactionWait(completionSource, options, Message.Id, userId);
                 await Message.AddReactionAsync(new Discord.Emoji(reaction));
             }
             return await completionSource.Task;

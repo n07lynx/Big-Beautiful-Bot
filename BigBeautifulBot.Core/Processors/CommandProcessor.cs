@@ -1,4 +1,4 @@
-﻿using BigBeautifulBot.Input.Inputs;
+﻿using BigBeautifulBot.Input;
 using BigBeautifulBot.Output;
 using BigBeautifulBot.Properties;
 using Discord.WebSocket;

@@ -14,7 +14,7 @@ using System.Net;
 using System.Text;
 using Discord;
 using Discord.Rest;
-using BigBeautifulBot.Input.Inputs;
+using BigBeautifulBot.Input;
 
 namespace BigBeautifulBot
 {
@@ -115,7 +115,7 @@ namespace BigBeautifulBot
             }
         }
 
-        private static Task Client_MessageReceived(SocketMessage arg)
+        private static Task Client_MessageReceived(Discord.WebSocket.SocketMessage arg)
         {
             try
             {

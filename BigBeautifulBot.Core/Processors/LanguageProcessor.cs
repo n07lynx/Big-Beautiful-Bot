@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using BigBeautifulBot.Input.Inputs;
+using BigBeautifulBot.Input;
 using BigBeautifulBot.Properties;
 using Discord.WebSocket;
 

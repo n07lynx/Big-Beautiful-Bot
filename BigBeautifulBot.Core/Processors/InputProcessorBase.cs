@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using BigBeautifulBot.Input.Inputs;
+using BigBeautifulBot.Input;
 using BigBeautifulBot.Input.Processors;
 using Discord.WebSocket;
 

@@ -1,7 +1,7 @@
 using System.Net.Sockets;
 using Discord.WebSocket;
 
-namespace BigBeautifulBot.Input.Inputs
+namespace BigBeautifulBot.Input
 {
     public struct UserIdentity
     {

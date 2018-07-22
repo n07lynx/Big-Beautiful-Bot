@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using BigBeautifulBot.Output;
 using Discord.WebSocket;
 
-namespace BigBeautifulBot.Input.Inputs
+namespace BigBeautifulBot.Input
 {
     //TODO: Move discord-specific code into an interfaced wrapper
     public class InputBase : IInput

@@ -2,7 +2,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Discord.WebSocket;
 
-namespace BigBeautifulBot.Input.Inputs
+namespace BigBeautifulBot.Input
 {
     public class CommandInput : StringInput
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BigBeautifulBot.Input.Inputs
+namespace BigBeautifulBot.Input
 {
     public class FoodInfo
     {

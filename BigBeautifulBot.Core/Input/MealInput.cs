@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using BigBeautifulBot.Properties;
 using Discord.WebSocket;
 
-namespace BigBeautifulBot.Input.Inputs
+namespace BigBeautifulBot.Input
 {
     public class MealInput : InputBase
     {

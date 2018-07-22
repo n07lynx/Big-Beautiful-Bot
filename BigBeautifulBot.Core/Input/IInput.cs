@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using BigBeautifulBot.Output;
 
-namespace BigBeautifulBot.Input.Inputs
+namespace BigBeautifulBot.Input
 {
     public interface IInput
     {

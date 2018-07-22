@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using BigBeautifulBot.Input.Inputs;
+using BigBeautifulBot.Input;
 using BigBeautifulBot.Output;
 using Discord.Rest;
 

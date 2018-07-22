@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using BigBeautifulBot.Properties;
 using System.Threading.Tasks;
 using System.Linq;
-using BigBeautifulBot.Input.Inputs;
+using BigBeautifulBot.Input;
 
 namespace BigBeautifulBot
 {

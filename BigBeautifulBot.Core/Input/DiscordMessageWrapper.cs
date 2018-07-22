@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BigBeautifulBot.Input.Inputs;
+using BigBeautifulBot.Input;
 using BigBeautifulBot.Output;
 using Discord.Rest;
 using Discord.WebSocket;
@@ -11,9 +11,9 @@ namespace BigBeautifulBot
 {
     internal class DiscordMessageWrapper : IMessage
     {
-        private SocketMessage DiscordSocketMessage;
+        private Discord.WebSocket.SocketMessage DiscordSocketMessage;
 
-        public DiscordMessageWrapper(SocketMessage socketMessage)
+        public DiscordMessageWrapper(Discord.WebSocket.SocketMessage socketMessage)
         {
             DiscordSocketMessage = socketMessage;
             Author = new UserIdentity(socketMessage.Author);

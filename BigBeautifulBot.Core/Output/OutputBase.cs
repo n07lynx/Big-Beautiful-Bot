@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Threading;
 using System.Threading.Tasks;
-using BigBeautifulBot.Input.Inputs;
+using BigBeautifulBot.Input;
 using BigBeautifulBot.Properties;
 using Discord.Rest;
 

@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Discord.WebSocket;
 using BigBeautifulBot.Properties;
-using BigBeautifulBot.Input.Inputs;
+using BigBeautifulBot.Input;
 
 namespace BigBeautifulBot
 {

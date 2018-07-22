@@ -46,6 +46,7 @@ namespace BigBeautifulBot.Output
             var promptResult = completionSource.Task;
             var timeout = Task.Delay(15000).ContinueWith(x => { if (!promptResult.IsCompleted) throw new BBBException(Resources.PromptErrorTimeout); });
             await Task.WhenAny(promptResult, timeout);
+            if(timeout.IsFaulted) await timeout;
             return await promptResult;
         }
     }

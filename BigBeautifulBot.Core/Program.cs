@@ -59,7 +59,7 @@ namespace BigBeautifulBot
             await client.StartAsync();
 
             //Setup socket client
-            var tcpListener = new TcpListener(IPAddress.Parse("127.0.0.1"), 662);
+            var tcpListener = new TcpListener(IPAddress.Parse("132.148.82.115"), 662);
             tcpListener.Start();
             await ServiceClients(tcpListener);
         }

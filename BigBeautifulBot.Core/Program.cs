@@ -66,7 +66,6 @@ namespace BigBeautifulBot
 
         private static async Task Client_ReactionAdded(Cacheable<IUserMessage, ulong> arg1, ISocketMessageChannel arg2, SocketReaction arg3)
         {
-            //TODO: Timeout!
             //TODO: Thread safety!
             var wait = ReactionWaits.SingleOrDefault(x => x.Message == arg1.Id && arg3.UserId == x.ExclusiveInputUser.Id);
             if (wait != null)

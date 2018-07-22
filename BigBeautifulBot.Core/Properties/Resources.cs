@@ -177,7 +177,7 @@
 
         public static string UseLabombe
         { get => @"Oh my, that's a lot of butter :dizzy_face:"; }
-
+        public const string PromptErrorTimeout = @":warning: Took too long to decide.";
         public const string SaveFatErrorTooFewArgs = @":warning: Invalid parameters.";
         public const string SaveFatErrorAccessDenied = @":warning: You do not have permission to save files to the BBB server.";
     }

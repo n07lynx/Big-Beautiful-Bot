@@ -1,9 +1,12 @@
 using System;
 using System.Collections;
+using System.Threading;
 using System.Threading.Tasks;
+using BigBeautifulBot.Input.Inputs;
+using BigBeautifulBot.Properties;
 using Discord.Rest;
 
-namespace BigBeautifulBot.Input.Inputs
+namespace BigBeautifulBot.Output
 {
     public class OutputBase
     {
@@ -40,7 +43,10 @@ namespace BigBeautifulBot.Input.Inputs
             {
                 await Message.AddReactionAsync(new Discord.Emoji(reaction));
             }
-            return await completionSource.Task;
+            var promptResult = completionSource.Task;
+            var timeout = Task.Delay(15000).ContinueWith(x => { if (!promptResult.IsCompleted) throw new BBBException(Resources.PromptErrorTimeout); });
+            await Task.WhenAny(promptResult, timeout);
+            return await promptResult;
         }
     }
 }

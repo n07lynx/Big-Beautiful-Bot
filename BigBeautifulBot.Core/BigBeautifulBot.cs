@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using BigBeautifulBot.Input.Processors;
+using BigBeautifulBot.Output;
 
 namespace BigBeautifulBot
 {
@@ -38,7 +39,7 @@ namespace BigBeautifulBot
             {
                 foreach (var processor in Processors)
                 {
-                    if(processor.TryParse(message, out var input))
+                    if (processor.TryParse(message, out var input))
                     {
                         await processor.Process(input);
                     }
@@ -51,6 +52,10 @@ namespace BigBeautifulBot
                 //     Console.WriteLine("CHECK THE SERVER, LORIELLE COULD HAVE BEEN POSTED!");
                 //     Console.Beep();
                 // }
+            }
+            catch (BBBException ex)
+            {
+                await message.SendMessageAsync(ex.UserMessage);
             }
             catch (Exception ex)
             {

@@ -1,4 +1,5 @@
 ﻿using BigBeautifulBot.Input.Inputs;
+using BigBeautifulBot.Output;
 using BigBeautifulBot.Properties;
 using Discord.WebSocket;
 using System;
@@ -73,14 +74,12 @@ namespace BigBeautifulBot
         {
             if (!message.Args.Any())
             {
-                await message.Respond(Resources.SaveFatErrorTooFewArgs);
-                return;
+                throw new BBBException(Resources.SaveFatErrorTooFewArgs);
             }
 
             if (!message.Author.IsAdmin)
             {
-                await message.Respond(Resources.SaveFatErrorAccessDenied);
-                return;
+                throw new BBBException(Resources.SaveFatErrorAccessDenied);
             }
 
             if (Uri.TryCreate(message.Args.First(), UriKind.Absolute, out var path))
@@ -90,8 +89,7 @@ namespace BigBeautifulBot
                 {
                     if (!response.IsSuccessStatusCode)
                     {
-                        await message.Respond(Resources.SaveFatErrorInternetResourceUnavailable);
-                        return;
+                        throw new BBBException(Resources.SaveFatErrorInternetResourceUnavailable);
                     }
 
                     var fileBytes = await response.Content.ReadAsByteArrayAsync();
@@ -202,8 +200,7 @@ namespace BigBeautifulBot
         {
             if (!command.Args.Any())
             {
-                await command.Respond(string.Format(Resources.WeightConvertErrorTooFewArgs, command.CommandName));
-                return;
+                throw new BBBException(string.Format(Resources.WeightConvertErrorTooFewArgs, command.CommandName));
             }
 
             const decimal kgLbConversionFactor = 0.453592M;
@@ -257,8 +254,7 @@ namespace BigBeautifulBot
                 }
                 else
                 {
-                    await command.Respond(string.Format(Resources.FattyErrorUnknownSource, sourceKey));
-                    return;
+                    throw new BBBException(string.Format(Resources.FattyErrorUnknownSource, sourceKey));
                 }
             }
 
@@ -349,8 +345,7 @@ namespace BigBeautifulBot
         {
             if (!command.Args.Any())
             {
-                await command.Respond(Resources.UseErrorTooFewArgs);
-                return;
+                throw new BBBException(Resources.UseErrorTooFewArgs);
             }
 
             var itemCode = command.Args[0];

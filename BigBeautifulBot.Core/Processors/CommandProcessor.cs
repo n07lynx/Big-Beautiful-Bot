@@ -282,7 +282,7 @@ namespace BigBeautifulBot
             using (command.LoadingHandle)
             {
                 var file = Program.GetRandomFile(_Bot.Config.PurinFolder);
-                await command.Respond(file);
+                await command.FileRespond(file);
             }
         }
 

@@ -6,9 +6,12 @@ using System.Threading.Tasks;
 
 namespace BigBeautifulBot
 {
+
     public class BBBInfo
     {
-        public static SQLiteConnection db;
+
+
+    public static SQLiteConnection db;
 
         private BBBSettings _Config;
 
@@ -16,6 +19,7 @@ namespace BigBeautifulBot
         public decimal WellFormedOverfeedLimit => -Math.Abs(_Config.OverfeedLimit);
         public bool IsOverfed => Appetite < WellFormedOverfeedLimit;
         public const string TheCreator = "FairyMaku#0920";
+
 
         public BBBInfo(BBBSettings config)
         {
@@ -35,7 +39,7 @@ namespace BigBeautifulBot
             Activities = GetActivities().ToArray();
         }
 
-        private IEnumerable<string> GetActivities()
+        public IEnumerable<string> GetActivities()
         {
             var command = new SQLiteCommand("SELECT Name FROM Games;", db);
             var reader = command.ExecuteReader();
@@ -43,6 +47,64 @@ namespace BigBeautifulBot
             {
                 yield return (string)reader["Name"];
             }
+        }
+
+        public static async Task AddReminder(Input.UserIdentity user, string datetimeISO, string remText)
+        {
+            var command = new SQLiteCommand($"INSERT INTO Reminders(Activity, Dt, Id) VALUES (@Activity, @Datetime, '@User');", db);
+
+            command.Parameters.AddWithValue("@User", user.UserName);
+            command.Parameters.AddWithValue("@Datetime", DateTime.Parse(datetimeISO));
+            command.Parameters.AddWithValue("@Activity", remText);
+
+            Console.WriteLine($"New Reminder: ID: {user.UserName}, DATETIME: {datetimeISO}, Text: {remText}");
+
+
+            await command.ExecuteNonQueryAsync();
+        }
+
+        public static IEnumerable<Input.ReminderType> GetReminders()
+        {
+            var reminders = GetRemindersUtil();
+            if (reminders == null)
+            {
+                yield return new Input.ReminderType("", "0001-01-01 00:00:00", "");
+            }
+
+            foreach (var i in reminders)
+            {
+                yield return i;
+            }
+        }
+
+
+        private static IEnumerable<Input.ReminderType> GetRemindersUtil()
+        {
+            var command = new SQLiteCommand("SELECT * FROM Reminders;", db);
+            var reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                var row = reader.GetValues();
+
+                var user = row[2];
+                var datetime = row[1] == "" ? "0001-01-01 00:00:00" : row[1];
+                var remText = row[0];
+
+                yield return new Input.ReminderType(user, datetime, remText);
+            } 
+        }
+
+        public static async Task RemoveReminder(Input.ReminderType query)
+        {
+            var command = new SQLiteCommand("DELETE FROM Reminders where Activity = @Activity & Dt = @Datetime & Id = @User;", db);
+
+            command.Parameters.AddWithValue("@User", query.User.UserName);
+            command.Parameters.AddWithValue("@Datetime", query.Time);
+            command.Parameters.AddWithValue("@Activity", query.RemText);
+
+            Console.WriteLine($"Removed Reminder: ID: {query.User.UserName}, DATETIME: {query.Time}, Text: {query.RemText}");
+
+            await command.ExecuteNonQueryAsync();
         }
 
         public string[] Activities { get; }

@@ -43,7 +43,8 @@ namespace BigBeautifulBot
             bbb = new BigBeautifulBot(config);
 
             _TickTimer = new Timer(Tick, null, config.TickInterval, config.TickInterval);
-
+            
+           
             //TODO: Move all this client stuff into their own classes
 
             //Setup client
@@ -54,15 +55,22 @@ namespace BigBeautifulBot
             client.MessageReceived += Client_MessageReceived;
             client.ReactionAdded += Client_ReactionAdded;
 
+
             //Login and start
             await client.LoginAsync(Discord.TokenType.Bot, config.Token);
             await client.StartAsync();
 
+            //Set Events for Reminder
+            ReminderProcessor.StartTimers();
+
             //Setup socket client
-            var tcpListener = new TcpListener(IPAddress.Parse("132.148.82.115"), 662);
+            var tcpListener = new TcpListener(IPAddress.Parse("10.0.0.2"), 662); //Change to your localhost if you're not me
             tcpListener.Start();
             await ServiceClients(tcpListener);
+
         }
+
+
 
         private static async Task Client_ReactionAdded(Cacheable<IUserMessage, ulong> arg1, ISocketMessageChannel arg2, SocketReaction arg3)
         {
@@ -198,5 +206,6 @@ namespace BigBeautifulBot
             }
             return result;
         }
+
     }
 }

@@ -63,7 +63,16 @@ namespace BigBeautifulBot
                 case "savefat":
                     await SaveFat(message);
                     return;
+                case "remindme":
+                    await RemindMe(message);
+                    return;
             }
+        }
+
+        private async Task RemindMe(CommandInput message)
+        {
+            //presumed input: ?remindme 28.08.2018 04:27 +00:15 Activity
+            await new ReminderProcessor().Process(message);
         }
 
         private const string TwoDimensionOptionEmoji = "2⃣";

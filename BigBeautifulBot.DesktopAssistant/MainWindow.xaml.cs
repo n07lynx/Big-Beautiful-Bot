@@ -27,7 +27,7 @@ namespace BigBeautifulBot.DesktopAssistant
         {
             InitializeComponent();
             DataContext = ViewModel = new BBBViewModel();
-            BotTcpClientStream = new TcpClient("132.148.82.115", 662).GetStream();
+            BotTcpClientStream = new TcpClient("10.0.0.2", 662).GetStream(); //Change to your localhost if you're not me
             SynchronizationContext.Current.Post(StreamListener, null);
             Current = this;
         }
